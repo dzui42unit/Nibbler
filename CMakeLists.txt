@@ -3,4 +3,4 @@ project(Nibbler)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Nibbler main.cpp)
+add_executable(Nibbler main.cpp Game/Game.cpp Game/Game.h)

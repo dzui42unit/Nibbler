@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/dzui/Projects/Nibbler/Game/Game.cpp">
+			<Option target="Nibbler"/>
+		</Unit>
+		<Unit filename="/Users/dzui/Projects/Nibbler/Game/Game.h">
+			<Option target="Nibbler"/>
+		</Unit>
 		<Unit filename="/Users/dzui/Projects/Nibbler/main.cpp">
 			<Option target="Nibbler"/>
 		</Unit>

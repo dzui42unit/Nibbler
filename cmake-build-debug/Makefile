@@ -123,6 +123,33 @@ Nibbler/fast:
 	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/build
 .PHONY : Nibbler/fast
 
+Game/Game.o: Game/Game.cpp.o
+
+.PHONY : Game/Game.o
+
+# target to build an object file
+Game/Game.cpp.o:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Game/Game.cpp.o
+.PHONY : Game/Game.cpp.o
+
+Game/Game.i: Game/Game.cpp.i
+
+.PHONY : Game/Game.i
+
+# target to preprocess a source file
+Game/Game.cpp.i:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Game/Game.cpp.i
+.PHONY : Game/Game.cpp.i
+
+Game/Game.s: Game/Game.cpp.s
+
+.PHONY : Game/Game.s
+
+# target to generate assembly for a file
+Game/Game.cpp.s:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Game/Game.cpp.s
+.PHONY : Game/Game.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Nibbler"
+	@echo "... Game/Game.o"
+	@echo "... Game/Game.i"
+	@echo "... Game/Game.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

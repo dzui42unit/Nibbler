@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/dzui/Projects/Nibbler/./Game/Game.h
+iostream
+-
+regex
+-
+vector
+-
+memory
+-
+exception
+-
+algorithm
+-
+
+/Users/dzui/Projects/Nibbler/Game/Game.cpp
+Game.h
+/Users/dzui/Projects/Nibbler/Game/Game.h
+
+/Users/dzui/Projects/Nibbler/Game/Game.h
+iostream
+-
+regex
+-
+vector
+-
+memory
+-
+exception
+-
+algorithm
+-
+
+/Users/dzui/Projects/Nibbler/main.cpp
+./Game/Game.h
+/Users/dzui/Projects/Nibbler/./Game/Game.h
+

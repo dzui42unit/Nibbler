@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Nibbler.dir/main.cpp.o"
+  "CMakeFiles/Nibbler.dir/Game/Game.cpp.o"
   "Nibbler.pdb"
   "Nibbler"
 )
