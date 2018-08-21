@@ -1,12 +1,18 @@
 #ifndef NIBBLER_GAME_H
 #define NIBBLER_GAME_H
 
+#include "../Snake/Snake.h"
+
 #include <iostream>
 #include <regex>
 #include <vector>
 #include <memory>
+#include <utility>
+#include <random>
+#include <ctime>
 #include <exception>
 #include <algorithm>
+#include <ncurses.h>
 
 class Game
 {
@@ -37,6 +43,8 @@ private:
 
 	void 	GenerateMap(void);
 
+	std::shared_ptr<Snake>	snake;
+
 public:
 
 	/*
@@ -63,13 +71,17 @@ public:
 	 *	method that prints a map
 	 */
 
-	void	PrintGameMap(void) const;
+	void	PrintGameMap(void);
 
+	/*
+	 *	method to run a game
+	 */
+
+	void	RunGame(void);
 
 	/*
 	 *	Exception if the wrong size of map is passed
 	 */
-
 
 	class 	MapSizeException : public std::exception
 	{

@@ -3,7 +3,12 @@
 
 CMakeFiles/Nibbler.dir/Game/Game.cpp.o: ../Game/Game.cpp
 CMakeFiles/Nibbler.dir/Game/Game.cpp.o: ../Game/Game.h
+CMakeFiles/Nibbler.dir/Game/Game.cpp.o: ../Snake/Snake.h
+
+CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o: ../Snake/Snake.cpp
+CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o: ../Snake/Snake.h
 
 CMakeFiles/Nibbler.dir/main.cpp.o: .././Game/Game.h
+CMakeFiles/Nibbler.dir/main.cpp.o: .././Snake/Snake.h
 CMakeFiles/Nibbler.dir/main.cpp.o: ../main.cpp
 

@@ -7,6 +7,8 @@
 #IncludeRegexTransform: 
 
 /Users/dzui/Projects/Nibbler/./Game/Game.h
+../Snake/Snake.h
+/Users/dzui/Projects/Nibbler/./Snake/Snake.h
 iostream
 -
 regex
@@ -15,9 +17,25 @@ vector
 -
 memory
 -
+utility
+-
+random
+-
+ctime
+-
 exception
 -
 algorithm
+-
+ncurses.h
+-
+
+/Users/dzui/Projects/Nibbler/./Snake/Snake.h
+vector
+-
+utility
+-
+iostream
 -
 
 /Users/dzui/Projects/Nibbler/Game/Game.cpp
@@ -25,6 +43,8 @@ Game.h
 /Users/dzui/Projects/Nibbler/Game/Game.h
 
 /Users/dzui/Projects/Nibbler/Game/Game.h
+../Snake/Snake.h
+/Users/dzui/Projects/Nibbler/Snake/Snake.h
 iostream
 -
 regex
@@ -33,9 +53,29 @@ vector
 -
 memory
 -
+utility
+-
+random
+-
+ctime
+-
 exception
 -
 algorithm
+-
+ncurses.h
+-
+
+/Users/dzui/Projects/Nibbler/Snake/Snake.cpp
+Snake.h
+/Users/dzui/Projects/Nibbler/Snake/Snake.h
+
+/Users/dzui/Projects/Nibbler/Snake/Snake.h
+vector
+-
+utility
+-
+iostream
 -
 
 /Users/dzui/Projects/Nibbler/main.cpp

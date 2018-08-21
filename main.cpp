@@ -15,7 +15,7 @@ int main(int argc,char **argv)
 		try
 		{
 			game = std::make_shared<Game>(Game(argv[1], argv[2]));
-			game->PrintGameMap();
+			game->RunGame();
 		}
 		catch (std::exception &e)
 		{

@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/dzui/Projects/Nibbler/Game/Game.cpp" "/Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles/Nibbler.dir/Game/Game.cpp.o"
+  "/Users/dzui/Projects/Nibbler/Snake/Snake.cpp" "/Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o"
   "/Users/dzui/Projects/Nibbler/main.cpp" "/Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles/Nibbler.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")

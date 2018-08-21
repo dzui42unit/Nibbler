@@ -150,6 +150,33 @@ Game/Game.cpp.s:
 	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Game/Game.cpp.s
 .PHONY : Game/Game.cpp.s
 
+Snake/Snake.o: Snake/Snake.cpp.o
+
+.PHONY : Snake/Snake.o
+
+# target to build an object file
+Snake/Snake.cpp.o:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o
+.PHONY : Snake/Snake.cpp.o
+
+Snake/Snake.i: Snake/Snake.cpp.i
+
+.PHONY : Snake/Snake.i
+
+# target to preprocess a source file
+Snake/Snake.cpp.i:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Snake/Snake.cpp.i
+.PHONY : Snake/Snake.cpp.i
+
+Snake/Snake.s: Snake/Snake.cpp.s
+
+.PHONY : Snake/Snake.s
+
+# target to generate assembly for a file
+Snake/Snake.cpp.s:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Snake/Snake.cpp.s
+.PHONY : Snake/Snake.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -189,6 +216,9 @@ help:
 	@echo "... Game/Game.o"
 	@echo "... Game/Game.i"
 	@echo "... Game/Game.s"
+	@echo "... Snake/Snake.o"
+	@echo "... Snake/Snake.i"
+	@echo "... Snake/Snake.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -10,17 +10,45 @@ const int Game::MAX_SIZE = 50;
 const int Game::MIN_SIZE = 10;
 
 /*
+ *	Method that runs a game
+ */
+
+void	Game::RunGame(void)
+{
+	char ch;
+	while (true)
+	{
+		std::cin >> ch;
+		if (ch == 'w')
+			snake->SetSnakeDirection(Directions::UP);
+		if (ch == 's')
+			snake->SetSnakeDirection(Directions::DOWN);
+		if (ch == 'a')
+			snake->SetSnakeDirection(Directions::LEFT);
+		if (ch == 'd')
+			snake->SetSnakeDirection(Directions::RIGHT);
+		if (ch == '1')
+			break ;
+		snake->MoveSnake();
+		PrintGameMap();
+	}
+}
+
+/*
  * 	Method that prints a map
  */
 
-void	Game::PrintGameMap() const
+void	Game::PrintGameMap()
 {
 	std::cout << "GAME MAP" << std::endl;
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
 		{
-			std::cout << game_map[i][j] << " ";
+			if (snake->CheckSnakePartCoordinate(i, j))
+				std::cout << 2 << " ";
+			else
+				std::cout << game_map[i][j] << " ";
 		}
 		std::cout << std::endl;
 	}
@@ -33,6 +61,16 @@ void	Game::PrintGameMap() const
 
 void	Game::GenerateMap(void)
 {
+	/*
+	 * 	Set up for a map generation
+	 */
+
+	std::mt19937_64 rng(std::time(NULL));
+	std::uniform_int_distribution<int> unif(0, 1);
+	std::uniform_int_distribution<int> unif_range_w(1, width - 1);
+	std::uniform_int_distribution<int> unif_range_h(1, height - 1);
+
+
 	for (int i = 0; i < height; i++)
 	{
 		std::vector<int>	temp;
@@ -85,14 +123,18 @@ Game::Game(char *w, char *h)
 	 */
 
 	GenerateMap();
+	/*
+	 * 	Create a snake object
+	 */
 
+	snake = std::make_shared<Snake>(Snake(height, width));
 }
 
 /*
  *	Copy constructor
  */
 
-Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map)
+Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map), snake(game.snake)
 {
 
 }
@@ -106,6 +148,7 @@ Game& 	Game::operator=(const Game &game)
 	width = game.width;
 	height = game.height;
 	game_map = game.game_map;
+	snake = game.snake;
 	return (*this);
 }
 

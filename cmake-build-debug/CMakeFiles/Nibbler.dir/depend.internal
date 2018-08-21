@@ -4,6 +4,11 @@
 CMakeFiles/Nibbler.dir/Game/Game.cpp.o
  /Users/dzui/Projects/Nibbler/Game/Game.cpp
  /Users/dzui/Projects/Nibbler/Game/Game.h
+ /Users/dzui/Projects/Nibbler/Snake/Snake.h
+CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o
+ /Users/dzui/Projects/Nibbler/Snake/Snake.cpp
+ /Users/dzui/Projects/Nibbler/Snake/Snake.h
 CMakeFiles/Nibbler.dir/main.cpp.o
  /Users/dzui/Projects/Nibbler/./Game/Game.h
+ /Users/dzui/Projects/Nibbler/./Snake/Snake.h
  /Users/dzui/Projects/Nibbler/main.cpp
