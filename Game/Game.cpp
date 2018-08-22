@@ -15,6 +15,13 @@ const int Game::MIN_SIZE = 10;
 
 void	Game::RunGame(void)
 {
+//	while (true)
+//	{
+		lib_wrap->RenderMap(game_map);
+//	}
+
+/*
+
 	char ch;
 	while (true)
 	{
@@ -32,6 +39,9 @@ void	Game::RunGame(void)
 		snake->MoveSnake();
 		PrintGameMap();
 	}
+
+ */
+
 }
 
 /*
@@ -133,14 +143,14 @@ Game::Game(char *w, char *h)
 	 *	Create SDL wrapper
 	 */
 
-	lib_wrap = std::make_shared<SdlLibraryWrap>(SdlLibraryWrap());
+	lib_wrap = std::make_shared<SdlLibraryWrap>(SdlLibraryWrap(width, height));
 }
 
 /*
  *	Copy constructor
  */
 
-Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map), snake(game.snake)
+Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map), snake(game.snake), lib_wrap(game.lib_wrap)
 {
 
 }
@@ -155,6 +165,7 @@ Game& 	Game::operator=(const Game &game)
 	height = game.height;
 	game_map = game.game_map;
 	snake = game.snake;
+	lib_wrap = game.lib_wrap;
 	return (*this);
 }
 

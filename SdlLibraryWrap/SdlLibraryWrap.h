@@ -14,21 +14,11 @@ private:
 	SDL_Surface		*surface;
 	SDL_Texture		*texture;
 public:
-			SdlLibraryWrap();
-
-	SdlLibraryWrap(const SdlLibraryWrap &sdl)
-	{
-		win = sdl.win;
-		ren = sdl.ren;
-	}
-
-	SdlLibraryWrap	&operator=(const SdlLibraryWrap &sdl)
-	{
-		win = sdl.win;
-		ren = sdl.ren;
-
-		return (*this);
-	}
+					SdlLibraryWrap() = delete;
+					SdlLibraryWrap(int w, int h);
+					SdlLibraryWrap(const SdlLibraryWrap &sdl);
+	void 			RenderMap(const std::vector<std::vector<int>> &game_map) final;
+	SdlLibraryWrap	&operator=(const SdlLibraryWrap &sdl);
 };
 
 
