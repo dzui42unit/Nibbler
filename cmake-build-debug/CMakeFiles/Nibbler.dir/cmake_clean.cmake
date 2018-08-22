@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Nibbler.dir/main.cpp.o"
   "CMakeFiles/Nibbler.dir/Game/Game.cpp.o"
   "CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o"
+  "CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o"
   "Nibbler.pdb"
   "Nibbler"
 )

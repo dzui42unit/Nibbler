@@ -128,6 +128,12 @@ Game::Game(char *w, char *h)
 	 */
 
 	snake = std::make_shared<Snake>(Snake(height, width));
+
+	/*
+	 *	Create SDL wrapper
+	 */
+
+	lib_wrap = std::make_shared<SdlLibraryWrap>(SdlLibraryWrap());
 }
 
 /*

@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/dzui/Projects/Nibbler
+CMAKE_SOURCE_DIR = /Users/dzui/Projects/NibblerToWorkWith
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/dzui/Projects/Nibbler/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Nibbler.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/Nibbler.dir/flags.make
 
 CMakeFiles/Nibbler.dir/main.cpp.o: CMakeFiles/Nibbler.dir/flags.make
 CMakeFiles/Nibbler.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Nibbler.dir/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Nibbler.dir/main.cpp.o -c /Users/dzui/Projects/Nibbler/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Nibbler.dir/main.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Nibbler.dir/main.cpp.o -c /Users/dzui/Projects/NibblerToWorkWith/main.cpp
 
 CMakeFiles/Nibbler.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Nibbler.dir/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dzui/Projects/Nibbler/main.cpp > CMakeFiles/Nibbler.dir/main.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dzui/Projects/NibblerToWorkWith/main.cpp > CMakeFiles/Nibbler.dir/main.cpp.i
 
 CMakeFiles/Nibbler.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Nibbler.dir/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dzui/Projects/Nibbler/main.cpp -o CMakeFiles/Nibbler.dir/main.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dzui/Projects/NibblerToWorkWith/main.cpp -o CMakeFiles/Nibbler.dir/main.cpp.s
 
 CMakeFiles/Nibbler.dir/main.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/Nibbler.dir/main.cpp.o.provides.build: CMakeFiles/Nibbler.dir/main.cp
 
 CMakeFiles/Nibbler.dir/Game/Game.cpp.o: CMakeFiles/Nibbler.dir/flags.make
 CMakeFiles/Nibbler.dir/Game/Game.cpp.o: ../Game/Game.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Nibbler.dir/Game/Game.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Nibbler.dir/Game/Game.cpp.o -c /Users/dzui/Projects/Nibbler/Game/Game.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Nibbler.dir/Game/Game.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Nibbler.dir/Game/Game.cpp.o -c /Users/dzui/Projects/NibblerToWorkWith/Game/Game.cpp
 
 CMakeFiles/Nibbler.dir/Game/Game.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Nibbler.dir/Game/Game.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dzui/Projects/Nibbler/Game/Game.cpp > CMakeFiles/Nibbler.dir/Game/Game.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dzui/Projects/NibblerToWorkWith/Game/Game.cpp > CMakeFiles/Nibbler.dir/Game/Game.cpp.i
 
 CMakeFiles/Nibbler.dir/Game/Game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Nibbler.dir/Game/Game.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dzui/Projects/Nibbler/Game/Game.cpp -o CMakeFiles/Nibbler.dir/Game/Game.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dzui/Projects/NibblerToWorkWith/Game/Game.cpp -o CMakeFiles/Nibbler.dir/Game/Game.cpp.s
 
 CMakeFiles/Nibbler.dir/Game/Game.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/Nibbler.dir/Game/Game.cpp.o.provides.build: CMakeFiles/Nibbler.dir/Ga
 
 CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o: CMakeFiles/Nibbler.dir/flags.make
 CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o: ../Snake/Snake.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o -c /Users/dzui/Projects/Nibbler/Snake/Snake.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o -c /Users/dzui/Projects/NibblerToWorkWith/Snake/Snake.cpp
 
 CMakeFiles/Nibbler.dir/Snake/Snake.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Nibbler.dir/Snake/Snake.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dzui/Projects/Nibbler/Snake/Snake.cpp > CMakeFiles/Nibbler.dir/Snake/Snake.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dzui/Projects/NibblerToWorkWith/Snake/Snake.cpp > CMakeFiles/Nibbler.dir/Snake/Snake.cpp.i
 
 CMakeFiles/Nibbler.dir/Snake/Snake.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Nibbler.dir/Snake/Snake.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dzui/Projects/Nibbler/Snake/Snake.cpp -o CMakeFiles/Nibbler.dir/Snake/Snake.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dzui/Projects/NibblerToWorkWith/Snake/Snake.cpp -o CMakeFiles/Nibbler.dir/Snake/Snake.cpp.s
 
 CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o.requires:
 
@@ -129,11 +129,36 @@ CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o.provides: CMakeFiles/Nibbler.dir/Snake/
 CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o.provides.build: CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o
 
 
+CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o: CMakeFiles/Nibbler.dir/flags.make
+CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o: ../SdlLibraryWrap/SdlLibraryWrap.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o -c /Users/dzui/Projects/NibblerToWorkWith/SdlLibraryWrap/SdlLibraryWrap.cpp
+
+CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dzui/Projects/NibblerToWorkWith/SdlLibraryWrap/SdlLibraryWrap.cpp > CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.i
+
+CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dzui/Projects/NibblerToWorkWith/SdlLibraryWrap/SdlLibraryWrap.cpp -o CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.s
+
+CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o.requires:
+
+.PHONY : CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o.requires
+
+CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o.provides: CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o.provides.build
+.PHONY : CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o.provides
+
+CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o.provides.build: CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o
+
+
 # Object files for target Nibbler
 Nibbler_OBJECTS = \
 "CMakeFiles/Nibbler.dir/main.cpp.o" \
 "CMakeFiles/Nibbler.dir/Game/Game.cpp.o" \
-"CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o"
+"CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o" \
+"CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o"
 
 # External object files for target Nibbler
 Nibbler_EXTERNAL_OBJECTS =
@@ -141,9 +166,10 @@ Nibbler_EXTERNAL_OBJECTS =
 Nibbler: CMakeFiles/Nibbler.dir/main.cpp.o
 Nibbler: CMakeFiles/Nibbler.dir/Game/Game.cpp.o
 Nibbler: CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o
+Nibbler: CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o
 Nibbler: CMakeFiles/Nibbler.dir/build.make
 Nibbler: CMakeFiles/Nibbler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable Nibbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable Nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Nibbler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -154,6 +180,7 @@ CMakeFiles/Nibbler.dir/build: Nibbler
 CMakeFiles/Nibbler.dir/requires: CMakeFiles/Nibbler.dir/main.cpp.o.requires
 CMakeFiles/Nibbler.dir/requires: CMakeFiles/Nibbler.dir/Game/Game.cpp.o.requires
 CMakeFiles/Nibbler.dir/requires: CMakeFiles/Nibbler.dir/Snake/Snake.cpp.o.requires
+CMakeFiles/Nibbler.dir/requires: CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o.requires
 
 .PHONY : CMakeFiles/Nibbler.dir/requires
 
@@ -162,6 +189,6 @@ CMakeFiles/Nibbler.dir/clean:
 .PHONY : CMakeFiles/Nibbler.dir/clean
 
 CMakeFiles/Nibbler.dir/depend:
-	cd /Users/dzui/Projects/Nibbler/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/dzui/Projects/Nibbler /Users/dzui/Projects/Nibbler /Users/dzui/Projects/Nibbler/cmake-build-debug /Users/dzui/Projects/Nibbler/cmake-build-debug /Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles/Nibbler.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/dzui/Projects/NibblerToWorkWith /Users/dzui/Projects/NibblerToWorkWith /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles/Nibbler.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Nibbler.dir/depend
 

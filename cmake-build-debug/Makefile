@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/dzui/Projects/Nibbler
+CMAKE_SOURCE_DIR = /Users/dzui/Projects/NibblerToWorkWith
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/dzui/Projects/Nibbler/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles /Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dzui/Projects/Nibbler/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -150,6 +150,33 @@ Game/Game.cpp.s:
 	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Game/Game.cpp.s
 .PHONY : Game/Game.cpp.s
 
+SdlLibraryWrap/SdlLibraryWrap.o: SdlLibraryWrap/SdlLibraryWrap.cpp.o
+
+.PHONY : SdlLibraryWrap/SdlLibraryWrap.o
+
+# target to build an object file
+SdlLibraryWrap/SdlLibraryWrap.cpp.o:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.o
+.PHONY : SdlLibraryWrap/SdlLibraryWrap.cpp.o
+
+SdlLibraryWrap/SdlLibraryWrap.i: SdlLibraryWrap/SdlLibraryWrap.cpp.i
+
+.PHONY : SdlLibraryWrap/SdlLibraryWrap.i
+
+# target to preprocess a source file
+SdlLibraryWrap/SdlLibraryWrap.cpp.i:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.i
+.PHONY : SdlLibraryWrap/SdlLibraryWrap.cpp.i
+
+SdlLibraryWrap/SdlLibraryWrap.s: SdlLibraryWrap/SdlLibraryWrap.cpp.s
+
+.PHONY : SdlLibraryWrap/SdlLibraryWrap.s
+
+# target to generate assembly for a file
+SdlLibraryWrap/SdlLibraryWrap.cpp.s:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/SdlLibraryWrap/SdlLibraryWrap.cpp.s
+.PHONY : SdlLibraryWrap/SdlLibraryWrap.cpp.s
+
 Snake/Snake.o: Snake/Snake.cpp.o
 
 .PHONY : Snake/Snake.o
@@ -216,6 +243,9 @@ help:
 	@echo "... Game/Game.o"
 	@echo "... Game/Game.i"
 	@echo "... Game/Game.s"
+	@echo "... SdlLibraryWrap/SdlLibraryWrap.o"
+	@echo "... SdlLibraryWrap/SdlLibraryWrap.i"
+	@echo "... SdlLibraryWrap/SdlLibraryWrap.s"
 	@echo "... Snake/Snake.o"
 	@echo "... Snake/Snake.i"
 	@echo "... Snake/Snake.s"

@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/dzui/Projects/Nibbler/cmake-build-debug"/>
+				<Option working_dir="/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/dzui/Projects/Nibbler/cmake-build-debug"/>
+				<Option working_dir="/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/dzui/Projects/Nibbler/cmake-build-debug"/>
+				<Option working_dir="/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Nibbler">
-				<Option output="/Users/dzui/Projects/Nibbler/cmake-build-debug/Nibbler" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/dzui/Projects/Nibbler/cmake-build-debug"/>
+				<Option output="/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Nibbler" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -52,15 +52,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 Nibbler"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 Nibbler"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Nibbler/fast">
-				<Option output="/Users/dzui/Projects/Nibbler/cmake-build-debug/Nibbler" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/dzui/Projects/Nibbler/cmake-build-debug"/>
+				<Option output="/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Nibbler" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -73,29 +73,38 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 Nibbler/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/Nibbler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 Nibbler/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/dzui/Projects/Nibbler/Game/Game.cpp">
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Game/Game.cpp">
 			<Option target="Nibbler"/>
 		</Unit>
-		<Unit filename="/Users/dzui/Projects/Nibbler/Game/Game.h">
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Game/Game.h">
 			<Option target="Nibbler"/>
 		</Unit>
-		<Unit filename="/Users/dzui/Projects/Nibbler/Snake/Snake.cpp">
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/InterfaceLibrary/InterfaceLibrary.h">
 			<Option target="Nibbler"/>
 		</Unit>
-		<Unit filename="/Users/dzui/Projects/Nibbler/Snake/Snake.h">
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/SdlLibraryWrap/SdlLibraryWrap.cpp">
 			<Option target="Nibbler"/>
 		</Unit>
-		<Unit filename="/Users/dzui/Projects/Nibbler/main.cpp">
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/SdlLibraryWrap/SdlLibraryWrap.h">
 			<Option target="Nibbler"/>
 		</Unit>
-		<Unit filename="/Users/dzui/Projects/Nibbler/CMakeLists.txt">
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Snake/Snake.cpp">
+			<Option target="Nibbler"/>
+		</Unit>
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Snake/Snake.h">
+			<Option target="Nibbler"/>
+		</Unit>
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/main.cpp">
+			<Option target="Nibbler"/>
+		</Unit>
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

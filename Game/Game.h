@@ -2,6 +2,7 @@
 #define NIBBLER_GAME_H
 
 #include "../Snake/Snake.h"
+#include "../SdlLibraryWrap/SdlLibraryWrap.h"
 
 #include <iostream>
 #include <regex>
@@ -45,15 +46,16 @@ private:
 
 	std::shared_ptr<Snake>	snake;
 
+	/*
+	 *	pointer to the library wrapper
+	 */
+
+	std::shared_ptr<InterfaceLibrary>	lib_wrap;
+
 public:
 
 	/*
 	 * 	Canonical form of a class
-	 *
-	 * 	1. Default constructor
-	 * 	2. Destructor
-	 * 	3. Copy constructor
-	 * 	4. Copy assignment operator
 	 */
 
 				Game() = delete;
