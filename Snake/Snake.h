@@ -9,7 +9,7 @@
  *	Directions
  */
 
-enum Directions { UP, DOWN, LEFT, RIGHT};
+enum Directions { UP = 1, DOWN, LEFT, RIGHT};
 
 class Snake
 {
@@ -57,6 +57,14 @@ public:
 
 	void	SetSnakeDirection(Directions d);
 
+	/*
+	 *
+	 */
+
+	const std::vector<std::pair<int, int>>	&GetSnakeParts(void) const
+	{
+		return (snake_parts);
+	};
 };
 
 

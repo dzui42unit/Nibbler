@@ -8,12 +8,16 @@ class InterfaceLibrary
 {
 public:
 
+	virtual int		RunLib(const std::vector<std::vector<int>> &game_map,
+							   const std::vector<std::pair<int, int>> &snake_parts,
+							   int x_food,
+							   int y_food) = 0;
 	virtual void 		RenderMap(const std::vector<std::vector<int>> &game_map) = 0;
 //	virtual void 		RenderSnake(const std::vector<std::pair<int, int>> &snake_parts) = 0;
 //	virtual void 		RenderFood(int x, int y) = 0;
-//	virtual void 		HandleInput(void) = 0;
+	virtual int 		HandleInput(void) = 0;
 
-	virtual 			~InterfaceLibrary() = default;
+	virtual 			~InterfaceLibrary() {};
 						InterfaceLibrary() {};
 						InterfaceLibrary(const InterfaceLibrary &il) = delete;
 	InterfaceLibrary	&operator=(const InterfaceLibrary &li) = delete;

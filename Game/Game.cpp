@@ -15,14 +15,26 @@ const int Game::MIN_SIZE = 10;
 
 void	Game::RunGame(void)
 {
-//	while (true)
-//	{
-		lib_wrap->RenderMap(game_map);
-//	}
+	bool 	game_run;
+	int 	direction;
 
-/*
+	game_run = true;
+	while (game_run)
+	{
+		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), 0, 0);
+		if (!direction)
+			game_run = false;
+		else
+		{
+			if (direction != -1)
+			{
+				snake->SetSnakeDirection(static_cast<Directions>(direction));
+				snake->MoveSnake();
+			}
+		}
+	}
 
-	char ch;
+/*	char ch;
 	while (true)
 	{
 		std::cin >> ch;
@@ -133,6 +145,7 @@ Game::Game(char *w, char *h)
 	 */
 
 	GenerateMap();
+
 	/*
 	 * 	Create a snake object
 	 */
