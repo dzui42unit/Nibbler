@@ -75,6 +75,8 @@ void	Snake::MoveSnake(void)
 	std::pair<int, int>	prev_part_pos = snake_parts[0];
 	std::pair<int, int>	cur_part_pos;
 
+	std::cout << "I AM MOVING\n";
+
 	/*
 	 * 	Move up
 	 * 	change y coord

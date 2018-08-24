@@ -11,7 +11,8 @@ private:
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
 	SDL_Event		event;
-	Uint32			ticks;
+	Uint32			now;
+	Uint32 			last;
 	SDL_Surface		*surface;
 	SDL_Texture		*texture;
 public:

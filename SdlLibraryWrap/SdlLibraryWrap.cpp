@@ -6,18 +6,16 @@ int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 					   int x_food,
 					   int y_food)
 {
-	ticks = SDL_GetTicks();
 
-	if (ticks % 100 == 0)
-	{
-		SDL_RenderClear(ren);
-		SDL_SetRenderDrawColor( ren, 0, 0, 0, 0 );
+	SDL_RenderClear(ren);
+	SDL_SetRenderDrawColor( ren, 0, 0, 0, 0 );
 
-		RenderMap(game_map);
-		RenderSnake(snake_parts);
+	RenderMap(game_map);
+	RenderSnake(snake_parts);
 
-		SDL_RenderPresent(ren);
-	}
+	SDL_RenderPresent(ren);
+	last = SDL_GetTicks();
+
 	return (HandleInput());
 }
 
@@ -55,15 +53,15 @@ int 			SdlLibraryWrap::HandleInput(void)
 	{
 		if(event.type == SDL_QUIT )
 			return (0);
-		if (event.key.keysym.sym == SDLK_ESCAPE)
+		if (event.key.keysym.sym == SDLK_ESCAPE && event.key.repeat == 0)
 			return (0);
-		if (event.key.keysym.sym == SDLK_UP)
+		if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0)
 			return (Directions::UP);
-		if (event.key.keysym.sym == SDLK_LEFT)
+		if (event.key.keysym.sym == SDLK_LEFT && event.key.repeat == 0)
 			return (Directions::LEFT);
-		if (event.key.keysym.sym == SDLK_DOWN)
+		if (event.key.keysym.sym == SDLK_DOWN && event.key.repeat == 0)
 			return (Directions::DOWN);
-		if (event.key.keysym.sym == SDLK_RIGHT)
+		if (event.key.keysym.sym == SDLK_RIGHT && event.key.repeat == 0)
 			return (Directions::RIGHT);
 	}
 	return (-1);
@@ -92,26 +90,9 @@ void 		 SdlLibraryWrap::RenderMap(const std::vector<std::vector<int>> &game_map)
 				SDL_SetRenderDrawColor(ren, 0, 0, 0, 0);
 			}
 			SDL_RenderFillRect(ren, &r);
-//			SDL_RenderPresent(ren);
-//			if (i == 0 || i == game_map.size() - 1) {
-//				SDL_SetRenderDrawColor( ren, 0, 255, 255, 255 );
-//			}
-//			else if (j == 0 || j == game_map[i].size() - 1) {
-//				SDL_SetRenderDrawColor( ren, 0, 255, 255, 255 );
-//			}
-//			else
-//				SDL_SetRenderDrawColor( ren, 0, 255, 255, 255 );
 		}
 	}
-
-
-
-
-//	SDL_DestroyRenderer(ren);
-//	SDL_DestroyWindow(win);
-//	SDL_Quit();
 }
-
 
 /*
  *	Default constructor for the SDL wrap
@@ -158,13 +139,17 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 		std::cout << "ERROR SDL CREATE RENDER" << std::endl;
 		exit(0);
 	}
+
+	/*
+	 *	Initialize some variables for timer
+	 */
 }
 
 /*
  *	Copy constructor
  */
 
-SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl) : win(sdl.win), ren(sdl.ren)
+SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl) : win(sdl.win), ren(sdl.ren), now(sdl.now), last(sdl.last)
 {
 
 }
@@ -175,9 +160,10 @@ SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl) : win(sdl.win), ren(sd
 
 SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 {
-	std::cout << "COPY LIBWRAP" << std::endl << std::endl;
 	win = sdl.win;
 	ren = sdl.ren;
+	now = sdl.now;
+	last = sdl.last;
 
 	return (*this);
 }

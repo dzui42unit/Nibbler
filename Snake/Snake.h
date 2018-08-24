@@ -58,13 +58,22 @@ public:
 	void	SetSnakeDirection(Directions d);
 
 	/*
-	 *
+	 *	Method that returns all snake parts
 	 */
 
 	const std::vector<std::pair<int, int>>	&GetSnakeParts(void) const
 	{
 		return (snake_parts);
 	};
+
+	/*
+	 *	Method that returns the direction of the Snake
+	 */
+
+	Directions	GetSnakeDirection(void) const
+	{
+		return (dir);
+	}
 };
 
 
