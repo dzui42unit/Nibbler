@@ -14,7 +14,6 @@ int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 	RenderSnake(snake_parts);
 
 	SDL_RenderPresent(ren);
-	last = SDL_GetTicks();
 
 	return (HandleInput());
 }
@@ -55,14 +54,17 @@ int 			SdlLibraryWrap::HandleInput(void)
 			return (0);
 		if (event.key.keysym.sym == SDLK_ESCAPE && event.key.repeat == 0)
 			return (0);
-		if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0)
-			return (Directions::UP);
-		if (event.key.keysym.sym == SDLK_LEFT && event.key.repeat == 0)
-			return (Directions::LEFT);
-		if (event.key.keysym.sym == SDLK_DOWN && event.key.repeat == 0)
-			return (Directions::DOWN);
-		if (event.key.keysym.sym == SDLK_RIGHT && event.key.repeat == 0)
-			return (Directions::RIGHT);
+		if (event.type == SDL_KEYDOWN)
+		{
+			if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0)
+				return (Directions::UP);
+			if (event.key.keysym.sym == SDLK_LEFT && event.key.repeat == 0)
+				return (Directions::LEFT);
+			if (event.key.keysym.sym == SDLK_DOWN && event.key.repeat == 0)
+				return (Directions::DOWN);
+			if (event.key.keysym.sym == SDLK_RIGHT && event.key.repeat == 0)
+				return (Directions::RIGHT);
+		}
 	}
 	return (-1);
 }

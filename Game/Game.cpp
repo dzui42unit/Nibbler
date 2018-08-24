@@ -21,16 +21,20 @@ void	Game::RunGame(void)
 	game_run = true;
 	while (game_run)
 	{
+//		direction = -1;
 		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), 0, 0);
 		if (!direction)
 			game_run = false;
 		else
 		{
+//			std::cout << direction << std::endl;
 			if (direction != -1)
 			{
+//				std::cout << "DA\n";
 				snake->SetSnakeDirection(static_cast<Directions>(direction));
 				snake->MoveSnake();
 			}
+//			direction = -1;
 		}
 	}
 
