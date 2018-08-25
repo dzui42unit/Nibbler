@@ -1,12 +1,10 @@
 #include "Game.h"
 
-// http://www.andrespagella.com/snake-game
-
 /*
  *	Max map size variables
  */
 
-const int Game::MAX_SIZE = 50;
+const int Game::MAX_SIZE = 40;
 const int Game::MIN_SIZE = 10;
 
 /*
@@ -19,45 +17,28 @@ void	Game::RunGame(void)
 	int 	direction;
 
 	game_run = true;
+	begin = std::chrono::high_resolution_clock::now();
+
 	while (game_run)
 	{
-//		direction = -1;
 		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), 0, 0);
 		if (!direction)
 			game_run = false;
 		else
 		{
-//			std::cout << direction << std::endl;
 			if (direction != -1)
 			{
-//				std::cout << "DA\n";
 				snake->SetSnakeDirection(static_cast<Directions>(direction));
+				if (direction != snake->GetSnakeDirection() && (direction - snake->GetSnakeDirection() != 1 && direction - snake->GetSnakeDirection() != -1))
+					snake->MoveSnake();
+			}
+			else if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= 200)
+			{
+				begin = std::chrono::high_resolution_clock::now();
 				snake->MoveSnake();
 			}
-//			direction = -1;
 		}
 	}
-
-/*	char ch;
-	while (true)
-	{
-		std::cin >> ch;
-		if (ch == 'w')
-			snake->SetSnakeDirection(Directions::UP);
-		if (ch == 's')
-			snake->SetSnakeDirection(Directions::DOWN);
-		if (ch == 'a')
-			snake->SetSnakeDirection(Directions::LEFT);
-		if (ch == 'd')
-			snake->SetSnakeDirection(Directions::RIGHT);
-		if (ch == '1')
-			break ;
-		snake->MoveSnake();
-		PrintGameMap();
-	}
-
- */
-
 }
 
 /*
@@ -96,6 +77,9 @@ void	Game::GenerateMap(void)
 	std::uniform_int_distribution<int> unif_range_w(1, width - 1);
 	std::uniform_int_distribution<int> unif_range_h(1, height - 1);
 
+
+	std::cout << height << std::endl;
+	std::cout << width << std::endl;
 
 	for (int i = 0; i < height; i++)
 	{

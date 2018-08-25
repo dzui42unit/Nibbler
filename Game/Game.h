@@ -13,7 +13,7 @@
 #include <ctime>
 #include <exception>
 #include <algorithm>
-#include <ncurses.h>
+#include <chrono>
 
 class Game
 {
@@ -51,6 +51,12 @@ private:
 	 */
 
 	std::shared_ptr<InterfaceLibrary>	lib_wrap;
+
+	/*
+	 *	Timer
+	 */
+
+	std::chrono::high_resolution_clock::time_point begin;
 
 public:
 

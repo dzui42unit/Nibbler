@@ -6,7 +6,6 @@ int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 					   int x_food,
 					   int y_food)
 {
-
 	SDL_RenderClear(ren);
 	SDL_SetRenderDrawColor( ren, 0, 0, 0, 0 );
 
@@ -84,8 +83,8 @@ void 		 SdlLibraryWrap::RenderMap(const std::vector<std::vector<int>> &game_map)
 	{
 		for (size_t j = 0; j < game_map[i].size(); j++)
 		{
-			r.x = i * r.h;
-			r.y = j * r.w;
+			r.x = j * r.h;
+			r.y = i * r.w;
 			if (game_map[i][j] == 1) {
 				SDL_SetRenderDrawColor(ren, 0, 255, 0, 255 );
 			} else {
@@ -145,6 +144,9 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	/*
 	 *	Initialize some variables for timer
 	 */
+
+	now = 0;
+	last = 0;
 }
 
 /*

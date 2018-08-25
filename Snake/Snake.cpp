@@ -10,7 +10,7 @@ Snake::Snake(int width, int height)
 	 *	Set a head position and other 3 cells of snake
 	 */
 
-	snake_parts.emplace_back(width / 2, height / 2);
+	snake_parts.emplace_back(height / 2, width / 2);
 	snake_parts.emplace_back(snake_parts[0].first, snake_parts[0].second + 1);
 	snake_parts.emplace_back(snake_parts[0].first, snake_parts[0].second + 2);
 	snake_parts.emplace_back(snake_parts[0].first, snake_parts[0].second + 3);
@@ -75,8 +75,6 @@ void	Snake::MoveSnake(void)
 	std::pair<int, int>	prev_part_pos = snake_parts[0];
 	std::pair<int, int>	cur_part_pos;
 
-	std::cout << "I AM MOVING\n";
-
 	/*
 	 * 	Move up
 	 * 	change y coord
@@ -123,12 +121,15 @@ void	Snake::MoveSnake(void)
 
 void	Snake::SetSnakeDirection(Directions d)
 {
-	if (dir == Directions::UP && d != Directions::DOWN)
-		dir = d;
-	if (dir == Directions::DOWN && d != Directions::UP)
-		dir = d;
-	if (dir == Directions::LEFT && d != Directions::RIGHT)
-		dir = d;
-	if (dir == Directions::RIGHT && d != Directions::LEFT)
-		dir = d;
+	if (d != dir)
+	{
+		if (dir == Directions::UP && d != Directions::DOWN)
+			dir = d;
+		if (dir == Directions::DOWN && d != Directions::UP)
+			dir = d;
+		if (dir == Directions::LEFT && d != Directions::RIGHT)
+			dir = d;
+		if (dir == Directions::RIGHT && d != Directions::LEFT)
+			dir = d;
+	}
 }

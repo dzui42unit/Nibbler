@@ -9,7 +9,7 @@
  *	Directions
  */
 
-enum Directions { UP = 1, DOWN, LEFT, RIGHT};
+enum Directions { UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4};
 
 class Snake
 {
