@@ -15,10 +15,22 @@ bool	Game::CheckCollision(void) const
 {
 	std::pair<int, int>	head_coords;
 
+	/*
+	 *	get snake head coordinates
+	 */
+
 	head_coords = snake->GetSnakeParts()[0];
 
 	// second is a row, first is a col
-	std::cout << head_coords.first << " " << head_coords.second << std::endl;
+//	std::cout << head_coords.first << " " << head_coords.second << std::endl;
+
+	/*
+	 *	if the head coordinates are on the map obstacle
+	 *	send a signal about it
+	 */
+
+	if (game_map[head_coords.first][head_coords.second] == 1)
+		return (true);
 
 	return (false);
 }
@@ -56,6 +68,7 @@ void	Game::RunGame(void)
 		}
 		if (CheckCollision())
 		{
+			exit(0);
 			std::cout << "HIT THAT WALL, BEACH!!!" << std::endl;
 		}
 	}
@@ -97,6 +110,7 @@ void	Game::GenerateMap(void)
 	std::uniform_int_distribution<int> unif_range_w(1, width - 1);
 	std::uniform_int_distribution<int> unif_range_h(1, height - 1);
 
+	std::cout << height << " " << width << std::endl;
 	for (int i = 0; i < height; i++)
 	{
 		std::vector<int>	temp;
@@ -117,7 +131,7 @@ void	Game::GenerateMap(void)
  * 	Constructor that takes width and height parameters as strings
  */
 
-Game::Game(char *h, char *w)
+Game::Game(char *w, char *h)
 {
 	std::regex numbers_pattern;
 
@@ -154,7 +168,7 @@ Game::Game(char *h, char *w)
 	 * 	Create a snake object
 	 */
 
-	snake = std::make_shared<Snake>(Snake(height, width));
+	snake = std::make_shared<Snake>(Snake(width, height));
 
 	/*
 	 *	Create SDL wrapper
