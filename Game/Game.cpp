@@ -49,7 +49,7 @@ void	Game::RunGame(void)
 
 	while (game_run)
 	{
-		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), 0, 0);
+		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), 0, 0, snake->GetSnakeDirection());
 		if (!direction)
 			game_run = false;
 		else

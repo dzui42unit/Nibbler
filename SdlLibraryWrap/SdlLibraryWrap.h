@@ -18,6 +18,17 @@ private:
 	SDL_Texture		*texture;
     SDL_Rect        image_texture_part;
     SDL_Texture     *border_texture;
+    SDL_Texture     *grass_texture;
+    SDL_Texture     *snake_head_texture;
+    SDL_Texture     *snake_body_texture;
+
+    SDL_Rect        head_up;
+    SDL_Rect        head_right;
+    SDL_Rect        head_down;
+    SDL_Rect        head_left;
+    SDL_Rect        rect_background;
+    SDL_Rect        rect_snake_body;
+
 public:
 					SdlLibraryWrap() = delete;
 					SdlLibraryWrap(int w, int h);
@@ -29,9 +40,10 @@ public:
 	int				RunLib(const std::vector<std::vector<int>> &game_map,
 						   const std::vector<std::pair<int, int>> &snake_parts,
 						   int x_food,
-						   int y_food) final;
+						   int y_food,
+                           int dir) final;
 	int 			HandleInput(void) final;
-	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts);
+	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir);
 
 
 };
