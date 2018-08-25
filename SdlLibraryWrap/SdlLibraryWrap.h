@@ -28,6 +28,7 @@ private:
     SDL_Rect        head_left;
     SDL_Rect        rect_background;
     SDL_Rect        rect_snake_body;
+    SDL_Rect        rect_food;
 
 public:
 					SdlLibraryWrap() = delete;

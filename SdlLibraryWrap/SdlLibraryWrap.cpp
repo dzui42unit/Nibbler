@@ -184,7 +184,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     SDL_Surface *image_border = IMG_Load("libs/sdl/texture1.jpg");
     SDL_Surface *image_grass = IMG_Load("libs/sdl/background3.jpg");
     SDL_Surface *image_snake_head = IMG_Load("libs/sdl/snake_head.png");
-    SDL_Surface *image_snake_body = IMG_Load("libs/sdl/snake_body2.png");
+    SDL_Surface *image_snake_body = IMG_Load("libs/sdl/snake_body3.png");
 
 
     if (!image_border || !image_grass || !image_snake_head || !image_snake_body)
@@ -212,7 +212,8 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     head_down = {256, 65, 60, 60};
     head_left = {195, 65, 60, 60};
     rect_background = {0, 0, w * 32, h * 32};
-    rect_snake_body = {30, 30, 100, 100};
+    rect_snake_body = {160, 0, 960, 960};
+    rect_food = {0, 192, 60, 60};
 
 	/*
 	 *	Initialize some variables for timer
@@ -235,8 +236,9 @@ void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos)
 	r.x = j_pos * r.h;
 	r.y = i_pos * r.w;
 
-	SDL_SetRenderDrawColor(ren, 255, 0, 0, 0);
-	SDL_RenderFillRect(ren, &r);
+    SDL_RenderCopy(ren, snake_head_texture, &rect_food, &r);
+//	SDL_SetRenderDrawColor(ren, 255, 0, 0, 0);
+//	SDL_RenderFillRect(ren, &r);
 }
 
 /*
@@ -258,7 +260,8 @@ SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
           head_left(sdl.head_left),
           rect_background(sdl.rect_background),
           snake_body_texture(sdl.snake_body_texture),
-          rect_snake_body(sdl.rect_snake_body)
+          rect_snake_body(sdl.rect_snake_body),
+          rect_food(sdl.rect_food)
 {
 
 }
@@ -284,7 +287,7 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
     rect_background = sdl.rect_background;
     rect_snake_body = sdl.rect_snake_body;
     snake_body_texture = sdl.snake_body_texture;
-
+    rect_food = sdl.rect_food;
 	return (*this);
 }
 
