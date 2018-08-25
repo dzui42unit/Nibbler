@@ -39,6 +39,8 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 		}
 		SDL_RenderFillRect(ren, &r);
 	}
+
+
 }
 
 
@@ -80,6 +82,10 @@ void 		 SdlLibraryWrap::RenderMap(const std::vector<std::vector<int>> &game_map)
 	r.w = 32;
 	r.h = 32;
 
+//    std::cout << image_texture_part.x << image_texture_part.y << image_texture_part.h << image_texture_part.w <<  std::endl;
+
+//    SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
+
 	for (size_t i = 0; i < game_map.size(); i++)
 	{
 		for (size_t j = 0; j < game_map[i].size(); j++)
@@ -87,13 +93,17 @@ void 		 SdlLibraryWrap::RenderMap(const std::vector<std::vector<int>> &game_map)
 			r.x = i * r.h;
 			r.y = j * r.w;
 			if (game_map[i][j] == 1) {
-				SDL_SetRenderDrawColor(ren, 0, 255, 0, 255 );
+//				SDL_SetRenderDrawColor(ren, 0, 255, 0, 255 );
+                SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
+//                SDL_RenderPresent(ren);
 			} else {
 				SDL_SetRenderDrawColor(ren, 0, 0, 0, 0);
+                SDL_RenderFillRect(ren, &r);
 			}
-			SDL_RenderFillRect(ren, &r);
+
 		}
 	}
+//    SDL_RenderPresent(ren);
 }
 
 /*
@@ -142,6 +152,37 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 		exit(0);
 	}
 
+    /*
+    * 	Init IMG
+    */
+
+    int flags = IMG_INIT_JPG;
+    int initted = IMG_Init(flags);
+    if ((initted & flags) != flags) {
+        std::cout << "IMG_Init: Failed to init required jpg and png support!\n" << std::endl;
+        std::cout << "IMG_Init: %s\n" <<  IMG_GetError() << std::endl;
+    }
+
+
+    SDL_Surface *image = IMG_Load("libs/sdl/texture1.jpg");
+    if (!image)
+    {
+        std::cout << "ERROR upload texture" << std::endl;
+        exit(0);
+    }
+
+    border_texture = SDL_CreateTextureFromSurface(ren, image);
+    if (!border_texture) {
+        std::cout << "ERROR border texture" << std::endl;
+        exit(1);
+    }
+    SDL_FreeSurface(image);
+
+    image_texture_part.x = 0;
+    image_texture_part.y = 0;
+    image_texture_part.h = 100;
+    image_texture_part.w = 100;
+
 	/*
 	 *	Initialize some variables for timer
 	 */
@@ -151,7 +192,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
  *	Copy constructor
  */
 
-SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl) : win(sdl.win), ren(sdl.ren), now(sdl.now), last(sdl.last)
+SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl) : win(sdl.win), ren(sdl.ren), now(sdl.now), last(sdl.last), image_texture_part(sdl.image_texture_part), border_texture(sdl.border_texture)
 {
 
 }
@@ -166,6 +207,8 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 	ren = sdl.ren;
 	now = sdl.now;
 	last = sdl.last;
+    image_texture_part = sdl.image_texture_part;
+    border_texture = sdl.border_texture;
 
 	return (*this);
 }
@@ -176,5 +219,5 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 
 SdlLibraryWrap::~SdlLibraryWrap()
 {
-
+	IMG_Quit();
 }

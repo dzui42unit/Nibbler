@@ -141,7 +141,7 @@ Game::Game(char *w, char *h)
 	 *	Check for them to fit the ranges
 	 */
 
-	if (width > MAX_SIZE || width < MIN_SIZE|| height < MIN_SIZE || height > MAX_SIZE)
+	if (width > MAX_SIZE || width < MIN_SIZE || height < MIN_SIZE || height > MAX_SIZE)
 		throw (MapSizeException());
 
 	/*

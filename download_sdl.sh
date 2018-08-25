@@ -5,17 +5,23 @@ pkg="sdl2"
 if brew list -1 | grep -q "^${pkg}\$"; then
     echo "Package '$pkg' is installed"
 else
-   # echo "Package '$pkg' is not installed"
-    brew install sdl2
+  # echo "Package '$pkg' is not installed"
+   brew install sdl2
 fi
 
-echo " debug ------ next step -----"
+ln -f -s ~/.brew/Cellar/sdl2/*/include/SDL2 libs/sdl/sdl2
+ln -f -s ~/.brew/Cellar/sdl2/*/lib/ libs/sdl/sdl2
 
-ln -s ~/.brew/Cellar/sdl2/*/include/SDL2 libs/sdl
-ln -s ~/.brew/Cellar/sdl2/*/lib/ libs/sdl
+pkg2="sdl2_image"
 
-#cp -R  ~/.brew/Cellar/sdl2/2.0.8/include/ myproject/include
+if brew list -1 | grep -q "^${pkg2}\$"; then
+    echo "Package '$pkg2' is installed"
+else
+   # echo "Package '$pkg2' is not installed"
+   brew install sdl2 sdl2_image
+fi
 
+ln -f -s ~/.brew/Cellar/sdl2_image/*/include/SDL2 libs/sdl/sdl2_image
+ln -f -s ~/.brew/Cellar/sdl2_image/*/lib/ libs/sdl/sdl2_image
 
-
-
+echo "*** WELL DONE ***"
