@@ -65,7 +65,7 @@ void	Game::RunGame(void)
 		colision_status = CheckCollision();
 		if (colision_status == Events::SELF_HIT || colision_status == Events::WALL_HIT)
 			exit(0);
-		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
+		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, snake->GetSnakeDirection());
 		if (!direction)
 			game_run = false;
 		else

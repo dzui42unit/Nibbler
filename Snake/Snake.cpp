@@ -111,7 +111,7 @@ void	Snake::MoveSnake(bool increase)
 	/*
 	 *	Move all other parts
 	 */
-	
+
 	for (size_t i = 1; i < snake_parts.size(); i++)
 	{
 		cur_part_pos = snake_parts[i];
