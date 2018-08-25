@@ -11,9 +11,9 @@ Snake::Snake(int width, int height)
 	 */
 
 	snake_parts.emplace_back(height / 2, width / 2);
-	snake_parts.emplace_back(snake_parts[0].first, snake_parts[0].second + 1);
-	snake_parts.emplace_back(snake_parts[0].first, snake_parts[0].second + 2);
-	snake_parts.emplace_back(snake_parts[0].first, snake_parts[0].second + 3);
+	snake_parts.emplace_back(snake_parts[0].first + 1, snake_parts[0].second);
+	snake_parts.emplace_back(snake_parts[0].first + 2, snake_parts[0].second);
+	snake_parts.emplace_back(snake_parts[0].first + 3, snake_parts[0].second);
 
 	/*
 	 *	Set default direction as UP
@@ -81,7 +81,7 @@ void	Snake::MoveSnake(void)
 	 */
 
 	if (dir == Directions::UP)
-		snake_parts[0].second -= 1;
+		snake_parts[0].first -=1;
 
 	/*
 	 *	Move down
@@ -89,7 +89,7 @@ void	Snake::MoveSnake(void)
 	 */
 
 	if (dir == Directions::DOWN)
-		snake_parts[0].second += 1;
+		snake_parts[0].first += 1;
 
 	/*
 	 *	Move left
@@ -97,14 +97,15 @@ void	Snake::MoveSnake(void)
 	 */
 
 	if (dir == Directions::LEFT)
-		snake_parts[0].first -= 1;
+		snake_parts[0].second -= 1;
+
 	/*
 	 *	Move right
 	 *	change x
 	 */
 
 	if (dir == Directions::RIGHT)
-		snake_parts[0].first += 1;
+		snake_parts[0].second += 1;
 
 	/*
 	 *	Move all other parts
@@ -132,4 +133,22 @@ void	Snake::SetSnakeDirection(Directions d)
 		if (dir == Directions::RIGHT && d != Directions::LEFT)
 			dir = d;
 	}
+}
+
+/*
+ *	Method that returns all snake parts
+ */
+
+const std::vector<std::pair<int, int>>	&Snake::GetSnakeParts(void) const
+{
+	return (snake_parts);
+};
+
+/*
+ *	Method that returns the direction of the Snake
+ */
+
+Directions	Snake::GetSnakeDirection(void) const
+{
+	return (dir);
 }

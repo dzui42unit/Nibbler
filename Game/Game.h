@@ -82,10 +82,16 @@ public:
 	void	PrintGameMap(void);
 
 	/*
-	 *	method to run a game
+	 *	method to run a game loop
 	 */
 
 	void	RunGame(void);
+
+	/*
+	 *	Method to calculate collision
+	 */
+
+	bool 	CheckCollision(void) const;
 
 	/*
 	 *	Exception if the wrong size of map is passed

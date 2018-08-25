@@ -29,8 +29,8 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 	r.h = 32;
 	for (size_t i = 0; i < snake_parts.size(); i++)
 	{
-		r.x = snake_parts[i].first * r.h;
-		r.y = snake_parts[i].second * r.w;
+		r.x = snake_parts[i].second * r.w;
+		r.y = snake_parts[i].first * r.h;
 		if (i == 0) {
 			SDL_SetRenderDrawColor(ren, 0, 255, 255, 0);
 		} else {
@@ -83,8 +83,8 @@ void 		 SdlLibraryWrap::RenderMap(const std::vector<std::vector<int>> &game_map)
 	{
 		for (size_t j = 0; j < game_map[i].size(); j++)
 		{
-			r.x = j * r.h;
-			r.y = i * r.w;
+			r.x = i * r.w;
+			r.y = j * r.h;
 			if (game_map[i][j] == 1) {
 				SDL_SetRenderDrawColor(ren, 0, 255, 0, 255 );
 			} else {
@@ -115,7 +115,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Create a window
 	 */
 
-	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32, h * 32, SDL_WINDOW_OPENGL)))
+	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, h * 32, w * 32, SDL_WINDOW_OPENGL)))
 	{
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);

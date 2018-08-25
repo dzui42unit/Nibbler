@@ -61,19 +61,14 @@ public:
 	 *	Method that returns all snake parts
 	 */
 
-	const std::vector<std::pair<int, int>>	&GetSnakeParts(void) const
-	{
-		return (snake_parts);
-	};
+	const std::vector<std::pair<int, int>>	&GetSnakeParts(void) const;
 
 	/*
 	 *	Method that returns the direction of the Snake
 	 */
 
-	Directions	GetSnakeDirection(void) const
-	{
-		return (dir);
-	}
+	Directions	GetSnakeDirection(void) const;
+
 };
 
 

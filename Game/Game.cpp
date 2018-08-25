@@ -8,6 +8,22 @@ const int Game::MAX_SIZE = 40;
 const int Game::MIN_SIZE = 10;
 
 /*
+ *	Method that calculates collision
+ */
+
+bool	Game::CheckCollision(void) const
+{
+	std::pair<int, int>	head_coords;
+
+	head_coords = snake->GetSnakeParts()[0];
+
+	// second is a row, first is a col
+	std::cout << head_coords.first << " " << head_coords.second << std::endl;
+
+	return (false);
+}
+
+/*
  *	Method that runs a game
  */
 
@@ -37,6 +53,10 @@ void	Game::RunGame(void)
 				begin = std::chrono::high_resolution_clock::now();
 				snake->MoveSnake();
 			}
+		}
+		if (CheckCollision())
+		{
+			std::cout << "HIT THAT WALL, BEACH!!!" << std::endl;
 		}
 	}
 }
@@ -77,10 +97,6 @@ void	Game::GenerateMap(void)
 	std::uniform_int_distribution<int> unif_range_w(1, width - 1);
 	std::uniform_int_distribution<int> unif_range_h(1, height - 1);
 
-
-	std::cout << height << std::endl;
-	std::cout << width << std::endl;
-
 	for (int i = 0; i < height; i++)
 	{
 		std::vector<int>	temp;
@@ -101,7 +117,7 @@ void	Game::GenerateMap(void)
  * 	Constructor that takes width and height parameters as strings
  */
 
-Game::Game(char *w, char *h)
+Game::Game(char *h, char *w)
 {
 	std::regex numbers_pattern;
 
