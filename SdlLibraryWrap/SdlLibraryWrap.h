@@ -30,6 +30,7 @@ public:
 						   const std::vector<std::pair<int, int>> &snake_parts,
 						   int x_food,
 						   int y_food) final;
+	void 			RenderFood(int x, int y);
 	int 			HandleInput(void) final;
 	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts);
 

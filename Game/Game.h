@@ -3,17 +3,20 @@
 
 #include "../Snake/Snake.h"
 #include "../SdlLibraryWrap/SdlLibraryWrap.h"
+#include "../Fruit/Fruit.h"
 
 #include <iostream>
 #include <regex>
 #include <vector>
 #include <memory>
 #include <utility>
-#include <random>
 #include <ctime>
 #include <exception>
 #include <algorithm>
 #include <chrono>
+#include <unistd.h>
+
+enum Events { WALL_HIT, SELF_HIT, PICKED_FRUIT, OK };
 
 class Game
 {
@@ -51,6 +54,12 @@ private:
 	 */
 
 	std::shared_ptr<InterfaceLibrary>	lib_wrap;
+
+	/*
+	 *	pointer to the Fruit object
+	 */
+
+	std::shared_ptr<Fruit>				fruit;
 
 	/*
 	 *	Timer
@@ -91,7 +100,7 @@ public:
 	 *	Method to calculate collision
 	 */
 
-	bool 	CheckCollision(void) const;
+	Events 	CheckCollision(void) const;
 
 	/*
 	 *	Exception if the wrong size of map is passed

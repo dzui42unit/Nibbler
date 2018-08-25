@@ -15,7 +15,8 @@ NAME = Nibbler
 SRC = main.cpp \
 	Game/Game.cpp \
 	Snake/Snake.cpp \
-	SdlLibraryWrap/SdlLibraryWrap.cpp
+	SdlLibraryWrap/SdlLibraryWrap.cpp \
+	Fruit/Fruit.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

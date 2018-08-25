@@ -123,6 +123,33 @@ Nibbler/fast:
 	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/build
 .PHONY : Nibbler/fast
 
+Fruit/Fruit.o: Fruit/Fruit.cpp.o
+
+.PHONY : Fruit/Fruit.o
+
+# target to build an object file
+Fruit/Fruit.cpp.o:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Fruit/Fruit.cpp.o
+.PHONY : Fruit/Fruit.cpp.o
+
+Fruit/Fruit.i: Fruit/Fruit.cpp.i
+
+.PHONY : Fruit/Fruit.i
+
+# target to preprocess a source file
+Fruit/Fruit.cpp.i:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Fruit/Fruit.cpp.i
+.PHONY : Fruit/Fruit.cpp.i
+
+Fruit/Fruit.s: Fruit/Fruit.cpp.s
+
+.PHONY : Fruit/Fruit.s
+
+# target to generate assembly for a file
+Fruit/Fruit.cpp.s:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Fruit/Fruit.cpp.s
+.PHONY : Fruit/Fruit.cpp.s
+
 Game/Game.o: Game/Game.cpp.o
 
 .PHONY : Game/Game.o
@@ -240,6 +267,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Nibbler"
+	@echo "... Fruit/Fruit.o"
+	@echo "... Fruit/Fruit.i"
+	@echo "... Fruit/Fruit.s"
 	@echo "... Game/Game.o"
 	@echo "... Game/Game.i"
 	@echo "... Game/Game.s"

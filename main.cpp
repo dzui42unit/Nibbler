@@ -3,7 +3,6 @@
 int main(int argc,char **argv)
 {
 	std::shared_ptr<Game>	game;
-
 	if (argc != 3)
 	{
 		std::cout << "Invalid usage" << std::endl;

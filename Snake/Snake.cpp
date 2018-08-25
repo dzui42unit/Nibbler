@@ -1,5 +1,7 @@
 #include "Snake.h"
 
+const int Snake::INIT_SIZE = 4;
+
 /*
  * 	Default constructor
  */
@@ -11,9 +13,8 @@ Snake::Snake(int width, int height)
 	 */
 
 	snake_parts.emplace_back(height / 2, width / 2);
-	snake_parts.emplace_back(snake_parts[0].first + 1, snake_parts[0].second);
-	snake_parts.emplace_back(snake_parts[0].first + 2, snake_parts[0].second);
-	snake_parts.emplace_back(snake_parts[0].first + 3, snake_parts[0].second);
+	for (int i = 1; i < INIT_SIZE; i++)
+		snake_parts.emplace_back(snake_parts[0].first + i, snake_parts[0].second);
 
 	/*
 	 *	Set default direction as UP
@@ -70,7 +71,7 @@ bool	Snake::CheckSnakePartCoordinate(int x, int y)
  *	Method to move a snake
  */
 
-void	Snake::MoveSnake(void)
+void	Snake::MoveSnake(bool increase)
 {
 	std::pair<int, int>	prev_part_pos = snake_parts[0];
 	std::pair<int, int>	cur_part_pos;
@@ -110,7 +111,7 @@ void	Snake::MoveSnake(void)
 	/*
 	 *	Move all other parts
 	 */
-
+	
 	for (size_t i = 1; i < snake_parts.size(); i++)
 	{
 		cur_part_pos = snake_parts[i];
@@ -118,6 +119,13 @@ void	Snake::MoveSnake(void)
 		snake_parts[i].second = prev_part_pos.second;
 		prev_part_pos = cur_part_pos;
 	}
+
+	/*
+	 *	Make snake bigger if the fruit wa eaten
+	 */
+
+	if (increase)
+		snake_parts.emplace_back(prev_part_pos);
 }
 
 void	Snake::SetSnakeDirection(Directions d)

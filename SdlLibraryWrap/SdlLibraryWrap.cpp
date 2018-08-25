@@ -10,8 +10,8 @@ int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 	SDL_SetRenderDrawColor( ren, 0, 0, 0, 0 );
 
 	RenderMap(game_map);
+	RenderFood(x_food, y_food);
 	RenderSnake(snake_parts);
-
 	SDL_RenderPresent(ren);
 
 	return (HandleInput());
@@ -41,8 +41,6 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 		}
 		SDL_RenderFillRect(ren, &r);
 	}
-
-
 }
 
 
@@ -193,6 +191,23 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 
 	now = 0;
 	last = 0;
+}
+
+/*
+ *	Method that renders a fruit
+ */
+
+void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos)
+{
+	SDL_Rect r;
+	r.w = 32;
+	r.h = 32;
+
+	r.x = j_pos * r.h;
+	r.y = i_pos * r.w;
+
+	SDL_SetRenderDrawColor(ren, 255, 0, 0, 0);
+	SDL_RenderFillRect(ren, &r);
 }
 
 /*

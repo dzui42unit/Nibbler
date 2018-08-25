@@ -11,28 +11,40 @@ const int Game::MIN_SIZE = 10;
  *	Method that calculates collision
  */
 
-bool	Game::CheckCollision(void) const
+Events	Game::CheckCollision(void) const
 {
+	std::vector<std::pair<int, int>>	snake_p;
 	std::pair<int, int>	head_coords;
 
 	/*
 	 *	get snake head coordinates
 	 */
 
-	head_coords = snake->GetSnakeParts()[0];
+	snake_p = snake->GetSnakeParts();
+	head_coords = snake_p[0];
 
-	// second is a row, first is a col
-//	std::cout << head_coords.first << " " << head_coords.second << std::endl;
+	/*
+	 *	If the head touched a fruit
+	 */
+
+	if (head_coords.first == fruit->GetFruitPosition().first
+		&& head_coords.second == fruit->GetFruitPosition().second)
+	{
+//		fruit->SetFruitPosition(game_map, snake_p, width, height);
+		return (Events::PICKED_FRUIT);
+	}
 
 	/*
 	 *	if the head coordinates are on the map obstacle
 	 *	send a signal about it
 	 */
 
+	snake_p.erase(snake_p.begin());
 	if (game_map[head_coords.first][head_coords.second] == 1)
-		return (true);
-
-	return (false);
+		return (Events ::WALL_HIT);
+	if (std::find(snake_p.begin(), snake_p.end(), head_coords) != snake_p.end())
+		return (Events::SELF_HIT);
+	return (Events::OK);
 }
 
 /*
@@ -43,34 +55,40 @@ void	Game::RunGame(void)
 {
 	bool 	game_run;
 	int 	direction;
+	bool	disable_movement;
+	Events 	colision_status;
 
+	disable_movement = false;
 	game_run = true;
-	begin = std::chrono::high_resolution_clock::now();
-
 	while (game_run)
 	{
-		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), 0, 0);
+		colision_status = CheckCollision();
+		if (colision_status == Events::SELF_HIT || colision_status == Events::WALL_HIT)
+			exit(0);
+		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
 		if (!direction)
 			game_run = false;
 		else
 		{
-			if (direction != -1)
+			if (direction != -1 && !disable_movement)
 			{
 				snake->SetSnakeDirection(static_cast<Directions>(direction));
-				if (direction != snake->GetSnakeDirection() && (direction - snake->GetSnakeDirection() != 1 && direction - snake->GetSnakeDirection() != -1))
-					snake->MoveSnake();
+				disable_movement = true;
 			}
-			else if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= 200)
+			if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= 200)
 			{
+				disable_movement = false;
 				begin = std::chrono::high_resolution_clock::now();
-				snake->MoveSnake();
+				if (colision_status == Events::PICKED_FRUIT)
+				{
+					fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+					snake->MoveSnake(true);
+				}
+				else
+					snake->MoveSnake(false);
 			}
 		}
-		if (CheckCollision())
-		{
-			exit(0);
-			std::cout << "HIT THAT WALL, BEACH!!!" << std::endl;
-		}
+		CheckCollision();
 	}
 }
 
@@ -110,7 +128,6 @@ void	Game::GenerateMap(void)
 	std::uniform_int_distribution<int> unif_range_w(1, width - 1);
 	std::uniform_int_distribution<int> unif_range_h(1, height - 1);
 
-	std::cout << height << " " << width << std::endl;
 	for (int i = 0; i < height; i++)
 	{
 		std::vector<int>	temp;
@@ -175,13 +192,20 @@ Game::Game(char *w, char *h)
 	 */
 
 	lib_wrap = std::make_shared<SdlLibraryWrap>(SdlLibraryWrap(width, height));
+
+	/*
+	 *	Create Fruit
+	 */
+
+	fruit = std::make_shared<Fruit>(Fruit());
+	fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
 }
 
 /*
  *	Copy constructor
  */
 
-Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map), snake(game.snake), lib_wrap(game.lib_wrap)
+Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map), snake(game.snake), lib_wrap(game.lib_wrap), fruit(game.fruit)
 {
 
 }
@@ -197,6 +221,7 @@ Game& 	Game::operator=(const Game &game)
 	game_map = game.game_map;
 	snake = game.snake;
 	lib_wrap = game.lib_wrap;
+	fruit = game.fruit;
 	return (*this);
 }
 

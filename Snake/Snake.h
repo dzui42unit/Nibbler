@@ -27,6 +27,12 @@ private:
 
 	Directions 							dir;
 
+	/*
+	 *	Initial size of the Snake
+	 */
+
+	static const int					INIT_SIZE;
+
 public:
 
 	/*
@@ -49,7 +55,7 @@ public:
 	 * 	Method to move a snake
 	 */
 
-	void	MoveSnake(void);
+	void	MoveSnake(bool increase);
 
 	/*
 	 *	Method to set snake's direction
@@ -68,7 +74,6 @@ public:
 	 */
 
 	Directions	GetSnakeDirection(void) const;
-
 };
 
 
