@@ -19,7 +19,8 @@ SRC = main.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
-CFLAGS = -std=c++14 -I libs/sdl/SDL2 -L libs/sdl/lib -l SDL2-2.0.0 # -Wall -Wextra -Werror
+CFLAGS = -std=c++14 -I libs/sdl/sdl2/SDL2 -L libs/sdl/sdl2/lib -l SDL2-2.0.0 \
+			-I libs/sdl/sdl2_image/SDL2 -L libs/sdl/sdl2_image/lib -l SDL2_image  
 
 CC = clang++
 

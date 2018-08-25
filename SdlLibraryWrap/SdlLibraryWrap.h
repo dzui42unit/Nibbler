@@ -2,7 +2,8 @@
 #define NIBBLER_SDLLIBRARYWRAP_H
 
 #include "../InterfaceLibrary/InterfaceLibrary.h"
-#include "../libs/sdl/SDL2/SDL.h"
+#include "../libs/sdl/sdl2/SDL2/SDL.h"
+#include "../libs/sdl/sdl2_image/SDL2/SDL_image.h"
 #include <iostream>
 
 class SdlLibraryWrap : public InterfaceLibrary
@@ -15,6 +16,8 @@ private:
 	Uint32 			last;
 	SDL_Surface		*surface;
 	SDL_Texture		*texture;
+    SDL_Rect        image_texture_part;
+    SDL_Texture     *border_texture;
 public:
 					SdlLibraryWrap() = delete;
 					SdlLibraryWrap(int w, int h);
