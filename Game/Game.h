@@ -81,6 +81,12 @@ private:
 
 	size_t game_speed;
 
+	/*
+	 *	Time period to change fruit position
+	 */
+
+	double fruit_respawn;
+
 public:
 
 	/*

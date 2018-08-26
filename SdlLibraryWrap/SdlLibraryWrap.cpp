@@ -5,7 +5,7 @@
  *	A function that renders a side menu in a simple manner
  */
 
-void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, std::chrono::high_resolution_clock::time_point time_left)
+void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left)
 {
 	std::string message;
 
@@ -20,21 +20,19 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, std::chrono::hig
 	Message_rect.y = 32;
 	Message_rect.w = 250;
 	Message_rect.h = 70;
-
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
 	/*
 	 *	Render time left
 	 */
 
-	message = "Time left: " + std::to_string(15.0f - static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - time_left).count()) / 1000.0);
+	message = "Time left: " + std::to_string(time_left);
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 32;
 	Message_rect.y = 90;
 	Message_rect.w = 270;
 	Message_rect.h = 60;
-
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 }
 
@@ -44,7 +42,7 @@ int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 					   int y_food,
                        int dir,
 						size_t score,
-						std::chrono::high_resolution_clock::time_point time_left)
+						double time_left)
 {
 	SDL_RenderClear(ren);
 	SDL_SetRenderDrawColor( ren, 0, 0, 0, 0 );
@@ -112,7 +110,8 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 
 /*
- *	Key hook handler
+ *	Key hook handler for user input
+ *	Movement of the snake UP, DOWN, LEFT, RIGHT and ESC
  */
 
 int 			SdlLibraryWrap::HandleInput(void)
@@ -223,6 +222,10 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     }
 
 
+	/*
+	 *	Reading textures
+	 */
+
     SDL_Surface *image_border = IMG_Load("libs/sdl/texture1.jpg");
     SDL_Surface *image_grass = IMG_Load("libs/sdl/background3.jpg");
     SDL_Surface *image_snake_head = IMG_Load("libs/sdl/snake_head.png");
@@ -237,10 +240,15 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
         exit(0);
     }
 
+	/*
+	 *	Creating of the textures
+	 */
+
     border_texture = SDL_CreateTextureFromSurface(ren, image_border);
     grass_texture = SDL_CreateTextureFromSurface(ren, image_grass);
     snake_head_texture = SDL_CreateTextureFromSurface(ren, image_snake_head);
     snake_body_texture = SDL_CreateTextureFromSurface(ren, image_snake_body);
+
     if (!border_texture || !grass_texture || !snake_head_texture || !snake_body_texture) {
         std::cout << "ERROR border texture" << std::endl;
         exit(1);
@@ -250,6 +258,10 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     SDL_FreeSurface(image_grass);
 
     image_texture_part = {0, 0, 100, 100};
+
+	/*
+	 *	Getting parts of the texture for the snake parts
+	 */
 
     head_up = {196, 0, 60, 60};
     head_right = {256, 0, 60, 60};

@@ -10,7 +10,8 @@ std::pair<int, int>	 	Fruit::GetFruitPosition(void) const
 }
 
 /*
- *	Method that checks if the position if free
+ *	Method that checks if the position is free on the map
+ *	is not a part of the map of snake
  */
 
 bool 	Fruit::CheckFreePosition(const std::vector<std::vector<int>> &game_map,
@@ -27,6 +28,10 @@ bool 	Fruit::CheckFreePosition(const std::vector<std::vector<int>> &game_map,
 	return (true);
 }
 
+/*
+ *	Method that sets a new position of the fruit on the map
+ */
+
 void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 						 const std::vector<std::pair<int, int>> &snake_parts,
 						 int w,
@@ -41,6 +46,11 @@ void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 
 	i_pos = unif_range_h(rng);
 	j_pos = unif_range_w(rng);
+
+	/*
+	 *	Generate new coordinates until they will not occupy a free cell on the game map
+	 */
+
 	while (!CheckFreePosition(game_map, snake_parts))
 	{
 		i_pos = unif_range_h(rng);
@@ -50,7 +60,7 @@ void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 }
 
 /*
- *	Default construtor
+ *	Default constructor
  */
 
 Fruit::Fruit()
