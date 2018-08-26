@@ -5,6 +5,9 @@
 #include "../libs/sdl/sdl2/SDL2/SDL.h"
 #include "../libs/sdl/sdl2_image/SDL2/SDL_image.h"
 #include "../libs/sdl/sdl2_ttf/SDL_ttf.h"
+#include "../libs/sdl/sdl2/SDL2/SDL_audio.h"
+#include "../libs/sdl/sdl2_mixer/SDL_mixer.h"
+
 #include <iostream>
 
 class SdlLibraryWrap : public InterfaceLibrary
@@ -55,8 +58,7 @@ public:
 	int 			HandleInput(void) final;
 	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) final ;
 	void			RenderSideMenu(int w, int h, size_t score, float time_left) final ;
-//	void			RenderSideMenu(int w, int h, size_t score, std::chrono::high_resolution_clock::time_point time_left) final ;
-
+	void			PlayEatingSound(void) final;
 
 };
 

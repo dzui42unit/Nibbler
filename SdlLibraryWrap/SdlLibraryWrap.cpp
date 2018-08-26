@@ -36,6 +36,16 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left)
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 }
 
+/*
+ *	Method that runs an eating sound
+ */
+
+void	SdlLibraryWrap::PlayEatingSound(void)
+{
+
+}
+
+
 int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 					   const std::vector<std::pair<int, int>> &snake_parts,
 					   int x_food,
@@ -191,6 +201,12 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);
 	}
+
+	/*
+	 * 	Init audio device
+	 */
+
+	SDL_Init(SDL_INIT_AUDIO);
 
 	/*
 	 *	Check if it was created

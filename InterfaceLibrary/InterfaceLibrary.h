@@ -21,6 +21,7 @@ public:
 	virtual void 		RenderFood(int x, int y) = 0;
 	virtual int 		HandleInput(void) = 0;
 	virtual void		RenderSideMenu(int w, int h, size_t score, float time_left) = 0;
+	virtual void		PlayEatingSound(void) = 0;
 
 	virtual 			~InterfaceLibrary() {};
 						InterfaceLibrary() {};

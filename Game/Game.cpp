@@ -162,6 +162,7 @@ void	Game::RunGame(void)
 						fruit_timer = std::chrono::high_resolution_clock::now();
 						fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
 						score += 10;
+						lib_wrap->PlayEatingSound();
 
 						/*
 						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
