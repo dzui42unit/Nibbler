@@ -73,6 +73,12 @@ private:
 
 	std::chrono::high_resolution_clock::time_point begin;
 
+	/*
+	 *	Speed of game
+	 */
+
+	size_t game_speed;
+
 public:
 
 	/*

@@ -72,7 +72,7 @@ void	Game::RunGame(void)
 				snake->SetSnakeDirection(static_cast<Directions>(direction));
 				disable_movement = true;
 			}
-			if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= 200)
+			if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= game_speed)
 			{
 				disable_movement = false;
 				begin = std::chrono::high_resolution_clock::now();
@@ -81,6 +81,8 @@ void	Game::RunGame(void)
 					fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
 					score += 10;
 					snake->MoveSnake(true);
+					if (score % 10 == 0 && game_speed > 100)
+						game_speed -= 50;
 				}
 				else
 					snake->MoveSnake(false);
@@ -203,13 +205,27 @@ Game::Game(char *w, char *h)
 	 */
 
 	score = 0;
+
+	/*
+	 *	Set game speed
+	 */
+
+	game_speed = 700;
 }
 
 /*
  *	Copy constructor
  */
 
-Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map), snake(game.snake), lib_wrap(game.lib_wrap), fruit(game.fruit), score(game.score)
+Game::Game(const Game &game) :
+		width(game.width),
+		height(game.height),
+		game_map(game.game_map),
+		snake(game.snake),
+		lib_wrap(game.lib_wrap),
+		fruit(game.fruit),
+		score(game.score),
+		game_speed(game.game_speed)
 {
 
 }
@@ -227,6 +243,7 @@ Game& 	Game::operator=(const Game &game)
 	snake = game.snake;
 	lib_wrap = game.lib_wrap;
 	fruit = game.fruit;
+	game_speed = game.game_speed;
 	return (*this);
 }
 
