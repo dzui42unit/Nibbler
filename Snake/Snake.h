@@ -9,7 +9,7 @@
  *	Directions
  */
 
-enum Directions { UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4};
+enum Directions { NOTHING_PRESSED = -1, UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4, PAUSE = -2 };
 
 class Snake
 {

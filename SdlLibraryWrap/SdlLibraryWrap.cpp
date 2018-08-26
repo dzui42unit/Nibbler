@@ -132,9 +132,11 @@ int 			SdlLibraryWrap::HandleInput(void)
 				return (Directions::DOWN);
 			if (event.key.keysym.sym == SDLK_RIGHT && event.key.repeat == 0)
 				return (Directions::RIGHT);
+			if (event.key.keysym.sym == SDLK_p && event.key.repeat == 0)
+				return (Directions::PAUSE);
 		}
 	}
-	return (-1);
+	return (Directions::NOTHING_PRESSED);
 }
 
 

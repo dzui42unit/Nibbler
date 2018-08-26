@@ -51,7 +51,7 @@ private:
 	 * 	method for generating a map
 	 */
 
-	void 	GenerateMap(void);
+	void 	GenerateMap(const std::vector<std::pair<int, int>> &snake_parts);
 
 	std::shared_ptr<Snake>	snake;
 
@@ -86,6 +86,12 @@ private:
 	 */
 
 	double fruit_respawn;
+
+	/*
+	 *	Set pause or not
+	 */
+
+	bool pause;
 
 public:
 

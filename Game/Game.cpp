@@ -93,7 +93,6 @@ void	Game::RunGame(void)
 	/*
 	 *	initialize variables
 	 */
-
 	game_run = true;
 	disable_movement = false;
 	fruit_timer = std::chrono::high_resolution_clock::now();
@@ -101,91 +100,97 @@ void	Game::RunGame(void)
 	while (game_run)
 	{
 		/*
-		 *	If the WALL_HIT or SELF_HIT event occurred - exit the game
-		 */
-
-		collision_status = CheckCollision();
-		if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
-			exit(0);
-
-		/*
-		 * 	Calculate the time left for the rendering purposes
-		 */
-
-		time_left = fruit_respawn - static_cast<double >(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count()) / 1000.0;
-
-		/*
 		 *	Render all the image with the RunLib method and get the input from the user
 		 *	if direction == 0, it means ESC was pressed and exit the game
+		 *	if direction == PAUSE the game stops, PRESS P to pause the game and continue
 		 */
-
 		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, snake->GetSnakeDirection(), score, time_left);
+		if (direction == Directions::PAUSE)
+			pause = !pause;
 		if (!direction)
 			game_run = false;
 		else
 		{
 			/*
-			 *	if the key was pressed, we set a new direction for the snake
-			 *	and disable changing of the direction until a move of snake will occur
+			 *	Do some action if the pause is not pressed
 			 */
-
-			if (direction != -1 && !disable_movement)
+			if (!pause)
 			{
-				snake->SetSnakeDirection(static_cast<Directions>(direction));
-				disable_movement = true;
-			}
-
-			/*
-			 *	The movement of snake is performed in some period of time
-			 *	The ability to change the direction is unable
-			 */
-
-			if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= game_speed)
-			{
-				disable_movement = false;
-				begin = std::chrono::high_resolution_clock::now();
 
 				/*
-				 * 	if the fruit was picked
-				 * 	we increase the score and change the fruit position
-				 *
-				 * 	if there was not fruit picked up, we move the snake in a usual manner
-				 * 	without extending it
+				 *	If the WALL_HIT or SELF_HIT event occurred - exit the game
 				 */
+				collision_status = CheckCollision();
+				if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
+					exit(0);
 
-				if (collision_status == Events::PICKED_FRUIT)
+				/*
+				 * 	Calculate the time left for the rendering purposes
+				 */
+				time_left = fruit_respawn - static_cast<double >(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count()) / 1000.0;
+
+				/*
+				 *	if the key was pressed, we set a new direction for the snake
+				 *	and disable changing of the direction until a move of snake will occur
+				 *	an
+				 */
+				if (direction != Directions::NOTHING_PRESSED && direction != Directions ::PAUSE
+					&& !disable_movement)
+				{
+					snake->SetSnakeDirection(static_cast<Directions>(direction));
+					disable_movement = true;
+				}
+
+				/*
+				 *	The movement of snake is performed in some period of time
+				 *	The ability to change the direction is unable
+				 */
+				if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= game_speed)
+				{
+					disable_movement = false;
+					begin = std::chrono::high_resolution_clock::now();
+
+					/*
+					 * 	if the fruit was picked
+					 * 	we increase the score and change the fruit position
+					 *
+					 * 	if there was not fruit picked up, we move the snake in a usual manner
+					 * 	without extending it
+					 */
+					if (collision_status == Events::PICKED_FRUIT)
+					{
+						fruit_timer = std::chrono::high_resolution_clock::now();
+						fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+						score += 10;
+
+						/*
+						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
+						 */
+						snake->MoveSnake(true);
+
+						/*
+						 *	Increase the speed of the game if some score value is reached
+						 */
+						if (score % 50 == 0 && game_speed > 150)
+						{
+							fruit_respawn -= fruit_respawn / 10.0;
+							game_speed -= 50;
+						}
+					}
+					else
+						snake->MoveSnake(false);
+				}
+
+				/*
+				 *	If the time for fruit spawn passed -> we change its position and reset the timer
+				 */
+				if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >=
+					static_cast<int>(fruit_respawn * 1000))
 				{
 					fruit_timer = std::chrono::high_resolution_clock::now();
 					fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
-					score += 10;
-
-					/*
-					 *	we pass TRUE to the move method to indicate that the size of snake should be increased
-					 */
-
-					snake->MoveSnake(true);
-
-					/*
-					 *	Increase the speed of the game if some score value is reached
-					 */
-
-					if (score % 10 == 0 && game_speed > 100)
-						game_speed -= 50;
 				}
-				else
-					snake->MoveSnake(false);
 			}
-		}
-
-		/*
-		 *	If the time for fruit spawn passed -> we change its position and reset the timer
-		 */
-
-		if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >=
-				static_cast<int>(fruit_respawn * 1000))
-		{
-			fruit_timer = std::chrono::high_resolution_clock::now();
-			fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
 		}
 	}
 }
@@ -215,11 +220,12 @@ void	Game::PrintGameMap()
  *	Method that generates the game map
  */
 
-void	Game::GenerateMap(void)
+void	Game::GenerateMap(const std::vector<std::pair<int, int>> &snake_parts)
 {
 	/*
 	 * 	Set up for a map generation
 	 */
+	int squares_to_full_fill;
 
 	std::mt19937_64 rng(std::time(NULL));
 	std::uniform_int_distribution<int> unif(0, 1);
@@ -239,6 +245,33 @@ void	Game::GenerateMap(void)
 				temp.push_back(0);
 		}
 		game_map.push_back(temp);
+	}
+
+	/*
+	 *	random generation of the level
+	 *	it calculates the general amount of the block
+	 *	and fulfills divides it by 25
+	 *	and fills it with obstacle and mirror to i_pos
+	 *
+	 *	1. the point should not be already occupied
+	 *	2. be part of snake
+	 *	3. be placed directly upper the head
+	 */
+
+	squares_to_full_fill = static_cast<int>((static_cast<double>(height * width) / 25));
+	for (int i = 0; i < squares_to_full_fill; i++)
+	{
+		int j_map = unif_range_w(rng);
+		int i_map = unif_range_h(rng);
+		while (snake->CheckSnakePartCoordinate(i_map, j_map) || snake->CheckSnakePartCoordinate(i_map, width - j_map - 1)
+			   || (game_map[i_map][j_map] && game_map[i_map][width - j_map - 1])
+				|| (snake_parts[0].first - 1 == i_map))
+		{
+			i_map = unif_range_h(rng);
+			j_map = unif_range_w(rng);
+		}
+		game_map[i_map][j_map] = 1;
+		game_map[i_map][width - 1 - j_map] = 1;
 	}
 }
 
@@ -274,12 +307,6 @@ Game::Game(char *w, char *h)
 		throw (MapSizeException());
 
 	/*
-	 *	Generating of the map
-	 */
-
-	GenerateMap();
-
-	/*
 	 * 	Create a snake object
 	 */
 
@@ -290,13 +317,6 @@ Game::Game(char *w, char *h)
 	 */
 
 	lib_wrap = std::make_shared<SdlLibraryWrap>(SdlLibraryWrap(width, height));
-
-	/*
-	 *	Create Fruit
-	 */
-
-	fruit = std::make_shared<Fruit>(Fruit());
-	fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
 
 	/*
 	 *	Set score value
@@ -314,7 +334,26 @@ Game::Game(char *w, char *h)
 	 *	Time in seconds to the food respawn
 	 */
 
-	fruit_respawn = 15.0;
+	fruit_respawn = static_cast<double>(width + height) / 2.0;
+
+	/*
+	 *	Generating of the map
+	 */
+
+	GenerateMap(snake->GetSnakeParts());
+
+	/*
+	 *	Create Fruit
+	 */
+
+	fruit = std::make_shared<Fruit>(Fruit());
+	fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+
+	/*
+	 *	Set pause by default
+	 */
+
+	pause = true;
 }
 
 /*
@@ -330,7 +369,8 @@ Game::Game(const Game &game) :
 		fruit(game.fruit),
 		score(game.score),
 		game_speed(game.game_speed),
-		fruit_respawn(game.fruit_respawn)
+		fruit_respawn(game.fruit_respawn),
+		pause(game.pause)
 {
 
 }
@@ -350,6 +390,7 @@ Game& 	Game::operator=(const Game &game)
 	fruit = game.fruit;
 	game_speed = game.game_speed;
 	fruit_respawn = game.fruit_respawn;
+	pause = game.pause;
 	return (*this);
 }
 

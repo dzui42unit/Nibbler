@@ -61,7 +61,7 @@ bool	Snake::CheckSnakePartCoordinate(int x, int y)
 {
 	for (auto elem : snake_parts)
 	{
-		if (y == elem.first && x == elem.second)
+		if (x == elem.first && y == elem.second)
 			return (true);
 	}
 	return (false);
