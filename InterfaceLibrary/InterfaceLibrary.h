@@ -12,11 +12,13 @@ public:
 							   const std::vector<std::pair<int, int>> &snake_parts,
 							   int x_food,
 							   int y_food,
-							   int dir) = 0;
+							   int dir,
+								size_t score) = 0;
 	virtual void 		RenderMap(const std::vector<std::vector<int>> &game_map) = 0;
 	virtual void 		RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) = 0;
 	virtual void 		RenderFood(int x, int y) = 0;
 	virtual int 		HandleInput(void) = 0;
+	virtual void		RenderSideMenu(int w, int h, size_t score) = 0;
 
 	virtual 			~InterfaceLibrary() {};
 						InterfaceLibrary() {};

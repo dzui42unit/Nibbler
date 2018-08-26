@@ -36,6 +36,12 @@ private:
 	int 	height;
 
 	/*
+	 *	Score of the player
+	 */
+
+	size_t 	score;
+
+	/*
 	 *	variable to store the map
 	 */
 

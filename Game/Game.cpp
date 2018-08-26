@@ -29,10 +29,7 @@ Events	Game::CheckCollision(void) const
 
 	if (head_coords.first == fruit->GetFruitPosition().first
 		&& head_coords.second == fruit->GetFruitPosition().second)
-	{
-//		fruit->SetFruitPosition(game_map, snake_p, width, height);
 		return (Events::PICKED_FRUIT);
-	}
 
 	/*
 	 *	if the head coordinates are on the map obstacle
@@ -56,16 +53,16 @@ void	Game::RunGame(void)
 	bool 	game_run;
 	int 	direction;
 	bool	disable_movement;
-	Events 	colision_status;
+	Events 	collision_status;
 
 	disable_movement = false;
 	game_run = true;
 	while (game_run)
 	{
-		colision_status = CheckCollision();
-		if (colision_status == Events::SELF_HIT || colision_status == Events::WALL_HIT)
+		collision_status = CheckCollision();
+		if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
 			exit(0);
-		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, snake->GetSnakeDirection());
+		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, snake->GetSnakeDirection(), score);
 		if (!direction)
 			game_run = false;
 		else
@@ -79,9 +76,10 @@ void	Game::RunGame(void)
 			{
 				disable_movement = false;
 				begin = std::chrono::high_resolution_clock::now();
-				if (colision_status == Events::PICKED_FRUIT)
+				if (collision_status == Events::PICKED_FRUIT)
 				{
 					fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+					score += 10;
 					snake->MoveSnake(true);
 				}
 				else
@@ -199,13 +197,19 @@ Game::Game(char *w, char *h)
 
 	fruit = std::make_shared<Fruit>(Fruit());
 	fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+
+	/*
+	 *	Set score value
+	 */
+
+	score = 0;
 }
 
 /*
  *	Copy constructor
  */
 
-Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map), snake(game.snake), lib_wrap(game.lib_wrap), fruit(game.fruit)
+Game::Game(const Game &game) : width(game.width), height(game.height), game_map(game.game_map), snake(game.snake), lib_wrap(game.lib_wrap), fruit(game.fruit), score(game.score)
 {
 
 }
@@ -218,6 +222,7 @@ Game& 	Game::operator=(const Game &game)
 {
 	width = game.width;
 	height = game.height;
+	score = game.score;
 	game_map = game.game_map;
 	snake = game.snake;
 	lib_wrap = game.lib_wrap;

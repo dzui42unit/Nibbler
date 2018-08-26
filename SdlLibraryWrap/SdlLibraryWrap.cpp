@@ -1,15 +1,36 @@
 #include "SdlLibraryWrap.h"
 #include "../Snake/Snake.h"
 
+/*
+ *	A function that renders a side menu in a simple manner
+ */
+
+void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score)
+{
+	std::string score_str = "Score: ";
+
+	score_str += std::to_string(score);
+	surfaceMessage = TTF_RenderText_Solid(Sans, score_str.c_str(), {255, 255, 255});
+	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	Message_rect.x = w + 32;
+	Message_rect.y = 32;
+	Message_rect.w = 250;
+	Message_rect.h = 70;
+
+	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+}
+
 int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 					   const std::vector<std::pair<int, int>> &snake_parts,
 					   int x_food,
 					   int y_food,
-                       int dir)
+                       int dir,
+						size_t score)
 {
 	SDL_RenderClear(ren);
 	SDL_SetRenderDrawColor( ren, 0, 0, 0, 0 );
 
+	RenderSideMenu(game_map[0].size() * 32, 0, score);
 	RenderMap(game_map);
 
 	RenderFood(x_food, y_food);
@@ -139,11 +160,13 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 		exit(0);
 	}
 
+	TTF_Init();
+
 	/*
 	 *	Create a window
 	 */
 
-	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32, h * 32, SDL_WINDOW_OPENGL)))
+	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + 32 * 10, h * 32, SDL_WINDOW_OPENGL)))
 	{
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);
@@ -186,8 +209,10 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     SDL_Surface *image_snake_head = IMG_Load("libs/sdl/snake_head.png");
     SDL_Surface *image_snake_body = IMG_Load("libs/sdl/snake_body3.png");
 
+	Sans = TTF_OpenFont("libs/sdl/2211.ttf", 12);
+	surfaceMessage = TTF_RenderText_Solid(Sans, "0", {255, 255, 255});
 
-    if (!image_border || !image_grass || !image_snake_head || !image_snake_body)
+	if (!image_border || !image_grass || !image_snake_head || !image_snake_body)
     {
         std::cout << "ERROR upload texture" << std::endl;
         exit(0);
@@ -237,8 +262,6 @@ void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos)
 	r.y = i_pos * r.w;
 
     SDL_RenderCopy(ren, snake_head_texture, &rect_food, &r);
-//	SDL_SetRenderDrawColor(ren, 255, 0, 0, 0);
-//	SDL_RenderFillRect(ren, &r);
 }
 
 /*
@@ -261,7 +284,10 @@ SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
           rect_background(sdl.rect_background),
           snake_body_texture(sdl.snake_body_texture),
           rect_snake_body(sdl.rect_snake_body),
-          rect_food(sdl.rect_food)
+          rect_food(sdl.rect_food),
+		  Message(sdl.Message),
+		  surfaceMessage(sdl.surfaceMessage),
+		  Sans(sdl.Sans)
 {
 
 }
@@ -288,6 +314,9 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
     rect_snake_body = sdl.rect_snake_body;
     snake_body_texture = sdl.snake_body_texture;
     rect_food = sdl.rect_food;
+	Message = sdl.Message;
+	Sans = sdl.Sans;
+	surfaceMessage = sdl.surfaceMessage;
 	return (*this);
 }
 

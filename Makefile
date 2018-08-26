@@ -6,7 +6,7 @@
 #    By: sprotsen <sprotsen@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/01 09:29:35 by sprotsen          #+#    #+#              #
-#    Updated: 2017/11/01 09:29:40 by sprotsen         ###   ########.fr        #
+#    Updated: 2018/08/26 12:59:00 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC = main.cpp \
 OBJ = $(SRC:.cpp=.o)
 
 CFLAGS = -std=c++14 -I libs/sdl/sdl2/SDL2 -L libs/sdl/sdl2/lib -l SDL2-2.0.0 \
-			-I libs/sdl/sdl2_image/SDL2 -L libs/sdl/sdl2_image/lib -l SDL2_image  
+		 -I libs/sdl/sdl2_image/SDL2 -L libs/sdl/sdl2_image/lib -l SDL2_image -L libs/sdl/sdl2_ttf/lib -l SDL2_ttf 
 
 CC = clang++
 

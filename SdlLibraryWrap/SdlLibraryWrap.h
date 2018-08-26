@@ -4,6 +4,7 @@
 #include "../InterfaceLibrary/InterfaceLibrary.h"
 #include "../libs/sdl/sdl2/SDL2/SDL.h"
 #include "../libs/sdl/sdl2_image/SDL2/SDL_image.h"
+#include "../libs/sdl/sdl2_ttf/SDL_ttf.h"
 #include <iostream>
 
 class SdlLibraryWrap : public InterfaceLibrary
@@ -30,6 +31,11 @@ private:
     SDL_Rect        rect_snake_body;
     SDL_Rect        rect_food;
 
+	TTF_Font* 		Sans;
+	SDL_Surface* 	surfaceMessage;
+	SDL_Texture* 	Message;
+	SDL_Rect 		Message_rect;
+
 public:
 					SdlLibraryWrap() = delete;
 					SdlLibraryWrap(int w, int h);
@@ -42,10 +48,12 @@ public:
 						   const std::vector<std::pair<int, int>> &snake_parts,
 						   int x_food,
 						   int y_food,
-                           int dir) final;
+                           int dir,
+							size_t score) final;
 	void 			RenderFood(int x, int y);
 	int 			HandleInput(void) final;
 	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir);
+	void			RenderSideMenu(int w, int h, size_t score);
 
 
 };
