@@ -33,13 +33,14 @@ void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 						 int h)
 {
 	/*
-	 * 	Set up for a map generation
+	 * 	Set up for a coordinates generation
 	 */
 
-	std::mt19937_64 rng(std::time(NULL));
 	std::uniform_int_distribution<int> unif_range_w(1, w - 1);
 	std::uniform_int_distribution<int> unif_range_h(1, h - 1);
 
+	i_pos = unif_range_h(rng);
+	j_pos = unif_range_w(rng);
 	while (!CheckFreePosition(game_map, snake_parts))
 	{
 		i_pos = unif_range_h(rng);
@@ -54,6 +55,8 @@ void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 
 Fruit::Fruit()
 {
+	std::mt19937_64 rng(std::time(NULL));
+
 	i_pos = 0;
 	j_pos = 0;
 }

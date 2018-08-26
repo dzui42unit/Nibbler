@@ -72,6 +72,8 @@ private:
 	 */
 
 	std::chrono::high_resolution_clock::time_point begin;
+	std::chrono::high_resolution_clock::time_point fruit_timer;
+
 
 	/*
 	 *	Speed of game

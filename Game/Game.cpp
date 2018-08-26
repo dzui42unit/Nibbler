@@ -57,12 +57,13 @@ void	Game::RunGame(void)
 
 	disable_movement = false;
 	game_run = true;
+	fruit_timer = std::chrono::high_resolution_clock::now();
 	while (game_run)
 	{
 		collision_status = CheckCollision();
 		if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
 			exit(0);
-		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, snake->GetSnakeDirection(), score);
+		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, snake->GetSnakeDirection(), score, fruit_timer);
 		if (!direction)
 			game_run = false;
 		else
@@ -78,6 +79,7 @@ void	Game::RunGame(void)
 				begin = std::chrono::high_resolution_clock::now();
 				if (collision_status == Events::PICKED_FRUIT)
 				{
+					fruit_timer = std::chrono::high_resolution_clock::now();
 					fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
 					score += 10;
 					snake->MoveSnake(true);
@@ -88,7 +90,11 @@ void	Game::RunGame(void)
 					snake->MoveSnake(false);
 			}
 		}
-		CheckCollision();
+		if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= 15000)
+		{
+			fruit_timer = std::chrono::high_resolution_clock::now();
+			fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+		}
 	}
 }
 

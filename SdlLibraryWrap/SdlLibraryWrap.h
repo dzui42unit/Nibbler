@@ -49,11 +49,12 @@ public:
 						   int x_food,
 						   int y_food,
                            int dir,
-							size_t score) final;
+							size_t score,
+							std::chrono::high_resolution_clock::time_point time_left) final;
 	void 			RenderFood(int x, int y);
 	int 			HandleInput(void) final;
-	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir);
-	void			RenderSideMenu(int w, int h, size_t score);
+	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) final ;
+	void			RenderSideMenu(int w, int h, size_t score, std::chrono::high_resolution_clock::time_point time_left) final ;
 
 
 };

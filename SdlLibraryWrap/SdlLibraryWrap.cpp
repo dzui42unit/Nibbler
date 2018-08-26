@@ -5,17 +5,35 @@
  *	A function that renders a side menu in a simple manner
  */
 
-void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score)
+void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, std::chrono::high_resolution_clock::time_point time_left)
 {
-	std::string score_str = "Score: ";
+	std::string message;
 
-	score_str += std::to_string(score);
-	surfaceMessage = TTF_RenderText_Solid(Sans, score_str.c_str(), {255, 255, 255});
+	/*
+	 *	render score
+	 */
+
+	message = "Score: " + std::to_string(score);
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 32;
 	Message_rect.y = 32;
 	Message_rect.w = 250;
 	Message_rect.h = 70;
+
+	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+
+	/*
+	 *	Render time left
+	 */
+
+	message = "Time left: " + std::to_string(15.0f - static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - time_left).count()) / 1000.0);
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	Message_rect.x = w + 32;
+	Message_rect.y = 90;
+	Message_rect.w = 270;
+	Message_rect.h = 60;
 
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 }
@@ -25,12 +43,13 @@ int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 					   int x_food,
 					   int y_food,
                        int dir,
-						size_t score)
+						size_t score,
+						std::chrono::high_resolution_clock::time_point time_left)
 {
 	SDL_RenderClear(ren);
 	SDL_SetRenderDrawColor( ren, 0, 0, 0, 0 );
 
-	RenderSideMenu(game_map[0].size() * 32, 0, score);
+	RenderSideMenu(game_map[0].size() * 32, 0, score, time_left);
 	RenderMap(game_map);
 
 	RenderFood(x_food, y_food);

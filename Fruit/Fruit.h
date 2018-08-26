@@ -15,6 +15,14 @@ private:
 	int		i_pos;
 	int 	j_pos;
 
+
+	/*
+	 *	random nb generator
+	 */
+
+	std::mt19937_64 rng;
+
+
 	bool 	CheckFreePosition(const std::vector<std::vector<int>> &game_map,
 							  const std::vector<std::pair<int, int>> &snake_parts);
 
