@@ -2,6 +2,13 @@
 
 int main(int argc,char **argv)
 {
+
+//	SoundWrapper	*sw = new SoundWrapper();
+//
+//	sw->playEatSound();
+//
+//	SDL_Delay(1000);
+
 	std::shared_ptr<Game>	game;
 	if (argc != 3)
 	{

@@ -4,6 +4,7 @@
 #include "../Snake/Snake.h"
 #include "../SdlLibraryWrap/SdlLibraryWrap.h"
 #include "../Fruit/Fruit.h"
+#include "../SoundWrapper/SoundWrapper.h"
 
 #include <iostream>
 #include <regex>
@@ -66,6 +67,13 @@ private:
 	 */
 
 	std::shared_ptr<Fruit>				fruit;
+
+	/*
+	 *	pointer to the sound wrapper
+	 */
+
+
+	std::shared_ptr<SoundWrapper>		sound_wrap;
 
 	/*
 	 *	Timer

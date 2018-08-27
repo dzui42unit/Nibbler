@@ -16,7 +16,8 @@ SRC = main.cpp \
 	Game/Game.cpp \
 	Snake/Snake.cpp \
 	SdlLibraryWrap/SdlLibraryWrap.cpp \
-	Fruit/Fruit.cpp
+	Fruit/Fruit.cpp \
+	SoundWrapper/SoundWrapper.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 

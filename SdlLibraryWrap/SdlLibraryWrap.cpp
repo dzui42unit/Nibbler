@@ -36,16 +36,6 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left)
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 }
 
-/*
- *	Method that runs an eating sound
- */
-
-void	SdlLibraryWrap::PlayEatingSound(void)
-{
-
-}
-
-
 int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
 					   const std::vector<std::pair<int, int>> &snake_parts,
 					   int x_food,
@@ -295,6 +285,11 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 
 	now = 0;
 	last = 0;
+
+//	SDL_LoadWAV("../sounds/1.wav", &wavSpec, &wavBuffer, &wavLength);
+//	deviceId = SDL_OpenAudioDevice(NULL, 0, &wavSpec, NULL, 0);
+
+//	SDL_CloseAudioDevice(deviceId);
 }
 
 /*

@@ -231,6 +231,33 @@ Snake/Snake.cpp.s:
 	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/Snake/Snake.cpp.s
 .PHONY : Snake/Snake.cpp.s
 
+SoundWrapper/SoundWrapper.o: SoundWrapper/SoundWrapper.cpp.o
+
+.PHONY : SoundWrapper/SoundWrapper.o
+
+# target to build an object file
+SoundWrapper/SoundWrapper.cpp.o:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/SoundWrapper/SoundWrapper.cpp.o
+.PHONY : SoundWrapper/SoundWrapper.cpp.o
+
+SoundWrapper/SoundWrapper.i: SoundWrapper/SoundWrapper.cpp.i
+
+.PHONY : SoundWrapper/SoundWrapper.i
+
+# target to preprocess a source file
+SoundWrapper/SoundWrapper.cpp.i:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/SoundWrapper/SoundWrapper.cpp.i
+.PHONY : SoundWrapper/SoundWrapper.cpp.i
+
+SoundWrapper/SoundWrapper.s: SoundWrapper/SoundWrapper.cpp.s
+
+.PHONY : SoundWrapper/SoundWrapper.s
+
+# target to generate assembly for a file
+SoundWrapper/SoundWrapper.cpp.s:
+	$(MAKE) -f CMakeFiles/Nibbler.dir/build.make CMakeFiles/Nibbler.dir/SoundWrapper/SoundWrapper.cpp.s
+.PHONY : SoundWrapper/SoundWrapper.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -279,6 +306,9 @@ help:
 	@echo "... Snake/Snake.o"
 	@echo "... Snake/Snake.i"
 	@echo "... Snake/Snake.s"
+	@echo "... SoundWrapper/SoundWrapper.o"
+	@echo "... SoundWrapper/SoundWrapper.i"
+	@echo "... SoundWrapper/SoundWrapper.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

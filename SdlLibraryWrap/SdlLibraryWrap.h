@@ -58,8 +58,6 @@ public:
 	int 			HandleInput(void) final;
 	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) final ;
 	void			RenderSideMenu(int w, int h, size_t score, float time_left) final ;
-	void			PlayEatingSound(void) final;
-
 };
 
 

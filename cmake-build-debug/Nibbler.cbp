@@ -107,6 +107,12 @@
 		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Snake/Snake.h">
 			<Option target="Nibbler"/>
 		</Unit>
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/SoundWrapper/SoundWrapper.cpp">
+			<Option target="Nibbler"/>
+		</Unit>
+		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/SoundWrapper/SoundWrapper.h">
+			<Option target="Nibbler"/>
+		</Unit>
 		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/main.cpp">
 			<Option target="Nibbler"/>
 		</Unit>

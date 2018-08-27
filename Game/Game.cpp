@@ -162,7 +162,7 @@ void	Game::RunGame(void)
 						fruit_timer = std::chrono::high_resolution_clock::now();
 						fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
 						score += 10;
-						lib_wrap->PlayEatingSound();
+						sound_wrap->playEatSound();
 
 						/*
 						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
@@ -259,7 +259,7 @@ void	Game::GenerateMap(const std::vector<std::pair<int, int>> &snake_parts)
 	 *	3. be placed directly upper the head
 	 */
 
-	squares_to_full_fill = static_cast<int>((static_cast<double>(height * width) / 25));
+	squares_to_full_fill = static_cast<int>((static_cast<double>(height * width) / 50));
 	for (int i = 0; i < squares_to_full_fill; i++)
 	{
 		int j_map = unif_range_w(rng);
@@ -355,6 +355,12 @@ Game::Game(char *w, char *h)
 	 */
 
 	pause = true;
+
+	/*
+	 *	Create a sound wrapper
+	 */
+
+	sound_wrap = std::make_shared<SoundWrapper>(SoundWrapper());
 }
 
 /*
@@ -371,7 +377,8 @@ Game::Game(const Game &game) :
 		score(game.score),
 		game_speed(game.game_speed),
 		fruit_respawn(game.fruit_respawn),
-		pause(game.pause)
+		pause(game.pause),
+		sound_wrap(game.sound_wrap)
 {
 
 }
@@ -392,6 +399,7 @@ Game& 	Game::operator=(const Game &game)
 	game_speed = game.game_speed;
 	fruit_respawn = game.fruit_respawn;
 	pause = game.pause;
+	sound_wrap = game.sound_wrap;
 	return (*this);
 }
 
