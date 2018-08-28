@@ -32,6 +32,14 @@ Events	Game::CheckCollision(void) const
 		return (Events::PICKED_FRUIT);
 
 	/*
+	 *	If the head touched a super fruit
+	 */
+
+	if (head_coords.first == super_fruit->GetFruitPosition().first
+		&& head_coords.second == super_fruit->GetFruitPosition().second)
+		return (Events::PICKED_SUPER_FRUIT);
+
+	/*
 	 *	if the head coordinates are on the map obstacle
 	 *	send a signal about it
 	 */
@@ -69,6 +77,13 @@ void	Game::RunGame(void)
 	bool 	game_run;
 
 	/*
+	 *	super fruit on the map
+	 */
+
+	bool super_fruit_present;
+
+
+	/*
 	 *	Direction holds a current snake head direction
 	 */
 
@@ -93,6 +108,7 @@ void	Game::RunGame(void)
 	/*
 	 *	initialize variables
 	 */
+	super_fruit_present = false;
 	game_run = true;
 	disable_movement = false;
 	fruit_timer = std::chrono::high_resolution_clock::now();
@@ -104,7 +120,14 @@ void	Game::RunGame(void)
 		 *	if direction == 0, it means ESC was pressed and exit the game
 		 *	if direction == PAUSE the game stops, PRESS P to pause the game and continue
 		 */
-		direction = lib_wrap->RunLib(game_map, snake->GetSnakeParts(), fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, snake->GetSnakeDirection(), score, time_left);
+
+		lib_wrap->ClearImage();
+		direction = lib_wrap->HandleInput();
+		lib_wrap->RenderMap(game_map);
+		lib_wrap->RenderFood(fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
+		lib_wrap->RenderFood(super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
+		lib_wrap->RenderSnake(snake->GetSnakeParts(), snake->GetSnakeDirection());
+
 		if (direction == Directions::PAUSE)
 			pause = !pause;
 		if (!direction)
@@ -118,6 +141,17 @@ void	Game::RunGame(void)
 			{
 
 				/*
+				 *	Spawn a super fruit
+				 */
+				if (!super_fruit_present &&
+					std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= static_cast<int>(fruit_respawn * 1000))
+				{
+					fruit_timer = std::chrono::high_resolution_clock::now();
+					super_fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
+					super_fruit_present = true;
+				}
+
+				/*
 				 *	If the WALL_HIT or SELF_HIT event occurred - exit the game
 				 */
 				collision_status = CheckCollision();
@@ -127,7 +161,11 @@ void	Game::RunGame(void)
 				/*
 				 * 	Calculate the time left for the rendering purposes
 				 */
-				time_left = fruit_respawn - static_cast<double >(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count()) / 1000.0;
+
+				if (super_fruit_present && super_fruit->GetFruitPosition().first != -1 && super_fruit->GetFruitPosition().second)
+					time_left = fruit_respawn - static_cast<double >(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count()) / 1000.0;
+				else
+					time_left = 0.0;
 
 				/*
 				 *	if the key was pressed, we set a new direction for the snake
@@ -159,8 +197,7 @@ void	Game::RunGame(void)
 					 */
 					if (collision_status == Events::PICKED_FRUIT)
 					{
-						fruit_timer = std::chrono::high_resolution_clock::now();
-						fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+						fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
 						score += 10;
 						sound_wrap->playEatSound();
 
@@ -173,10 +210,25 @@ void	Game::RunGame(void)
 						 *	Increase the speed of the game if some score value is reached
 						 */
 						if (score % 50 == 0 && game_speed > 150)
-						{
-							fruit_respawn -= fruit_respawn / 10.0;
 							game_speed -= 50;
-						}
+					}
+					else if (collision_status == Events::PICKED_SUPER_FRUIT)
+					{
+						super_fruit->HideFruit();
+						score += 50;
+						sound_wrap->playEatSound();
+
+						/*
+						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
+						 */
+
+						snake->MoveSnake(true);
+
+						/*
+						 *	Increase the speed of the game if some score value is reached
+						 */
+						if (score % 50 == 0 && game_speed > 150)
+							game_speed -= 50;
 					}
 					else
 						snake->MoveSnake(false);
@@ -185,14 +237,17 @@ void	Game::RunGame(void)
 				/*
 				 *	If the time for fruit spawn passed -> we change its position and reset the timer
 				 */
-				if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >=
-					static_cast<int>(fruit_respawn * 1000))
+				if (super_fruit_present &&
+						std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= static_cast<int>(fruit_respawn * 1000))
 				{
+					super_fruit_present = false;
 					fruit_timer = std::chrono::high_resolution_clock::now();
-					fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+					super_fruit->HideFruit();
 				}
 			}
 		}
+		lib_wrap->RenderSideMenu(static_cast<int>(game_map[0].size() * 32), 0, score, static_cast<float>(time_left));
+		lib_wrap->RenderImage();
 	}
 }
 
@@ -335,7 +390,7 @@ Game::Game(char *w, char *h)
 	 *	Time in seconds to the food respawn
 	 */
 
-	fruit_respawn = static_cast<double>(width + height) / 2.0;
+	fruit_respawn = 12.0;
 
 	/*
 	 *	Generating of the map
@@ -344,11 +399,12 @@ Game::Game(char *w, char *h)
 	GenerateMap(snake->GetSnakeParts());
 
 	/*
-	 *	Create Fruit
+	 *	Create Fruit and super fruit
 	 */
 
 	fruit = std::make_shared<Fruit>(Fruit());
-	fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height);
+	fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, -1, -1);
+	super_fruit = std::make_shared<Fruit>(Fruit());
 
 	/*
 	 *	Set pause by default
@@ -378,7 +434,8 @@ Game::Game(const Game &game) :
 		game_speed(game.game_speed),
 		fruit_respawn(game.fruit_respawn),
 		pause(game.pause),
-		sound_wrap(game.sound_wrap)
+		sound_wrap(game.sound_wrap),
+		super_fruit(game.super_fruit)
 {
 
 }
@@ -400,6 +457,7 @@ Game& 	Game::operator=(const Game &game)
 	fruit_respawn = game.fruit_respawn;
 	pause = game.pause;
 	sound_wrap = game.sound_wrap;
+	super_fruit = game.super_fruit;
 	return (*this);
 }
 

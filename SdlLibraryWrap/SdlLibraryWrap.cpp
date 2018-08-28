@@ -31,31 +31,77 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left)
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 32;
 	Message_rect.y = 90;
-	Message_rect.w = 270;
+	Message_rect.w = 350;
+	Message_rect.h = 60;
+	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+
+	/*
+	 *	Render Controls
+	 */
+
+	message = "ARROW_UP - to move snake up";
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	Message_rect.x = w + 32;
+	Message_rect.y = 150;
+	Message_rect.w = 350;
+	Message_rect.h = 60;
+	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+
+	message = "ARROW_DOWN - to move snake down";
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	Message_rect.x = w + 32;
+	Message_rect.y = 250;
+	Message_rect.w = 350;
+	Message_rect.h = 60;
+	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+
+	message = "ARROW_LEFT - to move snake left";
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	Message_rect.x = w + 32;
+	Message_rect.y = 350;
+	Message_rect.w = 350;
+	Message_rect.h = 60;
+	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+
+	message = "ARROW_RIGHT - to move snake right";
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	Message_rect.x = w + 32;
+	Message_rect.y = 450;
+	Message_rect.w = 350;
+	Message_rect.h = 60;
+	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+
+	message = "SPACEBAR - to pause a game";
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	Message_rect.x = w + 32;
+	Message_rect.y = 550;
+	Message_rect.w = 350;
 	Message_rect.h = 60;
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 }
 
-int		SdlLibraryWrap::RunLib(const std::vector<std::vector<int>> &game_map,
-					   const std::vector<std::pair<int, int>> &snake_parts,
-					   int x_food,
-					   int y_food,
-                       int dir,
-						size_t score,
-						double time_left)
+/*
+ *	Method that clears an image
+ */
+
+void	SdlLibraryWrap::ClearImage(void)
 {
 	SDL_RenderClear(ren);
 	SDL_SetRenderDrawColor( ren, 0, 0, 0, 0 );
+}
 
-	RenderSideMenu(game_map[0].size() * 32, 0, score, time_left);
-	RenderMap(game_map);
+/*
+ *	Method that puts image to the window
+ */
 
-	RenderFood(x_food, y_food);
-	RenderSnake(snake_parts, dir);
-
+void	SdlLibraryWrap::RenderImage(void)
+{
 	SDL_RenderPresent(ren);
-
-	return (HandleInput());
 }
 
 /*
@@ -132,7 +178,7 @@ int 			SdlLibraryWrap::HandleInput(void)
 				return (Directions::DOWN);
 			if (event.key.keysym.sym == SDLK_RIGHT && event.key.repeat == 0)
 				return (Directions::RIGHT);
-			if (event.key.keysym.sym == SDLK_p && event.key.repeat == 0)
+			if (event.key.keysym.sym == SDLK_SPACE && event.key.repeat == 0)
 				return (Directions::PAUSE);
 		}
 	}
@@ -186,7 +232,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Create a window
 	 */
 
-	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + 32 * 10, h * 32, SDL_WINDOW_OPENGL)))
+	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + 32 * 15, h * 32, SDL_WINDOW_OPENGL)))
 	{
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);
@@ -285,11 +331,6 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 
 	now = 0;
 	last = 0;
-
-//	SDL_LoadWAV("../sounds/1.wav", &wavSpec, &wavBuffer, &wavLength);
-//	deviceId = SDL_OpenAudioDevice(NULL, 0, &wavSpec, NULL, 0);
-
-//	SDL_CloseAudioDevice(deviceId);
 }
 
 /*

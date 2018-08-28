@@ -1,14 +1,10 @@
 #include "./Game/Game.h"
 
+// 2. - Side menu
+// 3. printing of the best 3 scores, write them in file and read them from it
+
 int main(int argc,char **argv)
 {
-
-//	SoundWrapper	*sw = new SoundWrapper();
-//
-//	sw->playEatSound();
-//
-//	SDL_Delay(1000);
-
 	std::shared_ptr<Game>	game;
 	if (argc != 3)
 	{

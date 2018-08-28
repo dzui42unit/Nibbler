@@ -17,7 +17,7 @@
 #include <chrono>
 #include <unistd.h>
 
-enum Events { WALL_HIT, SELF_HIT, PICKED_FRUIT, OK };
+enum Events { WALL_HIT, SELF_HIT, PICKED_FRUIT, PICKED_SUPER_FRUIT, OK };
 
 class Game
 {
@@ -67,6 +67,12 @@ private:
 	 */
 
 	std::shared_ptr<Fruit>				fruit;
+
+	/*
+	 *	pointer to the bonus fuit, that appears on the limited amount of time
+	 */
+
+	std::shared_ptr<Fruit>				super_fruit;
 
 	/*
 	 *	pointer to the sound wrapper

@@ -1,7 +1,3 @@
-//
-// Created by Dmytro Zui on 8/27/18.
-//
-
 #ifndef NIBBLER_SOUNDWRAPPER_H
 #define NIBBLER_SOUNDWRAPPER_H
 

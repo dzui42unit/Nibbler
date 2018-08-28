@@ -9,13 +9,15 @@ class InterfaceLibrary
 {
 public:
 
-	virtual int		RunLib(const std::vector<std::vector<int>> &game_map,
-							   const std::vector<std::pair<int, int>> &snake_parts,
-							   int x_food,
-							   int y_food,
-							   int dir,
-								size_t score,
-							  	double time_left) = 0;
+//	virtual int		RunLib(const std::vector<std::vector<int>> &game_map,
+//							   const std::vector<std::pair<int, int>> &snake_parts,
+//							   int x_food,
+//							   int y_food,
+//							   int dir,
+//								size_t score,
+//							  	double time_left) = 0;
+	virtual void		ClearImage(void) = 0;
+	virtual void		RenderImage(void) = 0;
 	virtual void 		RenderMap(const std::vector<std::vector<int>> &game_map) = 0;
 	virtual void 		RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) = 0;
 	virtual void 		RenderFood(int x, int y) = 0;

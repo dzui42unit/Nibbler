@@ -5,25 +5,22 @@
 
 SoundWrapper::SoundWrapper()
 {
-	// Initialize SDL.
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 	{
-		std::cout << "1\n";
+		std::cout << "ERROR: SDL_INIT_AUDIO" << std::endl;
 		exit(0);
 	}
 
-	//Initialize SDL_mixer
 	if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 )
 	{
-		std::cout << "2\n";
+		std::cout << "ERROR: Mix_OpenAudio" << std::endl;
 		exit(0);
 	}
 
-	// Load our sound effect
 	wave = Mix_LoadWAV("sounds/1.wav");
 	if (wave == NULL)
 	{
-		std::cout << "3\n";
+		std::cout << "ERROR: Mix_LoadWAV" << std::endl;
 		exit(0);
 	}
 

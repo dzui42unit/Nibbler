@@ -24,7 +24,7 @@ private:
 
 
 	bool 	CheckFreePosition(const std::vector<std::vector<int>> &game_map,
-							  const std::vector<std::pair<int, int>> &snake_parts);
+							  const std::vector<std::pair<int, int>> &snake_parts, int fruit_i_pos, int  fruit_j_pos);
 
 public:
 
@@ -44,13 +44,21 @@ public:
 	void	SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 							 const std::vector<std::pair<int, int>> &snake_parts,
 							 int w,
-							 int h);
+							 int h,
+								int fruit_i,
+								int fruit_j);
 
 	/*
 	 *	Method that returns the position of a fruit
 	 */
 
 	std::pair<int, int>	 	GetFruitPosition(void) const;
+
+	/*
+	 *	method that hides a fruit from the map
+	 */
+
+	void					HideFruit(void);
 
 };
 

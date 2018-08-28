@@ -47,13 +47,15 @@ public:
 	SdlLibraryWrap	&operator=(const SdlLibraryWrap &sdl);
 
 	void 			RenderMap(const std::vector<std::vector<int>> &game_map) final;
-	int				RunLib(const std::vector<std::vector<int>> &game_map,
-						   const std::vector<std::pair<int, int>> &snake_parts,
-						   int x_food,
-						   int y_food,
-                           int dir,
-							size_t score,
-							double time_left) final;
+//	int				RunLib(const std::vector<std::vector<int>> &game_map,
+//						   const std::vector<std::pair<int, int>> &snake_parts,
+//						   int x_food,
+//						   int y_food,
+//                           int dir,
+//							size_t score,
+//							double time_left) final;
+	void			ClearImage(void) final;
+	void			RenderImage(void) final;
 	void 			RenderFood(int x, int y);
 	int 			HandleInput(void) final;
 	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) final ;

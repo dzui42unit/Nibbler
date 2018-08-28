@@ -15,8 +15,10 @@ std::pair<int, int>	 	Fruit::GetFruitPosition(void) const
  */
 
 bool 	Fruit::CheckFreePosition(const std::vector<std::vector<int>> &game_map,
-						  			const std::vector<std::pair<int, int>> &snake_parts)
+						  			const std::vector<std::pair<int, int>> &snake_parts, int fruit_i_pos, int  fruit_j_pos)
 {
+	if (fruit_i_pos == i_pos && fruit_j_pos == j_pos)
+		return (false);
 	if (game_map[i_pos][j_pos] != 0)
 		return (false);
 
@@ -35,7 +37,7 @@ bool 	Fruit::CheckFreePosition(const std::vector<std::vector<int>> &game_map,
 void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 						 const std::vector<std::pair<int, int>> &snake_parts,
 						 int w,
-						 int h)
+						 int h, int fruit_i, int fruit_j)
 {
 	/*
 	 * 	Set up for a coordinates generation
@@ -51,7 +53,7 @@ void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 	 *	Generate new coordinates until they will not occupy a free cell on the game map
 	 */
 
-	while (!CheckFreePosition(game_map, snake_parts))
+	while (!CheckFreePosition(game_map, snake_parts, fruit_i, fruit_j))
 	{
 		i_pos = unif_range_h(rng);
 		j_pos = unif_range_w(rng);
@@ -67,8 +69,8 @@ Fruit::Fruit()
 {
 	std::mt19937_64 rng(std::time(NULL));
 
-	i_pos = 0;
-	j_pos = 0;
+	i_pos = -1;
+	j_pos = -1;
 }
 
 /*
@@ -100,4 +102,14 @@ Fruit	&Fruit::operator=(const Fruit &fr)
 Fruit::~Fruit()
 {
 
+}
+
+/*
+ *	method that hides a fruit from the map
+ */
+
+void					Fruit::HideFruit(void)
+{
+	i_pos = -1;
+	j_pos = -1;
 }
