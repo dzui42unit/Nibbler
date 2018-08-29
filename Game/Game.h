@@ -1,6 +1,8 @@
 #ifndef NIBBLER_GAME_H
 #define NIBBLER_GAME_H
 
+#define FILE_SCORES "scores.nibbler"
+
 #include "../Snake/Snake.h"
 #include "../SdlLibraryWrap/SdlLibraryWrap.h"
 #include "../Fruit/Fruit.h"
@@ -13,6 +15,7 @@
 #include <utility>
 #include <ctime>
 #include <exception>
+#include <fstream>
 #include <algorithm>
 #include <chrono>
 #include <unistd.h>
@@ -107,6 +110,12 @@ private:
 
 	bool pause;
 
+	/*
+	 *	Scores
+	 */
+
+	std::vector<int>	scores_data;
+
 public:
 
 	/*
@@ -142,9 +151,17 @@ public:
 
 	Events 	CheckCollision(void) const;
 
+
+	/*
+	 *	Method that writes an score to the file
+	 */
+
+	void	StoreScore(void);
+
 	/*
 	 *	Exception if the wrong size of map is passed
 	 */
+
 
 	class 	MapSizeException : public std::exception
 	{

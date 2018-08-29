@@ -5,7 +5,7 @@
  *	A function that renders a side menu in a simple manner
  */
 
-void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left)
+void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data)
 {
 	std::string message;
 
@@ -39,7 +39,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left)
 	 *	Render Controls
 	 */
 
-	message = "ARROW_UP - to move snake up";
+	message = "BEST SCORES:";
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 32;
@@ -48,41 +48,58 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left)
 	Message_rect.h = 60;
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
-	message = "ARROW_DOWN - to move snake down";
-	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
-	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-	Message_rect.x = w + 32;
-	Message_rect.y = 250;
-	Message_rect.w = 350;
-	Message_rect.h = 60;
-	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+	int k = 100;
 
-	message = "ARROW_LEFT - to move snake left";
-	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
-	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-	Message_rect.x = w + 32;
-	Message_rect.y = 350;
-	Message_rect.w = 350;
-	Message_rect.h = 60;
-	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+	for (size_t i = 0; i < score_data.size(); i++)
+	{
+		message = std::to_string(i + 1) + ": " + std::to_string(score_data[i]);
 
-	message = "ARROW_RIGHT - to move snake right";
-	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
-	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-	Message_rect.x = w + 32;
-	Message_rect.y = 450;
-	Message_rect.w = 350;
-	Message_rect.h = 60;
-	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+		surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+		Message_rect.x = w + 32;
+		Message_rect.y = 150 + k;
+		Message_rect.w = 100;
+		Message_rect.h = 60;
+		SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
-	message = "SPACEBAR - to pause a game";
-	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
-	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-	Message_rect.x = w + 32;
-	Message_rect.y = 550;
-	Message_rect.w = 350;
-	Message_rect.h = 60;
-	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+		k += 100;
+	}
+//
+//	message = "ARROW_DOWN - to move snake down";
+//	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+//	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+//	Message_rect.x = w + 32;
+//	Message_rect.y = 250;
+//	Message_rect.w = 350;
+//	Message_rect.h = 60;
+//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+//
+//	message = "ARROW_LEFT - to move snake left";
+//	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+//	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+//	Message_rect.x = w + 32;
+//	Message_rect.y = 350;
+//	Message_rect.w = 350;
+//	Message_rect.h = 60;
+//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+//
+//	message = "ARROW_RIGHT - to move snake right";
+//	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+//	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+//	Message_rect.x = w + 32;
+//	Message_rect.y = 450;
+//	Message_rect.w = 350;
+//	Message_rect.h = 60;
+//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+//
+//	message = "SPACEBAR - to pause a game";
+//	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+//	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+//	Message_rect.x = w + 32;
+//	Message_rect.y = 550;
+//	Message_rect.w = 350;
+//	Message_rect.h = 60;
+//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 }
 
 /*

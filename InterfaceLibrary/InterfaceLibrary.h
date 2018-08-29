@@ -22,7 +22,7 @@ public:
 	virtual void 		RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) = 0;
 	virtual void 		RenderFood(int x, int y) = 0;
 	virtual int 		HandleInput(void) = 0;
-	virtual void		RenderSideMenu(int w, int h, size_t score, float time_left) = 0;
+	virtual void		RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) = 0;
 
 	virtual 			~InterfaceLibrary() {};
 						InterfaceLibrary() {};

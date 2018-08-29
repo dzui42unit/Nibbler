@@ -59,7 +59,7 @@ public:
 	void 			RenderFood(int x, int y);
 	int 			HandleInput(void) final;
 	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) final ;
-	void			RenderSideMenu(int w, int h, size_t score, float time_left) final ;
+	void			RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) final ;
 };
 
 

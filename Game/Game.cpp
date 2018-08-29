@@ -8,6 +8,30 @@ const int Game::MAX_SIZE = 40;
 const int Game::MIN_SIZE = 10;
 
 /*
+ *	Method that stores a score to the file
+ */
+
+void	Game::StoreScore(void)
+{
+	std::fstream	file;
+
+	file.open(FILE_SCORES, std::ofstream::out | std::ostream::trunc);
+
+	scores_data.push_back(score);
+	sort(scores_data.begin(), scores_data.end(), [](const int a, const int b) {return a > b; });
+	auto it = scores_data.erase(std::unique( scores_data.begin(), scores_data.end() ), scores_data.end());
+	scores_data.resize(std::distance(scores_data.begin(), it));
+
+	if (scores_data.size() > 3)
+		scores_data.pop_back();
+
+	for (auto elem : scores_data)
+		file << elem << "\n";
+	file.close();
+}
+
+
+/*
  *	Method that calculates collision
  */
 
@@ -131,7 +155,10 @@ void	Game::RunGame(void)
 		if (direction == Directions::PAUSE)
 			pause = !pause;
 		if (!direction)
+		{
+			StoreScore();
 			game_run = false;
+		}
 		else
 		{
 			/*
@@ -156,7 +183,10 @@ void	Game::RunGame(void)
 				 */
 				collision_status = CheckCollision();
 				if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
+				{
+					StoreScore();
 					exit(0);
+				}
 
 				/*
 				 * 	Calculate the time left for the rendering purposes
@@ -246,7 +276,7 @@ void	Game::RunGame(void)
 				}
 			}
 		}
-		lib_wrap->RenderSideMenu(static_cast<int>(game_map[0].size() * 32), 0, score, static_cast<float>(time_left));
+		lib_wrap->RenderSideMenu(static_cast<int>(game_map[0].size() * 32), 0, score, static_cast<float>(time_left), scores_data);
 		lib_wrap->RenderImage();
 	}
 }
@@ -417,6 +447,23 @@ Game::Game(char *w, char *h)
 	 */
 
 	sound_wrap = std::make_shared<SoundWrapper>(SoundWrapper());
+
+	/*
+	 *	Read scores from score file
+	 */
+
+	std::string                 temp_string;
+	std::fstream                file;
+
+	file.open(FILE_SCORES);
+
+    while (std::getline(file, temp_string))
+    {
+        scores_data.push_back(std::stoi(temp_string));
+        temp_string.clear();
+    }
+
+	file.close();
 }
 
 /*
@@ -435,7 +482,8 @@ Game::Game(const Game &game) :
 		fruit_respawn(game.fruit_respawn),
 		pause(game.pause),
 		sound_wrap(game.sound_wrap),
-		super_fruit(game.super_fruit)
+		super_fruit(game.super_fruit),
+		scores_data(game.scores_data)
 {
 
 }
@@ -458,6 +506,7 @@ Game& 	Game::operator=(const Game &game)
 	pause = game.pause;
 	sound_wrap = game.sound_wrap;
 	super_fruit = game.super_fruit;
+	scores_data = game.scores_data;
 	return (*this);
 }
 
