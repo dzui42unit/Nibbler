@@ -20,7 +20,7 @@ public:
 	virtual void		RenderImage(void) = 0;
 	virtual void 		RenderMap(const std::vector<std::vector<int>> &game_map) = 0;
 	virtual void 		RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) = 0;
-	virtual void 		RenderFood(int x, int y) = 0;
+	virtual void 		RenderFood(int x, int y, bool isBonusFruit) = 0;
 	virtual int 		HandleInput(void) = 0;
 	virtual void		RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) = 0;
 

@@ -148,8 +148,8 @@ void	Game::RunGame(void)
 		lib_wrap->ClearImage();
 		direction = lib_wrap->HandleInput();
 		lib_wrap->RenderMap(game_map);
-		lib_wrap->RenderFood(fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
-		lib_wrap->RenderFood(super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
+		lib_wrap->RenderFood(fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, false);
+		lib_wrap->RenderFood(super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second, true);
 		lib_wrap->RenderSnake(snake->GetSnakeParts(), snake->GetSnakeDirection());
 
 		if (direction == Directions::PAUSE)

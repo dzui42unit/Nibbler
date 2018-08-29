@@ -25,6 +25,7 @@ private:
     SDL_Texture     *grass_texture;
     SDL_Texture     *snake_head_texture;
     SDL_Texture     *snake_body_texture;
+    SDL_Texture     *super_fruit_texture;
 
     SDL_Rect        head_up;
     SDL_Rect        head_right;
@@ -33,6 +34,7 @@ private:
     SDL_Rect        rect_background;
     SDL_Rect        rect_snake_body;
     SDL_Rect        rect_food;
+    SDL_Rect        rect_super_fruit;
 
 	TTF_Font* 		Sans;
 	SDL_Surface* 	surfaceMessage;
@@ -56,7 +58,7 @@ public:
 //							double time_left) final;
 	void			ClearImage(void) final;
 	void			RenderImage(void) final;
-	void 			RenderFood(int x, int y);
+	void 			RenderFood(int x, int y, bool isBonusFruit);
 	int 			HandleInput(void) final;
 	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) final ;
 	void			RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) final ;

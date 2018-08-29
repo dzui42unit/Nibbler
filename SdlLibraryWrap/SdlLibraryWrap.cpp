@@ -301,6 +301,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     SDL_Surface *image_grass = IMG_Load("libs/sdl/background3.jpg");
     SDL_Surface *image_snake_head = IMG_Load("libs/sdl/snake_head.png");
     SDL_Surface *image_snake_body = IMG_Load("libs/sdl/snake_body3.png");
+    SDL_Surface *image_super_fruit_texture = IMG_Load("libs/sdl/gold_apple.png");
 
 	Sans = TTF_OpenFont("libs/sdl/2211.ttf", 12);
 	surfaceMessage = TTF_RenderText_Solid(Sans, "0", {255, 255, 255});
@@ -319,6 +320,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     grass_texture = SDL_CreateTextureFromSurface(ren, image_grass);
     snake_head_texture = SDL_CreateTextureFromSurface(ren, image_snake_head);
     snake_body_texture = SDL_CreateTextureFromSurface(ren, image_snake_body);
+    super_fruit_texture = SDL_CreateTextureFromSurface(ren, image_super_fruit_texture);
 
     if (!border_texture || !grass_texture || !snake_head_texture || !snake_body_texture) {
         std::cout << "ERROR border texture" << std::endl;
@@ -327,6 +329,10 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 
     SDL_FreeSurface(image_border);
     SDL_FreeSurface(image_grass);
+    SDL_FreeSurface(image_snake_head);
+    SDL_FreeSurface(image_snake_body);
+    SDL_FreeSurface(image_super_fruit_texture);
+
 
     image_texture_part = {0, 0, 100, 100};
 
@@ -341,6 +347,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     rect_background = {0, 0, w * 32, h * 32};
     rect_snake_body = {160, 0, 960, 960};
     rect_food = {0, 192, 60, 60};
+    rect_super_fruit = {0, 0, 50, 50};
 
 	/*
 	 *	Initialize some variables for timer
@@ -354,7 +361,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
  *	Method that renders a fruit
  */
 
-void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos)
+void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos, bool isBonusFruit)
 {
 	SDL_Rect r;
 	r.w = 32;
@@ -363,7 +370,12 @@ void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos)
 	r.x = j_pos * r.h;
 	r.y = i_pos * r.w;
 
-    SDL_RenderCopy(ren, snake_head_texture, &rect_food, &r);
+    if (isBonusFruit) {
+        SDL_RenderCopy(ren, super_fruit_texture, NULL, &r);
+    }
+    else {
+        SDL_RenderCopy(ren, snake_head_texture, &rect_food, &r);
+    }
 }
 
 /*
@@ -389,7 +401,9 @@ SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
           rect_food(sdl.rect_food),
 		  Message(sdl.Message),
 		  surfaceMessage(sdl.surfaceMessage),
-		  Sans(sdl.Sans)
+		  Sans(sdl.Sans),
+          super_fruit_texture(sdl.super_fruit_texture),
+          rect_super_fruit(sdl.rect_super_fruit)
 {
 
 }
@@ -419,6 +433,8 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 	Message = sdl.Message;
 	Sans = sdl.Sans;
 	surfaceMessage = sdl.surfaceMessage;
+    super_fruit_texture = sdl.super_fruit_texture;
+    rect_super_fruit = sdl.rect_super_fruit;
 	return (*this);
 }
 
