@@ -43,6 +43,8 @@ void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 	 * 	Set up for a coordinates generation
 	 */
 
+	std::mt19937_64 rng(std::time(NULL));
+
 	std::uniform_int_distribution<int> unif_range_w(1, w - 1);
 	std::uniform_int_distribution<int> unif_range_h(1, h - 1);
 
@@ -67,8 +69,6 @@ void	Fruit::SetFruitPosition(const std::vector<std::vector<int>> &game_map,
 
 Fruit::Fruit()
 {
-	std::mt19937_64 rng(std::time(NULL));
-
 	i_pos = -1;
 	j_pos = -1;
 }

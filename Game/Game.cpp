@@ -137,6 +137,8 @@ void	Game::RunGame(void)
 	disable_movement = false;
 	fruit_timer = std::chrono::high_resolution_clock::now();
 
+//	std::chrono::milliseconds pause_time{0};
+
 	while (game_run)
 	{
 		/*
@@ -153,7 +155,14 @@ void	Game::RunGame(void)
 		lib_wrap->RenderSnake(snake->GetSnakeParts(), snake->GetSnakeDirection());
 
 		if (direction == Directions::PAUSE)
+		{
+//			if (!pause) {
+//				pause_time = std::chrono::duration_cast<std::chrono::milliseconds>((std::chrono::high_resolution_clock::now() - fruit_timer).count());
+//			} else {
+//				pause_time = std::chrono::duration_values::zero();
+//			}
 			pause = !pause;
+		}
 		if (!direction)
 		{
 			StoreScore();
@@ -170,6 +179,7 @@ void	Game::RunGame(void)
 				/*
 				 *	Spawn a super fruit
 				 */
+//				std::chrono::time_point t = std::chrono::high_resolution_clock::now();
 				if (!super_fruit_present &&
 					std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= static_cast<int>(fruit_respawn * 1000))
 				{

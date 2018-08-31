@@ -13,25 +13,34 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 *	render score
 	 */
 
-	message = "Score: " + std::to_string(score);
+	message = "Score:    " + std::to_string(score);
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-	Message_rect.x = w + 32;
-	Message_rect.y = 32;
-	Message_rect.w = 250;
-	Message_rect.h = 70;
+	Message_rect.x = w + 20;
+	Message_rect.y = 20;
+	Message_rect.w = 150;
+	Message_rect.h = 60;
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
 	/*
 	 *	Render time left
 	 */
 
-	message = "Time left: " + std::to_string(time_left);
+	message = "Time left:"; //+
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-	Message_rect.x = w + 32;
-	Message_rect.y = 90;
-	Message_rect.w = 350;
+	Message_rect.x = w + 20;
+	Message_rect.y = 80;
+	Message_rect.w = 150;
+	Message_rect.h = 60;
+	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+
+	message = std::to_string(time_left);
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+	Message_rect.x = w + 210;
+	Message_rect.y = 80;
+	Message_rect.w = 150;
 	Message_rect.h = 60;
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
@@ -42,13 +51,14 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	message = "BEST SCORES:";
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-	Message_rect.x = w + 32;
-	Message_rect.y = 150;
-	Message_rect.w = 350;
+	Message_rect.x = w + 20;
+	Message_rect.y = 140;
+	Message_rect.w = 200;
 	Message_rect.h = 60;
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
-	int k = 100;
+	int k = 180;
+	int step = 30;
 
 	for (size_t i = 0; i < score_data.size(); i++)
 	{
@@ -56,50 +66,13 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 
 		surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-		Message_rect.x = w + 32;
-		Message_rect.y = 150 + k;
-		Message_rect.w = 100;
-		Message_rect.h = 60;
+		Message_rect.x = w + 20;
+		Message_rect.y = k + step;
+		Message_rect.w = 120;
+		Message_rect.h = 30;
 		SDL_RenderCopy(ren, Message, NULL, &Message_rect);
-
-		k += 100;
+		k += step;
 	}
-//
-//	message = "ARROW_DOWN - to move snake down";
-//	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
-//	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-//	Message_rect.x = w + 32;
-//	Message_rect.y = 250;
-//	Message_rect.w = 350;
-//	Message_rect.h = 60;
-//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
-//
-//	message = "ARROW_LEFT - to move snake left";
-//	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
-//	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-//	Message_rect.x = w + 32;
-//	Message_rect.y = 350;
-//	Message_rect.w = 350;
-//	Message_rect.h = 60;
-//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
-//
-//	message = "ARROW_RIGHT - to move snake right";
-//	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
-//	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-//	Message_rect.x = w + 32;
-//	Message_rect.y = 450;
-//	Message_rect.w = 350;
-//	Message_rect.h = 60;
-//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
-//
-//	message = "SPACEBAR - to pause a game";
-//	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
-//	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-//	Message_rect.x = w + 32;
-//	Message_rect.y = 550;
-//	Message_rect.w = 350;
-//	Message_rect.h = 60;
-//	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 }
 
 /*
@@ -303,7 +276,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     SDL_Surface *image_snake_body = IMG_Load("libs/sdl/snake_body3.png");
     SDL_Surface *image_super_fruit_texture = IMG_Load("libs/sdl/gold_apple.png");
 
-	Sans = TTF_OpenFont("libs/sdl/2211.ttf", 12);
+	Sans = TTF_OpenFont("libs/sdl/10.ttf", 100);
 	surfaceMessage = TTF_RenderText_Solid(Sans, "0", {255, 255, 255});
 
 	if (!image_border || !image_grass || !image_snake_head || !image_snake_body)
