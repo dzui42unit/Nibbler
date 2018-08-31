@@ -13,12 +13,12 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 *	render score
 	 */
 
-	message = "Score:       " + std::to_string(score);
+	message = "Score:    " + std::to_string(score);
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
 	Message_rect.y = 20;
-	Message_rect.w = 200;
+	Message_rect.w = 150;
 	Message_rect.h = 60;
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
@@ -26,7 +26,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 *	Render time left
 	 */
 
-	message = "Time left:";
+	message = "Time left:"; //+
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
@@ -222,7 +222,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Create a window
 	 */
 
-	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + 380, h * 32, SDL_WINDOW_OPENGL)))
+	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + 32 * 15, h * 32, SDL_WINDOW_OPENGL)))
 	{
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);
@@ -271,11 +271,10 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 */
 
     SDL_Surface *image_border = IMG_Load("libs/sdl/texture1.jpg");
-    SDL_Surface *image_grass = IMG_Load("libs/sdl/background14.jpg");
-//    SDL_Surface *image_snake_head = IMG_Load("libs/sdl/snake_head.png");
-    SDL_Surface *image_snake_head = IMG_Load("libs/sdl/all.png");
-    SDL_Surface *image_snake_body = IMG_Load("libs/sdl/all.png");
-    SDL_Surface *image_super_fruit_texture = IMG_Load("libs/sdl/apple.png");
+    SDL_Surface *image_grass = IMG_Load("libs/sdl/background3.jpg");
+    SDL_Surface *image_snake_head = IMG_Load("libs/sdl/snake_head.png");
+    SDL_Surface *image_snake_body = IMG_Load("libs/sdl/snake_body3.png");
+    SDL_Surface *image_super_fruit_texture = IMG_Load("libs/sdl/gold_apple.png");
 
 	Sans = TTF_OpenFont("libs/sdl/10.ttf", 100);
 	surfaceMessage = TTF_RenderText_Solid(Sans, "0", {255, 255, 255});
@@ -314,20 +313,13 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Getting parts of the texture for the snake parts
 	 */
 
-//    head_up = {196, 0, 60, 60};
-//    head_right = {256, 0, 60, 60};
-//    head_down = {256, 65, 60, 60};
-//    head_left = {195, 65, 60, 60};
-
-    head_up = {64, 0, 32, 32};
-    head_right = {0, 0, 32, 32};
-    head_down = {96, 0, 32, 32};
-    head_left = {32, 0, 32, 32};
-
-
+    head_up = {196, 0, 60, 60};
+    head_right = {256, 0, 60, 60};
+    head_down = {256, 65, 60, 60};
+    head_left = {195, 65, 60, 60};
     rect_background = {0, 0, w * 32, h * 32};
-    rect_snake_body = {0, 32, 32, 32};
-    rect_food = {96, 32, 32, 32};
+    rect_snake_body = {160, 0, 960, 960};
+    rect_food = {0, 192, 60, 60};
     rect_super_fruit = {0, 0, 50, 50};
 
 	/*
