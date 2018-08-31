@@ -136,8 +136,8 @@ void	Game::RunGame(void)
 	game_run = true;
 	disable_movement = false;
 	fruit_timer = std::chrono::high_resolution_clock::now();
-
-//	std::chrono::milliseconds pause_time{0};
+	std::chrono::high_resolution_clock::time_point		pause_time;
+	pause_time = std::chrono::high_resolution_clock::now();
 
 	while (game_run)
 	{
@@ -156,12 +156,11 @@ void	Game::RunGame(void)
 
 		if (direction == Directions::PAUSE)
 		{
-//			if (!pause) {
-//				pause_time = std::chrono::duration_cast<std::chrono::milliseconds>((std::chrono::high_resolution_clock::now() - fruit_timer).count());
-//			} else {
-//				pause_time = std::chrono::duration_values::zero();
-//			}
 			pause = !pause;
+			if (pause)
+				pause_time = std::chrono::high_resolution_clock::now();
+			else
+				fruit_timer.operator+=(std::chrono::high_resolution_clock::now() - pause_time);
 		}
 		if (!direction)
 		{
@@ -179,7 +178,6 @@ void	Game::RunGame(void)
 				/*
 				 *	Spawn a super fruit
 				 */
-//				std::chrono::time_point t = std::chrono::high_resolution_clock::now();
 				if (!super_fruit_present &&
 					std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= static_cast<int>(fruit_respawn * 1000))
 				{

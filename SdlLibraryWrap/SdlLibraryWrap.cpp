@@ -13,12 +13,12 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 *	render score
 	 */
 
-	message = "Score:    " + std::to_string(score);
+	message = "Score:       " + std::to_string(score);
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
 	Message_rect.y = 20;
-	Message_rect.w = 150;
+	Message_rect.w = 200;
 	Message_rect.h = 60;
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
@@ -26,7 +26,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 *	Render time left
 	 */
 
-	message = "Time left:"; //+
+	message = "Time left:";
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
@@ -222,7 +222,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Create a window
 	 */
 
-	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + 32 * 15, h * 32, SDL_WINDOW_OPENGL)))
+	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + 380, h * 32, SDL_WINDOW_OPENGL)))
 	{
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);
