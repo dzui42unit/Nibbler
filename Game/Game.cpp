@@ -140,7 +140,7 @@ void	Game::RunGame(void)
 	pause_time = std::chrono::high_resolution_clock::now();
 
 	sound_wrap->playBackgroundMusic();
-	while (game_run)
+	while (true)
 	{
 		/*
 		 *	Render all the image with the RunLib method and get the input from the user
@@ -148,12 +148,17 @@ void	Game::RunGame(void)
 		 *	if direction == PAUSE the game stops, PRESS P to pause the game and continue
 		 */
 
-		lib_wrap->ClearImage();
 		direction = lib_wrap->HandleInput();
-		lib_wrap->RenderMap(game_map);
-		lib_wrap->RenderFood(fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, false);
-		lib_wrap->RenderFood(super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second, true);
-		lib_wrap->RenderSnake(snake->GetSnakeParts(), snake->GetSnakeDirection());
+		if (game_run)
+		{
+			lib_wrap->ClearImage();
+			lib_wrap->RenderMap(game_map);
+			lib_wrap->RenderFood(fruit->GetFruitPosition().first, fruit->GetFruitPosition().second, false);
+			lib_wrap->RenderFood(super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second, true);
+			lib_wrap->RenderSnake(snake->GetSnakeParts(), snake->GetSnakeDirection());
+			lib_wrap->RenderSideMenu(static_cast<int>(game_map[0].size() * 32), 0, score, static_cast<float>(time_left), scores_data);
+			lib_wrap->RenderImage();
+		}
 
 		if (direction == Directions::PAUSE)
 		{
@@ -166,14 +171,14 @@ void	Game::RunGame(void)
 		if (!direction)
 		{
 			StoreScore();
-			game_run = false;
+			exit(0);
 		}
 		else
 		{
 			/*
 			 *	Do some action if the pause is not pressed
 			 */
-			if (!pause)
+			if (!pause && game_run)
 			{
 
 				/*
@@ -185,16 +190,6 @@ void	Game::RunGame(void)
 					fruit_timer = std::chrono::high_resolution_clock::now();
 					super_fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
 					super_fruit_present = true;
-				}
-
-				/*
-				 *	If the WALL_HIT or SELF_HIT event occurred - exit the game
-				 */
-				collision_status = CheckCollision();
-				if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
-				{
-					StoreScore();
-					exit(0);
 				}
 
 				/*
@@ -274,6 +269,18 @@ void	Game::RunGame(void)
 				}
 
 				/*
+				 *	If the WALL_HIT or SELF_HIT event occurred - exit the game
+				 */
+				collision_status = CheckCollision();
+				if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
+				{
+					StoreScore();
+					game_run = false;
+					sound_wrap->playGameOverSound();
+					continue ;
+				}
+
+				/*
 				 *	If the time for fruit spawn passed -> we change its position and reset the timer
 				 */
 				if (super_fruit_present &&
@@ -285,8 +292,6 @@ void	Game::RunGame(void)
 				}
 			}
 		}
-		lib_wrap->RenderSideMenu(static_cast<int>(game_map[0].size() * 32), 0, score, static_cast<float>(time_left), scores_data);
-		lib_wrap->RenderImage();
 	}
 }
 

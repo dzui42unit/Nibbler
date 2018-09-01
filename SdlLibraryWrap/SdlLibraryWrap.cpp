@@ -104,42 +104,70 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 	r.w = 32;
 	r.h = 32;
-	for (size_t i = 0; i < snake_parts.size(); i++)
+	for (size_t i = 1; i < snake_parts.size(); i++)
 	{
 		r.x = snake_parts[i].second * r.w;
 		r.y = snake_parts[i].first * r.h;
-		if (i == 0)
-		{
-            switch (dir) {
-                case 1: {
-                    SDL_RenderCopy(ren, snake_head_texture, &head_up, &r);
-                    break;
-                }
-                case 2: {
-                    SDL_RenderCopy(ren, snake_head_texture, &head_down, &r);
-                    break;
-
-                }
-                case 3: {
-                    SDL_RenderCopy(ren, snake_head_texture, &head_left, &r);
-                    break;
-
-                }
-                case 4: {
-                    SDL_RenderCopy(ren, snake_head_texture, &head_right, &r);
-                    break;
-
-                }
-                default: {
-                    std::cout << "Error: incorrect dir" << dir << std::endl;
-                    break;
-
-                }
-            }
-		}
-		else
-		{
+//		if (i == 0)
+//		{
+//            switch (dir) {
+//                case 1: {
+//                    SDL_RenderCopy(ren, snake_head_texture, &head_up, &r);
+//                    break;
+//                }
+//                case 2: {
+//                    SDL_RenderCopy(ren, snake_head_texture, &head_down, &r);
+//                    break;
+//
+//                }
+//                case 3: {
+//                    SDL_RenderCopy(ren, snake_head_texture, &head_left, &r);
+//                    break;
+//
+//                }
+//                case 4: {
+//                    SDL_RenderCopy(ren, snake_head_texture, &head_right, &r);
+//                    break;
+//
+//                }
+//                default: {
+//                    std::cout << "Error: incorrect dir" << dir << std::endl;
+//                    break;
+//
+//                }
+//            }
+//		}
+//		else
+//		{
             SDL_RenderCopy(ren, snake_body_texture, &rect_snake_body, &r);
+//		}
+	}
+	r.x = snake_parts[0].second * r.w;
+	r.y = snake_parts[0].first * r.h;
+	switch (dir) {
+		case 1: {
+			SDL_RenderCopy(ren, snake_head_texture, &head_up, &r);
+			break;
+		}
+		case 2: {
+			SDL_RenderCopy(ren, snake_head_texture, &head_down, &r);
+			break;
+
+		}
+		case 3: {
+			SDL_RenderCopy(ren, snake_head_texture, &head_left, &r);
+			break;
+
+		}
+		case 4: {
+			SDL_RenderCopy(ren, snake_head_texture, &head_right, &r);
+			break;
+
+		}
+		default: {
+			std::cout << "Error: incorrect dir" << dir << std::endl;
+			break;
+
 		}
 	}
 }

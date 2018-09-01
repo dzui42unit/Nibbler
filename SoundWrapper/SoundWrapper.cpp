@@ -29,7 +29,13 @@ SoundWrapper::SoundWrapper()
 	bg_music = Mix_LoadMUS("sounds/main.wav");
 	if (bg_music == NULL)
 	{
-		std::cout << "here\n";
+		std::cout << "ERROR: Mix_LoadMUS" << std::endl;
+		exit(0);
+	}
+
+	game_over_sound = 	Mix_LoadWAV("sounds/game_over.wav");
+	if (game_over_sound == NULL)
+	{
 		std::cout << "ERROR: Mix_LoadMUS" << std::endl;
 		exit(0);
 	}
@@ -46,6 +52,8 @@ SoundWrapper::~SoundWrapper()
 		Mix_FreeChunk(eat_sound);
 	if (bg_music)
 		Mix_FreeMusic(bg_music);
+	if (game_over_sound)
+		Mix_FreeChunk(game_over_sound);
 	Mix_CloseAudio();
 }
 
@@ -57,6 +65,7 @@ SoundWrapper::SoundWrapper(const SoundWrapper &snd)
 {
 	eat_sound = snd.eat_sound;
 	bg_music = snd.bg_music;
+	game_over_sound = snd.game_over_sound;
 }
 
 /*
@@ -67,6 +76,8 @@ SoundWrapper::SoundWrapper(SoundWrapper &&snd)
 {
 	eat_sound = snd.eat_sound;
 	bg_music = snd.bg_music;
+	game_over_sound = snd.game_over_sound;
+	snd.game_over_sound = nullptr;
 	snd.eat_sound = nullptr;
 	snd.bg_music = nullptr;
 	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -80,6 +91,7 @@ SoundWrapper	&SoundWrapper::operator=(const SoundWrapper &snd)
 {
 	eat_sound = snd.eat_sound;
 	bg_music = snd.bg_music;
+	game_over_sound = snd.game_over_sound;
 	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096);
 	return (*this);
 }
@@ -90,7 +102,6 @@ SoundWrapper	&SoundWrapper::operator=(const SoundWrapper &snd)
 
 void			SoundWrapper::playEatSound(void)
 {
-//	Mix_Volume(0, MIX_MAX_VOLUME);
 	Mix_PlayChannel(-1, eat_sound, 0);
 }
 
@@ -103,3 +114,12 @@ void			SoundWrapper::playBackgroundMusic(void)
 	Mix_PlayMusic(bg_music, -1);
 }
 
+/*
+ *	Method to play game over sound
+ */
+
+void			SoundWrapper::playGameOverSound(void)
+{
+	Mix_HaltMusic();
+	Mix_PlayChannel(-1, game_over_sound, 0);
+}
