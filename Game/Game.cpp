@@ -69,7 +69,7 @@ Events	Game::CheckCollision(void) const
 	 */
 
 	snake_p.erase(snake_p.begin());
-	if (game_map[head_coords.first][head_coords.second] == 1)
+	if (game_map[head_coords.first][head_coords.second] != 0)
 		return (Events ::WALL_HIT);
 	if (std::find(snake_p.begin(), snake_p.end(), head_coords) != snake_p.end())
 		return (Events::SELF_HIT);
@@ -159,6 +159,12 @@ void	Game::RunGame(void)
 			lib_wrap->RenderSideMenu(static_cast<int>(game_map[0].size() * 32), 0, score, static_cast<float>(time_left), scores_data);
 			lib_wrap->RenderImage();
 		}
+		else
+		{
+			lib_wrap->ClearImage();
+			lib_wrap->RenderGameOverScreen();
+			lib_wrap->RenderImage();
+		}
 
 		if (direction == Directions::PAUSE)
 		{
@@ -190,6 +196,7 @@ void	Game::RunGame(void)
 					fruit_timer = std::chrono::high_resolution_clock::now();
 					super_fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
 					super_fruit_present = true;
+					sound_wrap->playBonusFruitAppearsSound();
 				}
 
 				/*
@@ -329,6 +336,7 @@ void	Game::GenerateMap(const std::vector<std::pair<int, int>> &snake_parts)
 
 	std::mt19937_64 rng(std::time(NULL));
 	std::uniform_int_distribution<int> unif(0, 1);
+	std::uniform_int_distribution<int> text_nb(1, 4);
 	std::uniform_int_distribution<int> unif_range_w(1, width - 1);
 	std::uniform_int_distribution<int> unif_range_h(1, height - 1);
 
@@ -370,8 +378,9 @@ void	Game::GenerateMap(const std::vector<std::pair<int, int>> &snake_parts)
 			i_map = unif_range_h(rng);
 			j_map = unif_range_w(rng);
 		}
-		game_map[i_map][j_map] = 1;
-		game_map[i_map][width - 1 - j_map] = 1;
+		int nb = text_nb(rng);
+		game_map[i_map][j_map] = nb;
+		game_map[i_map][width - 1 - j_map] = nb;
 	}
 }
 

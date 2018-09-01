@@ -12,6 +12,7 @@ private:
 	Mix_Music			*bg_music;
 	Mix_Chunk 			*eat_sound;
 	Mix_Chunk			*game_over_sound;
+	Mix_Chunk			*bonus_fruit_appears_sound;
 public:
 					SoundWrapper();
 					~SoundWrapper();
@@ -22,6 +23,7 @@ public:
 	void			playEatSound(void);
 	void			playBackgroundMusic(void);
 	void			playGameOverSound(void);
+	void			playBonusFruitAppearsSound(void);
 };
 
 

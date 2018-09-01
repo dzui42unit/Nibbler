@@ -5,17 +5,11 @@
 #include <chrono>
 #include <utility>
 
+#define SIDE_MENU_WIDTH 380
+
 class InterfaceLibrary
 {
 public:
-
-//	virtual int		RunLib(const std::vector<std::vector<int>> &game_map,
-//							   const std::vector<std::pair<int, int>> &snake_parts,
-//							   int x_food,
-//							   int y_food,
-//							   int dir,
-//								size_t score,
-//							  	double time_left) = 0;
 	virtual void		ClearImage(void) = 0;
 	virtual void		RenderImage(void) = 0;
 	virtual void 		RenderMap(const std::vector<std::vector<int>> &game_map) = 0;
@@ -23,6 +17,7 @@ public:
 	virtual void 		RenderFood(int x, int y, bool isBonusFruit) = 0;
 	virtual int 		HandleInput(void) = 0;
 	virtual void		RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) = 0;
+	virtual void		RenderGameOverScreen(void) = 0;
 
 	virtual 			~InterfaceLibrary() {};
 						InterfaceLibrary() {};

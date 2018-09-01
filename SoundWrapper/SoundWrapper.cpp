@@ -19,7 +19,7 @@ SoundWrapper::SoundWrapper()
 		exit(0);
 	}
 
-	eat_sound = Mix_LoadWAV("sounds/1.wav");
+	eat_sound = Mix_LoadWAV("sounds/eat_sound.wav");
 	if (eat_sound == NULL)
 	{
 		std::cout << "ERROR: Mix_LoadWAV" << std::endl;
@@ -36,7 +36,13 @@ SoundWrapper::SoundWrapper()
 	game_over_sound = 	Mix_LoadWAV("sounds/game_over.wav");
 	if (game_over_sound == NULL)
 	{
-		std::cout << "ERROR: Mix_LoadMUS" << std::endl;
+		std::cout << "ERROR: Mix_LoadWAV" << std::endl;
+		exit(0);
+	}
+	bonus_fruit_appears_sound = 	Mix_LoadWAV("sounds/bonus_fruit_appears.wav");
+	if (game_over_sound == NULL)
+	{
+		std::cout << "ERROR: Mix_LoadWAV" << std::endl;
 		exit(0);
 	}
 	Mix_VolumeMusic(20);
@@ -54,6 +60,8 @@ SoundWrapper::~SoundWrapper()
 		Mix_FreeMusic(bg_music);
 	if (game_over_sound)
 		Mix_FreeChunk(game_over_sound);
+	if (bonus_fruit_appears_sound)
+		Mix_FreeChunk(bonus_fruit_appears_sound);
 	Mix_CloseAudio();
 }
 
@@ -66,6 +74,7 @@ SoundWrapper::SoundWrapper(const SoundWrapper &snd)
 	eat_sound = snd.eat_sound;
 	bg_music = snd.bg_music;
 	game_over_sound = snd.game_over_sound;
+	bonus_fruit_appears_sound = snd.bonus_fruit_appears_sound;
 }
 
 /*
@@ -76,10 +85,12 @@ SoundWrapper::SoundWrapper(SoundWrapper &&snd)
 {
 	eat_sound = snd.eat_sound;
 	bg_music = snd.bg_music;
+	bonus_fruit_appears_sound = snd.bonus_fruit_appears_sound;
 	game_over_sound = snd.game_over_sound;
 	snd.game_over_sound = nullptr;
 	snd.eat_sound = nullptr;
 	snd.bg_music = nullptr;
+	snd.bonus_fruit_appears_sound = nullptr;
 	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096);
 }
 
@@ -91,6 +102,7 @@ SoundWrapper	&SoundWrapper::operator=(const SoundWrapper &snd)
 {
 	eat_sound = snd.eat_sound;
 	bg_music = snd.bg_music;
+	bonus_fruit_appears_sound = snd.bonus_fruit_appears_sound;
 	game_over_sound = snd.game_over_sound;
 	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096);
 	return (*this);
@@ -122,4 +134,14 @@ void			SoundWrapper::playGameOverSound(void)
 {
 	Mix_HaltMusic();
 	Mix_PlayChannel(-1, game_over_sound, 0);
+}
+
+/*
+ *	Method to play a bonus fruit appear sound
+ */
+
+void			SoundWrapper::playBonusFruitAppearsSound(void)
+{
+	Mix_VolumeMusic(20);
+	Mix_PlayChannel(-1, bonus_fruit_appears_sound, 0);
 }
