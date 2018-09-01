@@ -246,12 +246,6 @@ void	Game::RunGame(void)
 						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
 						 */
 						snake->MoveSnake(true);
-
-						/*
-						 *	Increase the speed of the game if some score value is reached
-						 */
-						if (score % 50 == 0 && game_speed > 150)
-							game_speed -= 50;
 					}
 					else if (collision_status == Events::PICKED_SUPER_FRUIT)
 					{
@@ -266,9 +260,9 @@ void	Game::RunGame(void)
 						snake->MoveSnake(true);
 
 						/*
-						 *	Increase the speed of the game if some score value is reached
+						 *	Increase the speed
 						 */
-						if (score % 50 == 0 && game_speed > 150)
+						if (game_speed > 150)
 							game_speed -= 50;
 					}
 					else
@@ -443,7 +437,7 @@ Game::Game(char *w, char *h)
 	 *	Time in seconds to the food respawn
 	 */
 
-	fruit_respawn = 12.0;
+	fruit_respawn = (width + height) / 2;
 
 	/*
 	 *	Generating of the map
