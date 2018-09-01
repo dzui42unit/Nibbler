@@ -138,9 +138,7 @@ void	Game::RunGame(void)
 	fruit_timer = std::chrono::high_resolution_clock::now();
 	std::chrono::high_resolution_clock::time_point		pause_time;
 	pause_time = std::chrono::high_resolution_clock::now();
-
-    std::cout << "HERE\n";
-
+    
     void	*dl_handle;
     void    *dl_sound;
 
@@ -186,9 +184,6 @@ void	Game::RunGame(void)
 
     sound_wrap = createSoundWrap();
 
-    if (!sound_wrap)
-        std::cout << "PEZDA\n";
-
     void        (*DeleteSoundWrap)(InterfaceSoundLib *);
     DeleteSoundWrap = (void(*)(InterfaceSoundLib *)) dlsym(dl_sound, "deleteSoundWrapper");
 
@@ -198,8 +193,6 @@ void	Game::RunGame(void)
         exit(0);
     }
 
-    printf("%p\n", sound_wrap);
-//    printf("%p\n", sound_wrap->playBackgroundMusic());
     sound_wrap->playBackgroundMusic();
 
     while (true)
@@ -258,7 +251,7 @@ void	Game::RunGame(void)
 					fruit_timer = std::chrono::high_resolution_clock::now();
 					super_fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
 					super_fruit_present = true;
-//					sound_wrap->playBonusFruitAppearsSound();
+					sound_wrap->playBonusFruitAppearsSound();
 				}
 
 				/*
@@ -302,7 +295,7 @@ void	Game::RunGame(void)
 					{
 						fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
 						score += 10;
-//						sound_wrap->playEatSound();
+						sound_wrap->playEatSound();
 
 						/*
 						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
@@ -313,7 +306,7 @@ void	Game::RunGame(void)
 					{
 						super_fruit->HideFruit();
 						score += 50;
-//						sound_wrap->playEatSound();
+						sound_wrap->playEatSound();
 
 						/*
 						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
@@ -339,7 +332,7 @@ void	Game::RunGame(void)
 				{
 					StoreScore();
 					game_run = false;
-//					sound_wrap->playGameOverSound();
+					sound_wrap->playGameOverSound();
 					continue ;
 				}
 
