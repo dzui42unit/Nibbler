@@ -1,5 +1,14 @@
 #include "SdlLibraryWrap.h"
-#include "../Snake/Snake.h"
+#include "../../Snake/Snake.h"
+
+/*
+ *	A method that renders a game over screen
+ */
+
+void	SdlLibraryWrap::RenderGameOverScreen(void)
+{
+	SDL_RenderCopy(ren, game_over_screen_texture, NULL, &game_over_rect);
+}
 
 /*
  *	A function that renders a side menu in a simple manner
@@ -13,12 +22,12 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 *	render score
 	 */
 
-	message = "Score:    " + std::to_string(score);
+	message = "Score:       " + std::to_string(score);
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
 	Message_rect.y = 20;
-	Message_rect.w = 150;
+	Message_rect.w = 200;
 	Message_rect.h = 60;
 	SDL_RenderCopy(ren, Message, NULL, &Message_rect);
 
@@ -26,7 +35,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 *	Render time left
 	 */
 
-	message = "Time left:"; //+
+	message = "Time left:";
 	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
@@ -104,42 +113,38 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 	r.w = 32;
 	r.h = 32;
-	for (size_t i = 0; i < snake_parts.size(); i++)
+	for (size_t i = 1; i < snake_parts.size(); i++)
 	{
 		r.x = snake_parts[i].second * r.w;
 		r.y = snake_parts[i].first * r.h;
-		if (i == 0)
-		{
-            switch (dir) {
-                case 1: {
-                    SDL_RenderCopy(ren, snake_head_texture, &head_up, &r);
-                    break;
-                }
-                case 2: {
-                    SDL_RenderCopy(ren, snake_head_texture, &head_down, &r);
-                    break;
-
-                }
-                case 3: {
-                    SDL_RenderCopy(ren, snake_head_texture, &head_left, &r);
-                    break;
-
-                }
-                case 4: {
-                    SDL_RenderCopy(ren, snake_head_texture, &head_right, &r);
-                    break;
-
-                }
-                default: {
-                    std::cout << "Error: incorrect dir" << dir << std::endl;
-                    break;
-
-                }
-            }
+		SDL_RenderCopy(ren, snake_body_texture, &rect_snake_body, &r);
+	}
+	r.x = snake_parts[0].second * r.w;
+	r.y = snake_parts[0].first * r.h;
+	switch (dir) {
+		case 1: {
+			SDL_RenderCopy(ren, snake_head_texture, &head_up, &r);
+			break;
 		}
-		else
-		{
-            SDL_RenderCopy(ren, snake_body_texture, &rect_snake_body, &r);
+		case 2: {
+			SDL_RenderCopy(ren, snake_head_texture, &head_down, &r);
+			break;
+
+		}
+		case 3: {
+			SDL_RenderCopy(ren, snake_head_texture, &head_left, &r);
+			break;
+
+		}
+		case 4: {
+			SDL_RenderCopy(ren, snake_head_texture, &head_right, &r);
+			break;
+
+		}
+		default: {
+			std::cout << "Error: incorrect dir" << dir << std::endl;
+			break;
+
 		}
 	}
 }
@@ -193,6 +198,26 @@ void 		 SdlLibraryWrap::RenderMap(const std::vector<std::vector<int>> &game_map)
 		{
 			r.x = j * r.h;
 			r.y = i * r.w;
+
+			switch (game_map[i][j]) {
+				case 1:
+					image_texture_part = {32, 0, 32, 32};
+					SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
+					break ;
+				case 2:
+					image_texture_part = {0, 0, 32, 32};
+					SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
+					break;
+				case 3:
+					image_texture_part = {0, 32, 32, 32};
+					SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
+					break;
+				case 4:
+					image_texture_part = {32, 32, 32, 32};
+					SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
+					break;
+			}
+
 			if (game_map[i][j] == 1) {
                 SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
             }
@@ -222,7 +247,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Create a window
 	 */
 
-	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + 32 * 15, h * 32, SDL_WINDOW_OPENGL)))
+	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + SIDE_MENU_WIDTH, h * 32, SDL_WINDOW_OPENGL)))
 	{
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);
@@ -270,18 +295,24 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Reading textures
 	 */
 
-    SDL_Surface *image_border = IMG_Load("libs/sdl/texture1.jpg");
-    SDL_Surface *image_grass = IMG_Load("libs/sdl/background3.jpg");
-    SDL_Surface *image_snake_head = IMG_Load("libs/sdl/snake_head.png");
-    SDL_Surface *image_snake_body = IMG_Load("libs/sdl/snake_body3.png");
-    SDL_Surface *image_super_fruit_texture = IMG_Load("libs/sdl/gold_apple.png");
+    SDL_Surface *image_border = IMG_Load("libs/sdl/cube.png");
+    SDL_Surface *image_grass = IMG_Load("libs/sdl/background5.jpg");
+    SDL_Surface *image_snake_head = IMG_Load("libs/sdl/all.png");
+    SDL_Surface *image_snake_body = IMG_Load("libs/sdl/all.png");
+    SDL_Surface *image_super_fruit_texture = IMG_Load("libs/sdl/apple.png");
+	SDL_Surface *image_game_over_texture = IMG_Load("libs/sdl/game_over.png");
 
 	Sans = TTF_OpenFont("libs/sdl/10.ttf", 100);
 	surfaceMessage = TTF_RenderText_Solid(Sans, "0", {255, 255, 255});
 
-	if (!image_border || !image_grass || !image_snake_head || !image_snake_body)
+	if (!image_border || !image_grass || !image_snake_head || !image_snake_body || !image_game_over_texture || !image_super_fruit_texture)
     {
         std::cout << "ERROR upload texture" << std::endl;
+        exit(0);
+    }
+    if (!Sans)
+    {
+        std::cout << "ERROR SANS" << std::endl;
         exit(0);
     }
 
@@ -294,8 +325,9 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     snake_head_texture = SDL_CreateTextureFromSurface(ren, image_snake_head);
     snake_body_texture = SDL_CreateTextureFromSurface(ren, image_snake_body);
     super_fruit_texture = SDL_CreateTextureFromSurface(ren, image_super_fruit_texture);
+	game_over_screen_texture = SDL_CreateTextureFromSurface(ren, image_game_over_texture);
 
-    if (!border_texture || !grass_texture || !snake_head_texture || !snake_body_texture) {
+    if (!border_texture || !grass_texture || !snake_head_texture || !snake_body_texture || !game_over_screen_texture) {
         std::cout << "ERROR border texture" << std::endl;
         exit(1);
     }
@@ -305,22 +337,26 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     SDL_FreeSurface(image_snake_head);
     SDL_FreeSurface(image_snake_body);
     SDL_FreeSurface(image_super_fruit_texture);
+	SDL_FreeSurface(image_game_over_texture);
 
 
-    image_texture_part = {0, 0, 100, 100};
+//    image_texture_part = {32, 0, 32, 32};
 
 	/*
 	 *	Getting parts of the texture for the snake parts
 	 */
 
-    head_up = {196, 0, 60, 60};
-    head_right = {256, 0, 60, 60};
-    head_down = {256, 65, 60, 60};
-    head_left = {195, 65, 60, 60};
+    head_up = {64, 0, 32, 32};
+    head_right = {0, 0, 32, 32};
+    head_down = {96, 0, 32, 32};
+    head_left = {32, 0, 32, 32};
+
+
     rect_background = {0, 0, w * 32, h * 32};
-    rect_snake_body = {160, 0, 960, 960};
-    rect_food = {0, 192, 60, 60};
+    rect_snake_body = {0, 32, 32, 32};
+    rect_food = {96, 32, 32, 32};
     rect_super_fruit = {0, 0, 50, 50};
+	game_over_rect = { 0, 0, w * 32 + SIDE_MENU_WIDTH, h * 32};
 
 	/*
 	 *	Initialize some variables for timer
@@ -376,7 +412,9 @@ SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
 		  surfaceMessage(sdl.surfaceMessage),
 		  Sans(sdl.Sans),
           super_fruit_texture(sdl.super_fruit_texture),
-          rect_super_fruit(sdl.rect_super_fruit)
+          rect_super_fruit(sdl.rect_super_fruit),
+		  game_over_rect(sdl.game_over_rect),
+		  game_over_screen_texture(sdl.game_over_screen_texture)
 {
 
 }
@@ -408,6 +446,8 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 	surfaceMessage = sdl.surfaceMessage;
     super_fruit_texture = sdl.super_fruit_texture;
     rect_super_fruit = sdl.rect_super_fruit;
+	game_over_rect = sdl.game_over_rect;
+	game_over_screen_texture = sdl.game_over_screen_texture;
 	return (*this);
 }
 
@@ -418,4 +458,14 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 SdlLibraryWrap::~SdlLibraryWrap()
 {
 	IMG_Quit();
+}
+
+
+SdlLibraryWrap      *createWrapper(int w, int h)
+{
+    return (new SdlLibraryWrap(w, h));
+}
+void                deleteWrapper(SdlLibraryWrap *lib)
+{
+    delete lib;
 }
