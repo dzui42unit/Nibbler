@@ -139,6 +139,7 @@ void	Game::RunGame(void)
 	std::chrono::high_resolution_clock::time_point		pause_time;
 	pause_time = std::chrono::high_resolution_clock::now();
 
+	sound_wrap->playBackgroundMusic();
 	while (game_run)
 	{
 		/*

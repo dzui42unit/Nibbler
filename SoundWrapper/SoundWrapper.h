@@ -4,12 +4,13 @@
 #include "../libs/sdl/sdl2_mixer/SDL_mixer.h"
 #include "../libs/sdl/sdl2/SDL2/SDL_audio.h"
 #include "../libs/sdl/sdl2/SDL2/SDL.h"
-
+#include <iostream>
 
 class SoundWrapper
 {
 private:
-	Mix_Chunk 			*wave;
+	Mix_Music			*bg_music;
+	Mix_Chunk 			*eat_sound;
 public:
 					SoundWrapper();
 					~SoundWrapper();
@@ -17,7 +18,8 @@ public:
 					SoundWrapper(SoundWrapper &&snd);
 	SoundWrapper	&operator=(const SoundWrapper &snd);
 
-	void			playEatSound();
+	void			playEatSound(void);
+	void			playBackgroundMusic(void);
 };
 
 
