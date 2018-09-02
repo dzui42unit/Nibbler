@@ -18,8 +18,6 @@ private:
 	SDL_Event		event;
 	Uint32			now;
 	Uint32 			last;
-	SDL_Surface		*surface;
-	SDL_Texture		*texture;
     SDL_Rect        image_texture_part;
     SDL_Texture     *border_texture;
     SDL_Texture     *grass_texture;

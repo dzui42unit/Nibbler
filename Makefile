@@ -6,7 +6,7 @@
 #    By: sprotsen <sprotsen@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/01 09:29:35 by sprotsen          #+#    #+#              #
-#    Updated: 2018/08/26 19:31:36 by dzui             ###   ########.fr        #
+#    Updated: 2018/09/02 18:32:51 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJ = $(SRC:.cpp=.o)
 		  -I libs/sdl/sdl2_image/SDL2 -L libs/sdl/sdl2_image/lib -l SDL2_image -L libs/sdl/sdl2_ttf/lib -l SDL2_ttf -L libs/sdl/sdl2_mixer/lib -l SDL2_mixer
 
 
-CFLAGS = -std=c++14
+CFLAGS = -std=c++14 -Wall -Wextra -Werror
 		 
 
 CC = clang++

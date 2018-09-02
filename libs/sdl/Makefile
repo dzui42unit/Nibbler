@@ -6,13 +6,13 @@
 #    By: sprotsen <sprotsen@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 21:10:53 by sprotsen          #+#    #+#              #
-#    Updated: 2018/08/22 21:10:54 by sprotsen         ###   ########.fr        #
+#    Updated: 2018/09/02 18:14:45 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libsdl2wrapper.so
 
-CC = clang++ -std=c++14 -fPIC
+CC = clang++ -std=c++14 -fPIC -Wall -Wextra -Werror
 
 # CFLAGS = -fPIC 
 #-Wall -Wextra -Werror

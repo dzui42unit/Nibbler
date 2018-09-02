@@ -14,7 +14,7 @@ void	SdlLibraryWrap::RenderGameOverScreen(void)
  *	A function that renders a side menu in a simple manner
  */
 
-void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data)
+void	SdlLibraryWrap::RenderSideMenu(int w, int , size_t score, float time_left, std::vector<int> score_data)
 {
 	std::string message;
 
@@ -23,7 +23,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 */
 
 	message = "Score:       " + std::to_string(score);
-	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255, 0});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
 	Message_rect.y = 20;
@@ -40,7 +40,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 */
 
 	message = "Time left:";
-	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255, 0});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
 	Message_rect.y = 80;
@@ -51,7 +51,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	SDL_DestroyTexture(Message);
 
 	message = std::to_string(time_left);
-	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255, 0});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 210;
 	Message_rect.y = 80;
@@ -67,7 +67,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	 */
 
 	message = "BEST SCORES:";
-	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+	surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255, 0});
 	Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 	Message_rect.x = w + 20;
 	Message_rect.y = 140;
@@ -85,7 +85,7 @@ void	SdlLibraryWrap::RenderSideMenu(int w, int h, size_t score, float time_left,
 	{
 		message = std::to_string(i + 1) + ": " + std::to_string(score_data[i]);
 
-		surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255});
+		surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255, 0});
 		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
 		Message_rect.x = w + 20;
 		Message_rect.y = k + step;
@@ -419,21 +419,22 @@ SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
           border_texture(sdl.border_texture),
           grass_texture(sdl.grass_texture),
           snake_head_texture(sdl.snake_head_texture),
-          head_up(sdl.head_up),
-          head_right(sdl.head_right),
-          head_down(sdl.head_down),
-          head_left(sdl.head_left),
-          rect_background(sdl.rect_background),
           snake_body_texture(sdl.snake_body_texture),
+		  super_fruit_texture(sdl.super_fruit_texture),
+		  game_over_screen_texture(sdl.game_over_screen_texture),
+		  head_up(sdl.head_up),
+		  head_right(sdl.head_right),
+		  head_down(sdl.head_down),
+		  head_left(sdl.head_left),
+		  rect_background(sdl.rect_background),
           rect_snake_body(sdl.rect_snake_body),
-          rect_food(sdl.rect_food),
-		  Message(sdl.Message),
-		  surfaceMessage(sdl.surfaceMessage),
-		  Sans(sdl.Sans),
-          super_fruit_texture(sdl.super_fruit_texture),
-          rect_super_fruit(sdl.rect_super_fruit),
+		  rect_food(sdl.rect_food),
+		  rect_super_fruit(sdl.rect_super_fruit),
 		  game_over_rect(sdl.game_over_rect),
-		  game_over_screen_texture(sdl.game_over_screen_texture)
+		  Sans(sdl.Sans),
+		  surfaceMessage(sdl.surfaceMessage),
+		  Message(sdl.Message),
+		  Message_rect(sdl.Message_rect)
 {
 
 }
@@ -448,25 +449,26 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 	ren = sdl.ren;
 	now = sdl.now;
 	last = sdl.last;
-    image_texture_part = sdl.image_texture_part;
-    border_texture = sdl.border_texture;
-    grass_texture = sdl.grass_texture;
-    snake_head_texture = sdl.snake_head_texture;
-    head_up = sdl.head_up;
-    head_right = sdl.head_right;
-    head_down = sdl.head_down;
-    head_left = sdl.head_left;
-    rect_background = sdl.rect_background;
-    rect_snake_body = sdl.rect_snake_body;
-    snake_body_texture = sdl.snake_body_texture;
-    rect_food = sdl.rect_food;
-	Message = sdl.Message;
+	image_texture_part = sdl.image_texture_part;
+	border_texture = sdl.border_texture;
+	grass_texture = sdl.grass_texture;
+	snake_head_texture = sdl.snake_head_texture;
+	snake_body_texture = sdl.snake_body_texture;
+	super_fruit_texture = sdl.super_fruit_texture;
+	game_over_screen_texture = sdl.game_over_screen_texture;
+	head_up = sdl.head_up;
+	head_right = sdl.head_right;
+	head_down = sdl.head_down;
+	head_left = sdl.head_left;
+	rect_background = sdl.rect_background;
+	rect_snake_body = sdl.rect_snake_body;
+	rect_food = sdl.rect_food;
+	rect_super_fruit = sdl.rect_super_fruit;
+	game_over_rect = sdl.game_over_rect;
 	Sans = sdl.Sans;
 	surfaceMessage = sdl.surfaceMessage;
-    super_fruit_texture = sdl.super_fruit_texture;
-    rect_super_fruit = sdl.rect_super_fruit;
-	game_over_rect = sdl.game_over_rect;
-	game_over_screen_texture = sdl.game_over_screen_texture;
+	Message = sdl.Message;
+	Message_rect = sdl.Message_rect;
 	return (*this);
 }
 

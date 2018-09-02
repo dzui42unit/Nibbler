@@ -1,9 +1,5 @@
 #include "Game.h"
 
-//	std::cout << "I HAVE OPENED whaadasdasdsadt\n";
-//	system("leaks a.out -q");
-//	exit(0);
-
 /*
  *	Max map size variables
  */
@@ -155,7 +151,11 @@ Events	Game::CheckCollision(void) const
 
 	if (head_coords.first == fruit->GetFruitPosition().first
 		&& head_coords.second == fruit->GetFruitPosition().second)
+	{
+		lib_wrap->RenderFood(-1, -1, false);
+//		sound_wrap->playEatSound();
 		return (Events::PICKED_FRUIT);
+	}
 
 	/*
 	 *	If the head touched a super fruit
@@ -163,7 +163,12 @@ Events	Game::CheckCollision(void) const
 
 	if (head_coords.first == super_fruit->GetFruitPosition().first
 		&& head_coords.second == super_fruit->GetFruitPosition().second)
+	{
+		lib_wrap->RenderFood(-1, -1, true);
+//		sound_wrap->playEatSound();
 		return (Events::PICKED_SUPER_FRUIT);
+
+	}
 
 	/*
 	 *	if the head coordinates are on the map obstacle
@@ -216,6 +221,12 @@ void	Game::RunGame(void)
 	int 	direction;
 
 	/*
+	 *	indicates the snake should move as it suppose to move or grow
+	 */
+
+	bool	move_norm_or_grow;
+
+	/*
 	 *	Collision status holds the current possible event
 	 *
 	 *	1. WALL_HIT - if the wall or some obstacle on the map was hit
@@ -235,6 +246,7 @@ void	Game::RunGame(void)
 	 *	initialize variables
 	 */
 	super_fruit_present = false;
+	move_norm_or_grow = false;
 	game_run = true;
 	disable_movement = false;
 	fruit_timer = std::chrono::high_resolution_clock::now();
@@ -330,14 +342,46 @@ void	Game::RunGame(void)
 			}
 
 			/*
+			 * 	if the fruit was picked
+			 * 	we increase the score and change the fruit position
+			 *
+			 * 	if there was not fruit picked up, we move the snake in a usual manner
+			 * 	without extending it
+			 */
+			if (collision_status == Events::PICKED_FRUIT)
+			{
+				fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
+				score += 10;
+				sound_wrap->playEatSound();
+
+				/*
+				 *	we set TRUE to the move_norm_or_grow  to indicate that the size of snake should be increased
+				 */
+				move_norm_or_grow = true;
+			}
+			else if (collision_status == Events::PICKED_SUPER_FRUIT)
+			{
+				/*
+				 *	we set TRUE to the move_norm_or_grow  to indicate that the size of snake should be increased
+				 */
+				super_fruit->HideFruit();
+				score += 50;
+				sound_wrap->playEatSound();
+				move_norm_or_grow = true;
+
+				/*
+				 *	Increase the speed
+				 */
+				if (game_speed > 150)
+					game_speed -= 50;
+			}
+
+			/*
 			 *	The movement of snake is performed in some period of time
 			 *	The ability to change the direction is unable
 			 */
 			if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= game_speed)
 			{
-				disable_movement = false;
-				begin = std::chrono::high_resolution_clock::now();
-
 				/*
 				 * 	if the fruit was picked
 				 * 	we increase the score and change the fruit position
@@ -345,37 +389,10 @@ void	Game::RunGame(void)
 				 * 	if there was not fruit picked up, we move the snake in a usual manner
 				 * 	without extending it
 				 */
-				if (collision_status == Events::PICKED_FRUIT)
-				{
-					fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
-					score += 10;
-					sound_wrap->playEatSound();
-
-					/*
-					 *	we pass TRUE to the move method to indicate that the size of snake should be increased
-					 */
-					snake->MoveSnake(true);
-				}
-				else if (collision_status == Events::PICKED_SUPER_FRUIT)
-				{
-					super_fruit->HideFruit();
-					score += 50;
-					sound_wrap->playEatSound();
-
-					/*
-					 *	we pass TRUE to the move method to indicate that the size of snake should be increased
-					 */
-
-					snake->MoveSnake(true);
-
-					/*
-					 *	Increase the speed
-					 */
-					if (game_speed > 150)
-						game_speed -= 50;
-				}
-				else
-					snake->MoveSnake(false);
+				disable_movement = false;
+				begin = std::chrono::high_resolution_clock::now();
+				snake->MoveSnake(move_norm_or_grow);
+				move_norm_or_grow = false;
 			}
 
 			/*
@@ -575,21 +592,23 @@ Game::Game(char *w, char *h)
 Game::Game(const Game &game) :
 		width(game.width),
 		height(game.height),
+		score(game.score),
 		game_map(game.game_map),
 		snake(game.snake),
 		lib_wrap(game.lib_wrap),
 		fruit(game.fruit),
-		score(game.score),
+		super_fruit(game.super_fruit),
+		sound_wrap(game.sound_wrap),
+		begin(game.begin),
+		fruit_timer(game.fruit_timer),
+		LibWrapCreator(game.LibWrapCreator),
+		DeleteLibWrap(game.DeleteLibWrap),
 		game_speed(game.game_speed),
 		fruit_respawn(game.fruit_respawn),
 		pause(game.pause),
-		sound_wrap(game.sound_wrap),
-		super_fruit(game.super_fruit),
 		scores_data(game.scores_data),
 		createSoundWrap(game.createSoundWrap),
-		DeleteSoundWrap(game.DeleteSoundWrap),
-		LibWrapCreator(game.LibWrapCreator),
-		DeleteLibWrap(game.DeleteLibWrap)
+		DeleteSoundWrap(game.DeleteSoundWrap)
 {
 
 }

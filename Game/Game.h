@@ -118,7 +118,7 @@ private:
 	 *	Speed of game
 	 */
 
-	size_t game_speed;
+	long long game_speed;
 
 	/*
 	 *	Time period to change fruit position
