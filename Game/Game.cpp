@@ -63,6 +63,7 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	if (lib_wrap)
 	{
 		DeleteLibWrap(lib_wrap);
+		lib_wrap = nullptr;
 	}
 
 	std::string	lib_name;
@@ -101,11 +102,7 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	/*
 	 *	Get a pointer to the Destructor of the
 	 */
-
 	lib_wrap = LibWrapCreator(width, height);
-	std::cout << "WHY ?\n";
-	system("leaks a.out -q");
-//	exit(0);
 	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
 	if (!DeleteLibWrap)
 		dlErrors();
@@ -287,9 +284,7 @@ void	Game::RunGame(void)
 		if (!direction)
 		{
 			StoreScore();
-			std::cout << "I HAVE OPENED whaadasdasdsadt\n";
-			system("leaks a.out -q");
-			exit(0);
+			break ;
 		}
 		if (direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB) {
 			LoadGraphicLibrary(static_cast<Directions>(direction));

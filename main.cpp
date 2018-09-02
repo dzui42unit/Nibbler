@@ -1,9 +1,4 @@
 #include "./Game/Game.h"
-#include <fstream>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
 
 int main(int argc,char **argv)
 {
@@ -22,6 +17,7 @@ int main(int argc,char **argv)
 		{
 			game = new Game(argv[1], argv[2]);
 			game->RunGame();
+			exit(0);
 		}
 		catch (std::exception &e)
 		{

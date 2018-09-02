@@ -322,7 +322,6 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	SDL_Surface *image_game_over_texture = IMG_Load("libs/sdl/game_over.png");
 
 	Sans = TTF_OpenFont("libs/sdl/10.ttf", 100);
-	surfaceMessage = TTF_RenderText_Solid(Sans, "0", {255, 255, 255});
 
 	if (!image_border || !image_grass || !image_snake_head || !image_snake_body || !image_game_over_texture || !image_super_fruit_texture)
     {
@@ -346,7 +345,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     super_fruit_texture = SDL_CreateTextureFromSurface(ren, image_super_fruit_texture);
 	game_over_screen_texture = SDL_CreateTextureFromSurface(ren, image_game_over_texture);
 
-    if (!border_texture || !grass_texture || !snake_head_texture || !snake_body_texture || !game_over_screen_texture) {
+    if (!border_texture || !grass_texture || !snake_head_texture || !snake_body_texture || !game_over_screen_texture || !super_fruit_texture) {
         std::cout << "ERROR border texture" << std::endl;
         exit(1);
     }
@@ -357,6 +356,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     SDL_FreeSurface(image_snake_body);
     SDL_FreeSurface(image_super_fruit_texture);
 	SDL_FreeSurface(image_game_over_texture);
+
 
 	surfaceMessage = nullptr;
 	Message = nullptr;
@@ -383,11 +383,6 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 
 	now = 0;
 	last = 0;
-
-//	std::cout << "I AM IN CONSTRUCTOR OF AN OBJECT\n";
-//	system("leaks a.out -q");
-//	exit(0);
-
 }
 
 /*
@@ -415,65 +410,65 @@ void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos, bool isBonusFruit)
  *	Copy constructor
  */
 
-//SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
-//        : win(sdl.win),
-//          ren(sdl.ren),
-//          now(sdl.now),
-//          last(sdl.last),
-//          image_texture_part(sdl.image_texture_part),
-//          border_texture(sdl.border_texture),
-//          grass_texture(sdl.grass_texture),
-//          snake_head_texture(sdl.snake_head_texture),
-//          head_up(sdl.head_up),
-//          head_right(sdl.head_right),
-//          head_down(sdl.head_down),
-//          head_left(sdl.head_left),
-//          rect_background(sdl.rect_background),
-//          snake_body_texture(sdl.snake_body_texture),
-//          rect_snake_body(sdl.rect_snake_body),
-//          rect_food(sdl.rect_food),
-//		  Message(sdl.Message),
-//		  surfaceMessage(sdl.surfaceMessage),
-//		  Sans(sdl.Sans),
-//          super_fruit_texture(sdl.super_fruit_texture),
-//          rect_super_fruit(sdl.rect_super_fruit),
-//		  game_over_rect(sdl.game_over_rect),
-//		  game_over_screen_texture(sdl.game_over_screen_texture)
-//{
-//
-//}
+SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
+        : win(sdl.win),
+          ren(sdl.ren),
+          now(sdl.now),
+          last(sdl.last),
+          image_texture_part(sdl.image_texture_part),
+          border_texture(sdl.border_texture),
+          grass_texture(sdl.grass_texture),
+          snake_head_texture(sdl.snake_head_texture),
+          head_up(sdl.head_up),
+          head_right(sdl.head_right),
+          head_down(sdl.head_down),
+          head_left(sdl.head_left),
+          rect_background(sdl.rect_background),
+          snake_body_texture(sdl.snake_body_texture),
+          rect_snake_body(sdl.rect_snake_body),
+          rect_food(sdl.rect_food),
+		  Message(sdl.Message),
+		  surfaceMessage(sdl.surfaceMessage),
+		  Sans(sdl.Sans),
+          super_fruit_texture(sdl.super_fruit_texture),
+          rect_super_fruit(sdl.rect_super_fruit),
+		  game_over_rect(sdl.game_over_rect),
+		  game_over_screen_texture(sdl.game_over_screen_texture)
+{
+
+}
 
 /*
  *	Copy assignment operator
  */
 
-//SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
-//{
-//	win = sdl.win;
-//	ren = sdl.ren;
-//	now = sdl.now;
-//	last = sdl.last;
-//    image_texture_part = sdl.image_texture_part;
-//    border_texture = sdl.border_texture;
-//    grass_texture = sdl.grass_texture;
-//    snake_head_texture = sdl.snake_head_texture;
-//    head_up = sdl.head_up;
-//    head_right = sdl.head_right;
-//    head_down = sdl.head_down;
-//    head_left = sdl.head_left;
-//    rect_background = sdl.rect_background;
-//    rect_snake_body = sdl.rect_snake_body;
-//    snake_body_texture = sdl.snake_body_texture;
-//    rect_food = sdl.rect_food;
-//	Message = sdl.Message;
-//	Sans = sdl.Sans;
-//	surfaceMessage = sdl.surfaceMessage;
-//    super_fruit_texture = sdl.super_fruit_texture;
-//    rect_super_fruit = sdl.rect_super_fruit;
-//	game_over_rect = sdl.game_over_rect;
-//	game_over_screen_texture = sdl.game_over_screen_texture;
-//	return (*this);
-//}
+SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
+{
+	win = sdl.win;
+	ren = sdl.ren;
+	now = sdl.now;
+	last = sdl.last;
+    image_texture_part = sdl.image_texture_part;
+    border_texture = sdl.border_texture;
+    grass_texture = sdl.grass_texture;
+    snake_head_texture = sdl.snake_head_texture;
+    head_up = sdl.head_up;
+    head_right = sdl.head_right;
+    head_down = sdl.head_down;
+    head_left = sdl.head_left;
+    rect_background = sdl.rect_background;
+    rect_snake_body = sdl.rect_snake_body;
+    snake_body_texture = sdl.snake_body_texture;
+    rect_food = sdl.rect_food;
+	Message = sdl.Message;
+	Sans = sdl.Sans;
+	surfaceMessage = sdl.surfaceMessage;
+    super_fruit_texture = sdl.super_fruit_texture;
+    rect_super_fruit = sdl.rect_super_fruit;
+	game_over_rect = sdl.game_over_rect;
+	game_over_screen_texture = sdl.game_over_screen_texture;
+	return (*this);
+}
 
 /*
  *	Destructor
@@ -484,6 +479,12 @@ SdlLibraryWrap::~SdlLibraryWrap()
 	SDL_DestroyWindow(win);
 	SDL_DestroyRenderer(ren);
 	TTF_CloseFont(Sans);
+	SDL_DestroyTexture(border_texture);
+	SDL_DestroyTexture(grass_texture);
+	SDL_DestroyTexture(snake_head_texture);
+	SDL_DestroyTexture(snake_body_texture);
+	SDL_DestroyTexture(super_fruit_texture);
+	SDL_DestroyTexture(game_over_screen_texture);
 	IMG_Quit();
 }
 

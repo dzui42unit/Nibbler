@@ -30,15 +30,25 @@ CFLAGS = -std=c++14
 
 CC = clang++
 
-all: $(NAME)
-	# g++ $(SRC) -o play -I libs/sdl/SDL2 -L libs/sdl/lib -l SDL2-2.0.0
+all: lib copy $(NAME)
 
+
+# g++ $(SRC) -o play -I libs/sdl/SDL2 -L libs/sdl/lib -l SDL2-2.0.0
+lib:
+	make re -C libs/sdl
+	make re -C libs/SoundWrapper
+
+copy:
+	cp libs/sdl/libsdl2wrapper.so .
+	cp libs/SoundWrapper/libsoundwrapper.so .
 
 $(NAME): $(OBJ)
-	clang++ $(OBJ) -L. -lsdl2wrapper -Wl,-rpath,. -L. -lsoundwrapper -Wl,-rpath,.
+	clang++ -o $(NAME) $(OBJ)  -L. -lsdl2wrapper -Wl,-rpath,. -L. -lsoundwrapper -Wl,-rpath,.
 
 
-	#$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+
+
+#$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c  -o $@ $< 
