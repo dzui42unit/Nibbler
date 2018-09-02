@@ -47,8 +47,8 @@ public:
 					SdlLibraryWrap() = delete;
 					SdlLibraryWrap(int w, int h);
 					~SdlLibraryWrap();
-					SdlLibraryWrap(const SdlLibraryWrap &sdl);
-	SdlLibraryWrap	&operator=(const SdlLibraryWrap &sdl);
+					SdlLibraryWrap(const SdlLibraryWrap &sdl) = delete;
+	SdlLibraryWrap	&operator=(const SdlLibraryWrap &sdl) = delete;
 
 	void 			RenderMap(const std::vector<std::vector<int>> &game_map) final;
 	void			ClearImage(void) final;

@@ -1,5 +1,9 @@
 #include "Game.h"
 
+//	std::cout << "I HAVE OPENED whaadasdasdsadt\n";
+//	system("leaks a.out -q");
+//	exit(0);
+
 /*
  *	Max map size variables
  */
@@ -47,6 +51,7 @@ void	Game::LoadSoundLibrary(void)
 	DeleteSoundWrap = (void(*)(InterfaceSoundLib *)) dlsym(dl_sound, "deleteSoundWrapper");
 	if (!DeleteSoundWrap)
 		dlErrors();
+	dlclose(dl_sound);
 }
 
 /*
@@ -56,10 +61,12 @@ void	Game::LoadSoundLibrary(void)
 void	Game::LoadGraphicLibrary(Directions lib_nb)
 {
 	if (lib_wrap)
+	{
 		DeleteLibWrap(lib_wrap);
+	}
 
 	std::string	lib_name;
-	void	*dl_handle;
+	void		*dl_handle;
 
 	switch(lib_nb)
 	{
@@ -96,6 +103,9 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	 */
 
 	lib_wrap = LibWrapCreator(width, height);
+	std::cout << "WHY ?\n";
+	system("leaks a.out -q");
+//	exit(0);
 	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
 	if (!DeleteLibWrap)
 		dlErrors();
@@ -235,6 +245,7 @@ void	Game::RunGame(void)
 	pause_time = std::chrono::high_resolution_clock::now();
 
 	LoadGraphicLibrary(Directions::SDL_LIB);
+
 	LoadSoundLibrary();
 
     sound_wrap->playBackgroundMusic();
@@ -276,6 +287,8 @@ void	Game::RunGame(void)
 		if (!direction)
 		{
 			StoreScore();
+			std::cout << "I HAVE OPENED whaadasdasdsadt\n";
+			system("leaks a.out -q");
 			exit(0);
 		}
 		if (direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB) {
@@ -577,7 +590,11 @@ Game::Game(const Game &game) :
 		pause(game.pause),
 		sound_wrap(game.sound_wrap),
 		super_fruit(game.super_fruit),
-		scores_data(game.scores_data)
+		scores_data(game.scores_data),
+		createSoundWrap(game.createSoundWrap),
+		DeleteSoundWrap(game.DeleteSoundWrap),
+		LibWrapCreator(game.LibWrapCreator),
+		DeleteLibWrap(game.DeleteLibWrap)
 {
 
 }
@@ -601,6 +618,10 @@ Game& 	Game::operator=(const Game &game)
 	sound_wrap = game.sound_wrap;
 	super_fruit = game.super_fruit;
 	scores_data = game.scores_data;
+	createSoundWrap = game.createSoundWrap;
+	DeleteSoundWrap = game.DeleteSoundWrap;
+	LibWrapCreator = game.LibWrapCreator;
+	DeleteLibWrap = game.DeleteLibWrap;
 	return (*this);
 }
 
