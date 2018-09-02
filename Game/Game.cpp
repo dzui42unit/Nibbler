@@ -8,6 +8,101 @@ const int Game::MAX_SIZE = 40;
 const int Game::MIN_SIZE = 10;
 
 /*
+ *	Method that gives dl errors
+ */
+
+void	Game::dlErrors(void)
+{
+	std::cout << "ERROR: " << dlerror() << std::endl;
+	exit(0);
+}
+
+/*
+ *	Method that loads sound library
+ */
+
+void	Game::LoadSoundLibrary(void)
+{
+	void	*dl_sound;
+
+	/*
+	 *	Open sound library
+	 */
+
+	dl_sound = dlopen(LIB_SOUND_WRAP, RTLD_LAZY | RTLD_LOCAL);
+	if (!dl_sound)
+		dlErrors();
+
+	/*
+	 *	Get a pointer to the constructor of the sound libary
+	 */
+	createSoundWrap = (InterfaceSoundLib *(*)(void)) dlsym(dl_sound, "createSoundWrapper");
+	if (!createSoundWrap)
+		dlErrors();
+
+	/*
+	 *	Create a sound library
+	 */
+	sound_wrap = createSoundWrap();
+	DeleteSoundWrap = (void(*)(InterfaceSoundLib *)) dlsym(dl_sound, "deleteSoundWrapper");
+	if (!DeleteSoundWrap)
+		dlErrors();
+}
+
+/*
+ *	Method that loads a graphical library
+ */
+
+void	Game::LoadGraphicLibrary(Directions lib_nb)
+{
+	if (lib_wrap)
+		DeleteLibWrap(lib_wrap);
+
+	std::string	lib_name;
+	void	*dl_handle;
+
+	switch(lib_nb)
+	{
+		case Directions::SDL_LIB :
+			lib_name = SDL_LIB_NAME;
+			break ;
+		case Directions::SFML_LIB :
+			lib_name = SFML_LIB_NAME;
+			break;
+		case Directions::OPENGL_LIB :
+			lib_name = OPENGL_LIB_NAME;
+			break ;
+		default:
+			break ;
+	}
+
+	/*
+	 *	Open a library
+	 */
+	dl_handle = dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_LOCAL);
+	if (!dl_handle)
+		dlErrors();
+
+	/*
+	 *	Get a pointer to the Constructor of the library object
+	 */
+
+	LibWrapCreator = (InterfaceLibrary *(*)(int w, int h)) dlsym(dl_handle, "createWrapper");
+	if (!LibWrapCreator)
+		dlErrors();
+
+	/*
+	 *	Get a pointer to the Destructor of the
+	 */
+
+	lib_wrap = LibWrapCreator(width, height);
+	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
+	if (!DeleteLibWrap)
+		dlErrors();
+	dlclose(dl_handle);
+}
+
+/*
  *	Method that stores a score to the file
  */
 
@@ -38,7 +133,7 @@ void	Game::StoreScore(void)
 Events	Game::CheckCollision(void) const
 {
 	std::vector<std::pair<int, int>>	snake_p;
-	std::pair<int, int>	head_coords;
+	std::pair<int, int>					head_coords;
 
 	/*
 	 *	get snake head coordinates
@@ -138,60 +233,9 @@ void	Game::RunGame(void)
 	fruit_timer = std::chrono::high_resolution_clock::now();
 	std::chrono::high_resolution_clock::time_point		pause_time;
 	pause_time = std::chrono::high_resolution_clock::now();
-    
-    void	*dl_handle;
-    void    *dl_sound;
 
-
-    dl_handle = dlopen(SDL_LIB_NAME, RTLD_LAZY | RTLD_LOCAL);
-    InterfaceLibrary    *(* LibWrapCreator)(int w, int h);
-    if (!dl_handle)
-    {
-        std::cout << "ERROR: " << dlerror() << std::endl;
-        exit(0);
-    }
-    LibWrapCreator = (InterfaceLibrary *(*)(int w, int h)) dlsym(dl_handle, "createWrapper");
-    if (!LibWrapCreator)
-    {
-        std::cout << "ERROR: " << dlerror() << std::endl;
-        exit(0);
-    }
-
-    lib_wrap = LibWrapCreator(width, height);
-
-    void        (*DeleteLibWrap)(InterfaceLibrary *);
-    DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
-
-    if (!DeleteLibWrap)
-    {
-        std::cout << "ERROR: " << dlerror() << std::endl;
-        exit(0);
-    }
-
-    dl_sound = dlopen(LIB_SOUND_WRAP, RTLD_LAZY | RTLD_LOCAL);
-    if (!dl_sound)
-    {
-        std::cout << "ERROR: " << dlerror() << std::endl;
-        exit(0);
-    }
-    InterfaceSoundLib    *(* createSoundWrap)(void);
-    createSoundWrap = (InterfaceSoundLib *(*)(void)) dlsym(dl_sound, "createSoundWrapper");
-    if (!createSoundWrap)
-    {
-        std::cout << "ERROR: " << dlerror() << std::endl;
-        exit(0);
-    }
-
-    sound_wrap = createSoundWrap();
-
-    void        (*DeleteSoundWrap)(InterfaceSoundLib *);
-    DeleteSoundWrap = (void(*)(InterfaceSoundLib *)) dlsym(dl_sound, "deleteSoundWrapper");
-
-    if (!DeleteSoundWrap)
-    {
-        std::cout << "ERROR: " << dlerror() << std::endl;
-        exit(0);
-    }
+	LoadGraphicLibrary(Directions::SDL_LIB);
+	LoadSoundLibrary();
 
     sound_wrap->playBackgroundMusic();
 
@@ -234,142 +278,122 @@ void	Game::RunGame(void)
 			StoreScore();
 			exit(0);
 		}
-		else
+		if (direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB) {
+			LoadGraphicLibrary(static_cast<Directions>(direction));
+			direction = Directions::NOTHING_PRESSED;
+		}
+
+		/*
+		 *	Do some action if the pause is not pressed
+		 */
+		if (!pause && game_run)
 		{
 			/*
-			 *	Do some action if the pause is not pressed
+			 *	Spawn a super fruit
 			 */
-			if (!pause && game_run)
+			if (!super_fruit_present &&
+				std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= static_cast<int>(fruit_respawn * 1000))
 			{
+				fruit_timer = std::chrono::high_resolution_clock::now();
+				super_fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
+				super_fruit_present = true;
+				sound_wrap->playBonusFruitAppearsSound();
+			}
+
+			/*
+			 * 	Calculate the time left for the rendering purposes
+			 */
+
+			if (super_fruit_present && super_fruit->GetFruitPosition().first != -1 && super_fruit->GetFruitPosition().second)
+				time_left = fruit_respawn - static_cast<double >(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count()) / 1000.0;
+			else
+				time_left = 0.0;
+
+			/*
+			 *	if the key was pressed, we set a new direction for the snake
+			 *	and disable changing of the direction until a move of snake will occur
+			 *	an
+			 */
+			if (direction != Directions::NOTHING_PRESSED && direction != Directions ::PAUSE
+				&& !disable_movement)
+			{
+				snake->SetSnakeDirection(static_cast<Directions>(direction));
+				disable_movement = true;
+			}
+
+			/*
+			 *	The movement of snake is performed in some period of time
+			 *	The ability to change the direction is unable
+			 */
+			if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= game_speed)
+			{
+				disable_movement = false;
+				begin = std::chrono::high_resolution_clock::now();
 
 				/*
-				 *	Spawn a super fruit
+				 * 	if the fruit was picked
+				 * 	we increase the score and change the fruit position
+				 *
+				 * 	if there was not fruit picked up, we move the snake in a usual manner
+				 * 	without extending it
 				 */
-				if (!super_fruit_present &&
-					std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= static_cast<int>(fruit_respawn * 1000))
+				if (collision_status == Events::PICKED_FRUIT)
 				{
-					fruit_timer = std::chrono::high_resolution_clock::now();
-					super_fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
-					super_fruit_present = true;
-					sound_wrap->playBonusFruitAppearsSound();
-				}
-
-				/*
-				 * 	Calculate the time left for the rendering purposes
-				 */
-
-				if (super_fruit_present && super_fruit->GetFruitPosition().first != -1 && super_fruit->GetFruitPosition().second)
-					time_left = fruit_respawn - static_cast<double >(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count()) / 1000.0;
-				else
-					time_left = 0.0;
-
-				/*
-				 *	if the key was pressed, we set a new direction for the snake
-				 *	and disable changing of the direction until a move of snake will occur
-				 *	an
-				 */
-				if (direction != Directions::NOTHING_PRESSED && direction != Directions ::PAUSE
-					&& !disable_movement)
-				{
-					snake->SetSnakeDirection(static_cast<Directions>(direction));
-					disable_movement = true;
-				}
-
-				/*
-				 *	The movement of snake is performed in some period of time
-				 *	The ability to change the direction is unable
-				 */
-				if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - begin).count() >= game_speed)
-				{
-					disable_movement = false;
-					begin = std::chrono::high_resolution_clock::now();
+					fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
+					score += 10;
+					sound_wrap->playEatSound();
 
 					/*
-					 * 	if the fruit was picked
-					 * 	we increase the score and change the fruit position
-					 *
-					 * 	if there was not fruit picked up, we move the snake in a usual manner
-					 * 	without extending it
+					 *	we pass TRUE to the move method to indicate that the size of snake should be increased
 					 */
-					if (collision_status == Events::PICKED_FRUIT)
-					{
-						fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
-						score += 10;
-						sound_wrap->playEatSound();
-
-						/*
-						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
-						 */
-						snake->MoveSnake(true);
-					}
-					else if (collision_status == Events::PICKED_SUPER_FRUIT)
-					{
-						super_fruit->HideFruit();
-						score += 50;
-						sound_wrap->playEatSound();
-
-						/*
-						 *	we pass TRUE to the move method to indicate that the size of snake should be increased
-						 */
-
-						snake->MoveSnake(true);
-
-						/*
-						 *	Increase the speed
-						 */
-						if (game_speed > 150)
-							game_speed -= 50;
-					}
-					else
-						snake->MoveSnake(false);
+					snake->MoveSnake(true);
 				}
-
-				/*
-				 *	If the WALL_HIT or SELF_HIT event occurred - exit the game
-				 */
-				collision_status = CheckCollision();
-				if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
+				else if (collision_status == Events::PICKED_SUPER_FRUIT)
 				{
-					StoreScore();
-					game_run = false;
-					sound_wrap->playGameOverSound();
-					continue ;
-				}
-
-				/*
-				 *	If the time for fruit spawn passed -> we change its position and reset the timer
-				 */
-				if (super_fruit_present &&
-						std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= static_cast<int>(fruit_respawn * 1000))
-				{
-					super_fruit_present = false;
-					fruit_timer = std::chrono::high_resolution_clock::now();
 					super_fruit->HideFruit();
+					score += 50;
+					sound_wrap->playEatSound();
+
+					/*
+					 *	we pass TRUE to the move method to indicate that the size of snake should be increased
+					 */
+
+					snake->MoveSnake(true);
+
+					/*
+					 *	Increase the speed
+					 */
+					if (game_speed > 150)
+						game_speed -= 50;
 				}
+				else
+					snake->MoveSnake(false);
+			}
+
+			/*
+			 *	If the WALL_HIT or SELF_HIT event occurred - exit the game
+			 */
+			collision_status = CheckCollision();
+			if (collision_status == Events::SELF_HIT || collision_status == Events::WALL_HIT)
+			{
+				StoreScore();
+				game_run = false;
+				sound_wrap->playGameOverSound();
+				continue ;
+			}
+
+			/*
+			 *	If the time for fruit spawn passed -> we change its position and reset the timer
+			 */
+			if (super_fruit_present &&
+				std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - fruit_timer).count() >= static_cast<int>(fruit_respawn * 1000))
+			{
+				super_fruit_present = false;
+				fruit_timer = std::chrono::high_resolution_clock::now();
+				super_fruit->HideFruit();
 			}
 		}
 	}
-}
-
-/*
- * 	Method that prints a map
- */
-
-void	Game::PrintGameMap()
-{
-	std::cout << "GAME MAP" << std::endl;
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; j < width; j++)
-		{
-			if (snake->CheckSnakePartCoordinate(i, j))
-				std::cout << 2 << " ";
-			else
-				std::cout << game_map[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
 }
 
 /*
@@ -414,7 +438,6 @@ void	Game::GenerateMap(const std::vector<std::pair<int, int>> &snake_parts)
 	 *	2. be part of snake
 	 *	3. be placed directly upper the head
 	 */
-
 	squares_to_full_fill = static_cast<int>((static_cast<double>(height * width) / 50));
 	for (int i = 0; i < squares_to_full_fill; i++)
 	{
@@ -436,7 +459,6 @@ void	Game::GenerateMap(const std::vector<std::pair<int, int>> &snake_parts)
 /*
  * 	Constructor that takes width and height parameters as strings
  */
-
 Game::Game(char *w, char *h)
 {
 	std::regex numbers_pattern;
@@ -468,14 +490,13 @@ Game::Game(char *w, char *h)
 	 * 	Create a snake object
 	 */
 
-	snake = std::make_shared<Snake>(Snake(width, height));
+	snake = new Snake(width, height);
 
 	/*
 	 *	Create SDL wrapper
 	 */
 
     lib_wrap = nullptr;
-//	lib_wrap = std::make_shared<SdlLibraryWrap>(SdlLibraryWrap(width, height));
 
 	/*
 	 *	Set score value
@@ -505,9 +526,9 @@ Game::Game(char *w, char *h)
 	 *	Create Fruit and super fruit
 	 */
 
-	fruit = std::make_shared<Fruit>(Fruit());
+	fruit = new Fruit();
 	fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, -1, -1);
-	super_fruit = std::make_shared<Fruit>(Fruit());
+	super_fruit = new Fruit();
 
 	/*
 	 *	Set pause by default
@@ -589,5 +610,9 @@ Game& 	Game::operator=(const Game &game)
 
 Game::~Game()
 {
-
+	delete(snake);
+	delete(fruit);
+	delete(super_fruit);
+	delete(sound_wrap);
+	delete(lib_wrap);
 }

@@ -142,9 +142,9 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 		}
 		default: {
-			std::cout << "Error: incorrect dir" << dir << std::endl;
+//			std::cout << "Error: incorrect dir" << dir << std::endl;
 			break;
-
+//
 		}
 	}
 }
@@ -175,6 +175,12 @@ int 			SdlLibraryWrap::HandleInput(void)
 				return (Directions::RIGHT);
 			if (event.key.keysym.sym == SDLK_SPACE && event.key.repeat == 0)
 				return (Directions::PAUSE);
+			if (event.key.keysym.sym == SDLK_KP_1 && event.key.repeat == 0)
+				return (Directions::SDL_LIB);
+			if (event.key.keysym.sym == SDLK_KP_2 && event.key.repeat == 0)
+				return (Directions::SFML_LIB);
+			if (event.key.keysym.sym == SDLK_KP_3 && event.key.repeat == 0)
+				return (Directions::OPENGL_LIB);
 		}
 	}
 	return (Directions::NOTHING_PRESSED);
@@ -338,9 +344,6 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
     SDL_FreeSurface(image_snake_body);
     SDL_FreeSurface(image_super_fruit_texture);
 	SDL_FreeSurface(image_game_over_texture);
-
-
-//    image_texture_part = {32, 0, 32, 32};
 
 	/*
 	 *	Getting parts of the texture for the snake parts

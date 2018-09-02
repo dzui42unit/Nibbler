@@ -5,11 +5,8 @@
 
 #include "../Snake/Snake.h"
 #include "../InterfaceLibrary/InterfaceLibrary.h"
-//#include "../libs/SoundWrapper/SoundWrapper.h"
-//#include "../SdlLibraryWrap/SdlLibraryWrap.h"
 #include "../Fruit/Fruit.h"
 #include "../InterfaceSoundLib/InterfaceSoundLib.h"
-//#include "../SoundWrapper/SoundWrapper.h"
 
 
 #include <iostream>
@@ -26,6 +23,8 @@
 #include <unistd.h>
 
 #define SDL_LIB_NAME "libsdl2wrapper.so"
+#define SFML_LIB_NAME "libsfml2wrapper.so"
+#define OPENGL_LIB_NAME "libopengl2wrapper.so"
 #define LIB_SOUND_WRAP "libsoundwrapper.so"
 
 
@@ -34,6 +33,12 @@ enum Events { WALL_HIT, SELF_HIT, PICKED_FRUIT, PICKED_SUPER_FRUIT, OK };
 class Game
 {
 private:
+
+	/*
+	 *	Method that processes dl errors
+	 */
+
+	void	dlErrors(void);
 
 	/*
 	 *	Map size limits
@@ -66,33 +71,31 @@ private:
 
 	void 	GenerateMap(const std::vector<std::pair<int, int>> &snake_parts);
 
-	std::shared_ptr<Snake>	snake;
+	Snake					*snake;
 
 	/*
 	 *	pointer to the library wrapper
 	 */
 
 	InterfaceLibrary					*lib_wrap;
-//	std::shared_ptr<InterfaceLibrary>	lib_wrap;
 
 	/*
 	 *	pointer to the Fruit object
 	 */
 
-	std::shared_ptr<Fruit>				fruit;
+	Fruit								*fruit;
 
 	/*
 	 *	pointer to the bonus fuit, that appears on the limited amount of time
 	 */
 
-	std::shared_ptr<Fruit>				super_fruit;
+	Fruit								*super_fruit;
 
 	/*
 	 *	pointer to the sound wrapper
 	 */
 
     InterfaceSoundLib                   *sound_wrap;
-//	std::shared_ptr<SoundWrapper>		sound_wrap;
 
 	/*
 	 *	Timer
@@ -101,6 +104,15 @@ private:
 	std::chrono::high_resolution_clock::time_point begin;
 	std::chrono::high_resolution_clock::time_point fruit_timer;
 
+	/*
+	 *	Pointer to the function that creates a library
+	 */
+	InterfaceLibrary    *(* LibWrapCreator)(int w, int h);
+
+	/*
+	 *	Pointer to the function that deletes library
+	 */
+	void        (*DeleteLibWrap)(InterfaceLibrary *);
 
 	/*
 	 *	Speed of game
@@ -126,6 +138,16 @@ private:
 
 	std::vector<int>	scores_data;
 
+	/*
+	 *	Pointer to the function that creates an Sound wrapper
+	 */
+	InterfaceSoundLib    *(* createSoundWrap)(void);
+
+	/*
+	 *	Pointer to the function that deletes an Sound wrapper
+	 */
+	void        (*DeleteSoundWrap)(InterfaceSoundLib *);
+
 public:
 
 	/*
@@ -142,12 +164,6 @@ public:
 	 */
 
 	Game(char *w , char *h);
-
-	/*
-	 *	method that prints a map
-	 */
-
-	void	PrintGameMap(void);
 
 	/*
 	 *	method to run a game loop
@@ -172,6 +188,15 @@ public:
 	 *	Exception if the wrong size of map is passed
 	 */
 
+	/*
+	 *	Method that loads a graphical library
+	 */
+	void	LoadGraphicLibrary(Directions dir);
+
+	/*
+	 *	Method that loads a sound library
+	 */
+	void	LoadSoundLibrary(void);
 
 	class 	MapSizeException : public std::exception
 	{

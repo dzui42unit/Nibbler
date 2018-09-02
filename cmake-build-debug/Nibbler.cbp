@@ -80,42 +80,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Fruit/Fruit.cpp">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Fruit/Fruit.h">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Game/Game.cpp">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Game/Game.h">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/InterfaceLibrary/InterfaceLibrary.h">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/SdlLibraryWrap/SdlLibraryWrap.cpp">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/SdlLibraryWrap/SdlLibraryWrap.h">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Snake/Snake.cpp">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/Snake/Snake.h">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/SoundWrapper/SoundWrapper.cpp">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/SoundWrapper/SoundWrapper.h">
-			<Option target="Nibbler"/>
-		</Unit>
-		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/main.cpp">
-			<Option target="Nibbler"/>
-		</Unit>
 		<Unit filename="/Users/dzui/Projects/NibblerToWorkWith/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
