@@ -12,9 +12,9 @@
 
 NAME = libsoundwrapper.so
 
-CC = clang++ -std=c++14
+CC = clang++ -std=c++14 -fPIC
 
-CFLAGS = -fPIC 
+# CFLAGS = -fPIC 
 #-Wall -Wextra -Werror
 
 #LIBS = -I ../sdl/sdl2_mixer/SDL2 -L ../sdl/sdl2_mixer/lib -l SDL2_mixer

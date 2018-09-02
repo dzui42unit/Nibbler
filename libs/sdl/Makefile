@@ -12,9 +12,9 @@
 
 NAME = libsdl2wrapper.so
 
-CC = clang++ -std=c++14
+CC = clang++ -std=c++14 -fPIC
 
-CFLAGS = -fPIC 
+# CFLAGS = -fPIC 
 #-Wall -Wextra -Werror
 
 LIBS = -I ../../InterfaceLibrary
@@ -33,8 +33,8 @@ all: lib.so
 lib.so:
 	$(CC) -shared $(SRC) $(LIBS) -o $(NAME)
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c  -o $@ $< 
+# %.o: %.cpp
+# 	$(CC) $(CFLAGS) -c  -o $@ $< 
 
 clean:
 	rm -f $(OBJ)
