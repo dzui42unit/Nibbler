@@ -26,10 +26,15 @@ LISD += -framework OpenGL -framework AppKit
 
 SRC = SdlLibraryWrap.cpp
 
+OBJ = $(SRC:.cpp=.o)
+
 all: lib.so
 
 lib.so:
-	$(CC) $(CFLAGS) -shared $(SRC) $(LIBS) -o $(NAME)
+	$(CC) -shared $(SRC) $(LIBS) -o $(NAME)
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c  -o $@ $< 
 
 clean:
 	rm -f $(OBJ)

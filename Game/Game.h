@@ -4,9 +4,13 @@
 #define FILE_SCORES "scores.nibbler"
 
 #include "../Snake/Snake.h"
-#include "../SdlLibraryWrap/SdlLibraryWrap.h"
+#include "../InterfaceLibrary/InterfaceLibrary.h"
+//#include "../libs/SoundWrapper/SoundWrapper.h"
+//#include "../SdlLibraryWrap/SdlLibraryWrap.h"
 #include "../Fruit/Fruit.h"
-#include "../SoundWrapper/SoundWrapper.h"
+#include "../InterfaceSoundLib/InterfaceSoundLib.h"
+//#include "../SoundWrapper/SoundWrapper.h"
+
 
 #include <iostream>
 #include <regex>
@@ -18,7 +22,12 @@
 #include <fstream>
 #include <algorithm>
 #include <chrono>
+#include <dlfcn.h>
 #include <unistd.h>
+
+#define SDL_LIB_NAME "libsdl2wrapper.so"
+#define LIB_SOUND_WRAP "libsoundwrapper.so"
+
 
 enum Events { WALL_HIT, SELF_HIT, PICKED_FRUIT, PICKED_SUPER_FRUIT, OK };
 
@@ -63,7 +72,8 @@ private:
 	 *	pointer to the library wrapper
 	 */
 
-	std::shared_ptr<InterfaceLibrary>	lib_wrap;
+	InterfaceLibrary					*lib_wrap;
+//	std::shared_ptr<InterfaceLibrary>	lib_wrap;
 
 	/*
 	 *	pointer to the Fruit object
@@ -81,8 +91,8 @@ private:
 	 *	pointer to the sound wrapper
 	 */
 
-
-	std::shared_ptr<SoundWrapper>		sound_wrap;
+    InterfaceSoundLib                   *sound_wrap;
+//	std::shared_ptr<SoundWrapper>		sound_wrap;
 
 	/*
 	 *	Timer

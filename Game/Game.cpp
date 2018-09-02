@@ -138,9 +138,64 @@ void	Game::RunGame(void)
 	fruit_timer = std::chrono::high_resolution_clock::now();
 	std::chrono::high_resolution_clock::time_point		pause_time;
 	pause_time = std::chrono::high_resolution_clock::now();
+    
+    void	*dl_handle;
+    void    *dl_sound;
 
-	sound_wrap->playBackgroundMusic();
-	while (true)
+
+    dl_handle = dlopen(SDL_LIB_NAME, RTLD_LAZY | RTLD_LOCAL);
+    InterfaceLibrary    *(* LibWrapCreator)(int w, int h);
+    if (!dl_handle)
+    {
+        std::cout << "ERROR: " << dlerror() << std::endl;
+        exit(0);
+    }
+    LibWrapCreator = (InterfaceLibrary *(*)(int w, int h)) dlsym(dl_handle, "createWrapper");
+    if (!LibWrapCreator)
+    {
+        std::cout << "ERROR: " << dlerror() << std::endl;
+        exit(0);
+    }
+
+    lib_wrap = LibWrapCreator(width, height);
+
+    void        (*DeleteLibWrap)(InterfaceLibrary *);
+    DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
+
+    if (!DeleteLibWrap)
+    {
+        std::cout << "ERROR: " << dlerror() << std::endl;
+        exit(0);
+    }
+
+    dl_sound = dlopen(LIB_SOUND_WRAP, RTLD_LAZY | RTLD_LOCAL);
+    if (!dl_sound)
+    {
+        std::cout << "ERROR: " << dlerror() << std::endl;
+        exit(0);
+    }
+    InterfaceSoundLib    *(* createSoundWrap)(void);
+    createSoundWrap = (InterfaceSoundLib *(*)(void)) dlsym(dl_sound, "createSoundWrapper");
+    if (!createSoundWrap)
+    {
+        std::cout << "ERROR: " << dlerror() << std::endl;
+        exit(0);
+    }
+
+    sound_wrap = createSoundWrap();
+
+    void        (*DeleteSoundWrap)(InterfaceSoundLib *);
+    DeleteSoundWrap = (void(*)(InterfaceSoundLib *)) dlsym(dl_sound, "deleteSoundWrapper");
+
+    if (!DeleteSoundWrap)
+    {
+        std::cout << "ERROR: " << dlerror() << std::endl;
+        exit(0);
+    }
+
+    sound_wrap->playBackgroundMusic();
+
+    while (true)
 	{
 		/*
 		 *	Render all the image with the RunLib method and get the input from the user
@@ -419,7 +474,8 @@ Game::Game(char *w, char *h)
 	 *	Create SDL wrapper
 	 */
 
-	lib_wrap = std::make_shared<SdlLibraryWrap>(SdlLibraryWrap(width, height));
+    lib_wrap = nullptr;
+//	lib_wrap = std::make_shared<SdlLibraryWrap>(SdlLibraryWrap(width, height));
 
 	/*
 	 *	Set score value
@@ -463,7 +519,7 @@ Game::Game(char *w, char *h)
 	 *	Create a sound wrapper
 	 */
 
-	sound_wrap = std::make_shared<SoundWrapper>(SoundWrapper());
+    sound_wrap = nullptr;
 
 	/*
 	 *	Read scores from score file

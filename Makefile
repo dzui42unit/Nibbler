@@ -15,14 +15,18 @@ NAME = Nibbler
 SRC = main.cpp \
 	Game/Game.cpp \
 	Snake/Snake.cpp \
-	SdlLibraryWrap/SdlLibraryWrap.cpp \
-	Fruit/Fruit.cpp \
-	SoundWrapper/SoundWrapper.cpp \
+	Fruit/Fruit.cpp
 
+
+#SdlLibraryWrap/SdlLibraryWrap.cpp
 OBJ = $(SRC:.cpp=.o)
 
-CFLAGS = -std=c++14 -I libs/sdl/sdl2/SDL2 -L libs/sdl/sdl2/lib -l SDL2-2.0.0 \
-		 -I libs/sdl/sdl2_image/SDL2 -L libs/sdl/sdl2_image/lib -l SDL2_image -L libs/sdl/sdl2_ttf/lib -l SDL2_ttf -L libs/sdl/sdl2_mixer/lib -l SDL2_mixer
+# CFLAGS = -std=c++14 -I libs/sdl/sdl2/SDL2 -L libs/sdl/sdl2/lib -l SDL2-2.0.0 \
+		  -I libs/sdl/sdl2_image/SDL2 -L libs/sdl/sdl2_image/lib -l SDL2_image -L libs/sdl/sdl2_ttf/lib -l SDL2_ttf -L libs/sdl/sdl2_mixer/lib -l SDL2_mixer
+
+
+CFLAGS = -std=c++14
+		 
 
 CC = clang++
 
@@ -31,7 +35,10 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	clang++ $(OBJ) -L. -lsdl2wrapper -Wl,-rpath,. -L. -lsoundwrapper -Wl,-rpath,.
+
+
+	#$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c  -o $@ $< 
