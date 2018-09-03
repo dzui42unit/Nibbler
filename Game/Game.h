@@ -22,10 +22,10 @@
 #include <dlfcn.h>
 #include <unistd.h>
 
-#define SDL_LIB_NAME "libsdl2wrapper.so"
+#define SDL_LIB_NAME "libs/sdl/libsdl2wrapper.so"
 #define SFML_LIB_NAME "libsfml2wrapper.so"
 #define OPENGL_LIB_NAME "libopengl2wrapper.so"
-#define LIB_SOUND_WRAP "libsoundwrapper.so"
+#define LIB_SOUND_WRAP "libs/SoundWrapper/libsoundwrapper.so"
 
 
 enum Events { WALL_HIT, SELF_HIT, PICKED_FRUIT, PICKED_SUPER_FRUIT, OK };
@@ -136,7 +136,8 @@ private:
 	 *	Scores
 	 */
 
-	std::vector<int>	scores_data;
+
+    std::vector<int>	scores_data;
 
 	/*
 	 *	Pointer to the function that creates an Sound wrapper
@@ -147,6 +148,16 @@ private:
 	 *	Pointer to the function that deletes an Sound wrapper
 	 */
 	void        (*DeleteSoundWrap)(InterfaceSoundLib *);
+
+    /*
+     *  pointer to the dynamic library handler
+     */
+    void		*dl_handle;
+
+    /*
+     *  pointer to the dynamic sound handler
+     */
+    void        *dl_sound;
 
 public:
 

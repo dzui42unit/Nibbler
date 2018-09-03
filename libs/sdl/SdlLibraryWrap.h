@@ -58,10 +58,10 @@ public:
 	void			RenderGameOverScreen(void) final;
 };
 
-extern "C" {
-    SdlLibraryWrap      *createWrapper(int, int);
-    void                deleteWrapper(SdlLibraryWrap *lib);
-}
+//extern "C" {
+//    SdlLibraryWrap      *createWrapper(int, int);
+//    void                deleteWrapper(SdlLibraryWrap *lib);
+//}
 
 
 #endif //NIBBLER_SDLLIBRARYWRAP_H

@@ -29,7 +29,7 @@ void	Game::LoadSoundLibrary(void)
 	 *	Open sound library
 	 */
 
-	dl_sound = dlopen(LIB_SOUND_WRAP, RTLD_LAZY | RTLD_LOCAL);
+	dl_sound = dlopen(LIB_SOUND_WRAP, RTLD_LAZY);
 	if (!dl_sound)
 		dlErrors();
 
@@ -47,7 +47,6 @@ void	Game::LoadSoundLibrary(void)
 	DeleteSoundWrap = (void(*)(InterfaceSoundLib *)) dlsym(dl_sound, "deleteSoundWrapper");
 	if (!DeleteSoundWrap)
 		dlErrors();
-	dlclose(dl_sound);
 }
 
 /*
@@ -59,11 +58,11 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	if (lib_wrap)
 	{
 		DeleteLibWrap(lib_wrap);
-		lib_wrap = nullptr;
+        lib_wrap = nullptr;
+        dlclose(dl_handle);
 	}
 
 	std::string	lib_name;
-	void		*dl_handle;
 
 	switch(lib_nb)
 	{
@@ -83,7 +82,7 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	/*
 	 *	Open a library
 	 */
-	dl_handle = dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_LOCAL);
+	dl_handle = dlopen(lib_name.c_str(), RTLD_LAZY);
 	if (!dl_handle)
 		dlErrors();
 
@@ -102,7 +101,6 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
 	if (!DeleteLibWrap)
 		dlErrors();
-	dlclose(dl_handle);
 }
 
 /*
@@ -254,7 +252,6 @@ void	Game::RunGame(void)
 	pause_time = std::chrono::high_resolution_clock::now();
 
 	LoadGraphicLibrary(Directions::SDL_LIB);
-
 	LoadSoundLibrary();
 
     sound_wrap->playBackgroundMusic();
@@ -608,7 +605,8 @@ Game::Game(const Game &game) :
 		pause(game.pause),
 		scores_data(game.scores_data),
 		createSoundWrap(game.createSoundWrap),
-		DeleteSoundWrap(game.DeleteSoundWrap)
+		DeleteSoundWrap(game.DeleteSoundWrap),
+        dl_handle(game.dl_handle)
 {
 
 }
@@ -636,6 +634,8 @@ Game& 	Game::operator=(const Game &game)
 	DeleteSoundWrap = game.DeleteSoundWrap;
 	LibWrapCreator = game.LibWrapCreator;
 	DeleteLibWrap = game.DeleteLibWrap;
+    dl_handle = game.dl_handle;
+    dl_sound = game.dl_sound;
 	return (*this);
 }
 
@@ -645,7 +645,11 @@ Game& 	Game::operator=(const Game &game)
 
 Game::~Game()
 {
-	delete(snake);
+    if (dl_sound)
+        dlclose(dl_sound);
+    if (dl_handle)
+        dlclose(dl_handle);
+    delete(snake);
 	delete(fruit);
 	delete(super_fruit);
 	delete(sound_wrap);

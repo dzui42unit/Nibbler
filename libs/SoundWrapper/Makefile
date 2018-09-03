@@ -12,20 +12,11 @@
 
 NAME = libsoundwrapper.so
 
-CC = clang++ -std=c++14 -fPIC -Wall -Wextra -Werror
-
-# CFLAGS = -fPIC 
-#-Wall -Wextra -Werror
-
-#LIBS = -I ../sdl/sdl2_mixer/SDL2 -L ../sdl/sdl2_mixer/lib -l SDL2_mixer
-#LIBS += -I ../sdl/sdl2/SDL2 -L ../sdl/sdl2/lib -l SDL2
+CC = clang++ -std=c++14 -Wall -Wextra -Werror
 
 LIBS = -I ../../InterfaceSoundLib
-
 LIBS += -I ../sdl/sdl2/SDL2 -L ../sdl/sdl2/lib -l SDL2
-# LIBS += -I ../sdl/sdl2_image/SDL2 -L ../sdl/sdl2_image/lib -l SDL2_image 
 LIBS += -I ../sdl/sdl2_mixer/SDL2 -L ../sdl/sdl2_mixer/lib -l SDL2_mixer 
-# LIBS += -I ../sdl/sdl2_ttf/SDL2 -L ../sdl/sdl2_ttf/lib -l SDL2_ttf
 LISD += -framework OpenGL -framework AppKit
 
 
@@ -33,10 +24,10 @@ SRC = SoundWrapper.cpp
 
 # OBJ = $(SRC:.cpp=.o)
 
-all: $(OBJ) lib.so
+all: lib.so
 
 lib.so:
-	$(CC) -shared $(SRC) $(LIBS) -o $(NAME)
+	$(CC) -dynamiclib -flat_namespace $(SRC) $(LIBS) -o $(NAME)
 
 # %.o: %.cpp
 # 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 

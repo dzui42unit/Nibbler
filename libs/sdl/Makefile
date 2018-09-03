@@ -12,10 +12,9 @@
 
 NAME = libsdl2wrapper.so
 
-CC = clang++ -std=c++14 -fPIC -Wall -Wextra -Werror
+CC = clang++ -std=c++14
 
-# CFLAGS = -fPIC 
-#-Wall -Wextra -Werror
+# -Wall -Wextra -Werror
 
 LIBS = -I ../../InterfaceLibrary
 LIBS += -I sdl2/SDL2 -L sdl2/lib -l SDL2
@@ -26,15 +25,15 @@ LISD += -framework OpenGL -framework AppKit
 
 SRC = SdlLibraryWrap.cpp
 
-OBJ = $(SRC:.cpp=.o)
+# OBJ = $(SRC:.cpp=.o)
 
 all: lib.so
 
 lib.so:
-	$(CC) -shared $(SRC) $(LIBS) -o $(NAME)
+	$(CC) -dynamiclib -flat_namespace $(SRC) $(LIBS) -o $(NAME)
 
 # %.o: %.cpp
-# 	$(CC) $(CFLAGS) -c  -o $@ $< 
+# 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 
 
 clean:
 	rm -f $(OBJ)

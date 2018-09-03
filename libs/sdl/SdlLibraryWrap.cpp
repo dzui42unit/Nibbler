@@ -491,11 +491,11 @@ SdlLibraryWrap::~SdlLibraryWrap()
 }
 
 
-SdlLibraryWrap      *createWrapper(int w, int h)
+extern "C" SdlLibraryWrap      *createWrapper(int w, int h)
 {
     return (new SdlLibraryWrap(w, h));
 }
-void                deleteWrapper(SdlLibraryWrap *lib)
+extern "C" void                deleteWrapper(SdlLibraryWrap *lib)
 {
     delete lib;
 }
