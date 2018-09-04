@@ -15,7 +15,7 @@ ln -f -s ~/.brew/Cellar/sdl2/*/lib/ libs/sdl/sdl2
 pkg2="sdl2_image"
 pkg3="sdl2_ttf"
 pkg4="sdl2_mixer"
-pkg5="glfw3"
+pkg5="glfw"
 
 if brew list -1 | grep -q "^${pkg2}\$"; then
     echo "Package '$pkg2' is installed"
