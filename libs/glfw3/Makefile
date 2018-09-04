@@ -18,10 +18,7 @@ CC = clang++ -std=c++14
 
 LIBS = -I ../../InterfaceLibrary
 LIBS += -I GLFW/ -L lib/
-#LIBS += -I sdl2_image/SDL2 -L sdl2_image/lib -l SDL2_image 
-#LIBS += -I sdl2_mixer/SDL2 -L sdl2_mixer/lib -l SDL2_mixer 
-#LIBS += -I sdl2_ttf/SDL2 -L sdl2_ttf/lib -l SDL2_ttf
-LISD += -framework OpenGL -framework AppKit
+LIBS += -lglfw -framework OpenGL -framework AppKit
 
 SRC = Glfw3Wrapper.cpp
 
