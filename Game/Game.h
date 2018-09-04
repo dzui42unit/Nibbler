@@ -24,7 +24,7 @@
 
 #define SDL_LIB_NAME "libs/sdl/libsdl2wrapper.so"
 #define SFML_LIB_NAME "libsfml2wrapper.so"
-#define OPENGL_LIB_NAME "libopengl2wrapper.so"
+#define OPENGL_LIB_NAME "libs/glfw3/libglfw3wrapper.so"
 #define LIB_SOUND_WRAP "libs/SoundWrapper/libsoundwrapper.so"
 
 

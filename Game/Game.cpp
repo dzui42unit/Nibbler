@@ -101,6 +101,13 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
 	if (!DeleteLibWrap)
 		dlErrors();
+
+	if (lib_name == OPENGL_LIB_NAME)
+	{
+		std::cout << "Success!\n\n";
+		exit(0);
+	}
+
 }
 
 /*

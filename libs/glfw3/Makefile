@@ -5,48 +5,40 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sprotsen <sprotsen@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/11/01 09:29:35 by sprotsen          #+#    #+#              #
-#    Updated: 2018/09/02 18:32:51 by dzui             ###   ########.fr        #
+#    Created: 2018/08/22 21:10:53 by sprotsen          #+#    #+#              #
+#    Updated: 2018/09/02 18:14:45 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Nibbler
+NAME = libglfw3wrapper.so
 
-SRC = main.cpp \
-	Game/Game.cpp \
-	Snake/Snake.cpp \
-	Fruit/Fruit.cpp
+CC = clang++ -std=c++14
 
-OBJ = $(SRC:.cpp=.o)
+# -Wall -Wextra -Werror
 
-CFLAGS = -std=c++14 -Wall -Wextra -Werror
-		 
+LIBS = -I ../../InterfaceLibrary
+LIBS += -I GLFW/ -L lib/
+#LIBS += -I sdl2_image/SDL2 -L sdl2_image/lib -l SDL2_image 
+#LIBS += -I sdl2_mixer/SDL2 -L sdl2_mixer/lib -l SDL2_mixer 
+#LIBS += -I sdl2_ttf/SDL2 -L sdl2_ttf/lib -l SDL2_ttf
+LISD += -framework OpenGL -framework AppKit
 
-CC = clang++
+SRC = Glfw3Wrapper.cpp
 
-all: lib $(NAME)
+# OBJ = $(SRC:.cpp=.o)
 
-lib:
-	make re -C libs/sdl
-	make re -C libs/SoundWrapper
-	make re -C libs/glfw3
+all: lib.so
 
-$(NAME): $(OBJ)
-	clang++ -o $(NAME) $(OBJ) 
+lib.so:
+	$(CC) -dynamiclib -flat_namespace $(SRC) $(LIBS) -o $(NAME)
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c  -o $@ $< 
+# %.o: %.cpp
+# 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 
 
 clean:
 	rm -f $(OBJ)
-	make clean -C libs/sdl
-	make clean -C libs/SoundWrapper
-	make clean -C libs/glfw3
 
 fclean:	clean
 	rm -f $(NAME)
-	make fclean -C libs/sdl
-	make fclean -C libs/SoundWrapper
-	make fclean -C libs/glfw3
 
 re: fclean all
