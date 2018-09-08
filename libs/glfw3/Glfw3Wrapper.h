@@ -3,15 +3,21 @@
 
 #include "InterfaceLibrary.h"
 #include "glfw3.h"
-#include "glfw3native.h"
+#include <map>
 #include <iostream>
 
 class Glfw3Wrapper : public InterfaceLibrary
 {
 private:
 	GLFWwindow* 	window;
+	int 			width;
+	int				height;
+
 public:
-					Glfw3Wrapper() = delete;
+
+	static int		last_key;
+
+	Glfw3Wrapper() = delete;
 					Glfw3Wrapper(int w, int h);
 					~Glfw3Wrapper();
 					Glfw3Wrapper(const Glfw3Wrapper &glw3);

@@ -210,7 +210,7 @@ void 		 SdlLibraryWrap::RenderMap(const std::vector<std::vector<int>> &game_map)
 	r.w = 32;
 	r.h = 32;
 
-    SDL_RenderCopy(ren, grass_texture, &rect_background, &rect_background);
+	SDL_RenderCopy(ren, grass_texture, &rect_background, &rect_background);
 	for (size_t i = 0; i < game_map.size(); i++)
 	{
 		for (size_t j = 0; j < game_map[i].size(); j++)
@@ -238,8 +238,8 @@ void 		 SdlLibraryWrap::RenderMap(const std::vector<std::vector<int>> &game_map)
 			}
 
 			if (game_map[i][j] == 1) {
-                SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
-            }
+				SDL_RenderCopy(ren, border_texture, &image_texture_part, &r);
+			}
 		}
 	}
 }
@@ -298,63 +298,63 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 		exit(0);
 	}
 
-    /*
-    * 	Init IMG
-    */
+	/*
+	* 	Init IMG
+	*/
 
-    int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-    int initted = IMG_Init(flags);
-    if ((initted & flags) != flags) {
-        std::cout << "IMG_Init: Failed to init required jpg and png support!\n" << std::endl;
-        std::cout << "IMG_Init: %s\n" <<  IMG_GetError() << std::endl;
-    }
+	int flags = IMG_INIT_JPG | IMG_INIT_PNG;
+	int initted = IMG_Init(flags);
+	if ((initted & flags) != flags) {
+		std::cout << "IMG_Init: Failed to init required jpg and png support!\n" << std::endl;
+		std::cout << "IMG_Init: %s\n" <<  IMG_GetError() << std::endl;
+	}
 
 
 	/*
 	 *	Reading textures
 	 */
 
-    SDL_Surface *image_border = IMG_Load("libs/sdl/cube.png");
-    SDL_Surface *image_grass = IMG_Load("libs/sdl/background5.jpg");
-    SDL_Surface *image_snake_head = IMG_Load("libs/sdl/all.png");
-    SDL_Surface *image_snake_body = IMG_Load("libs/sdl/all.png");
-    SDL_Surface *image_super_fruit_texture = IMG_Load("libs/sdl/apple.png");
+	SDL_Surface *image_border = IMG_Load("libs/sdl/cube.png");
+	SDL_Surface *image_grass = IMG_Load("libs/sdl/background5.jpg");
+	SDL_Surface *image_snake_head = IMG_Load("libs/sdl/all.png");
+	SDL_Surface *image_snake_body = IMG_Load("libs/sdl/all.png");
+	SDL_Surface *image_super_fruit_texture = IMG_Load("libs/sdl/apple.png");
 	SDL_Surface *image_game_over_texture = IMG_Load("libs/sdl/game_over.png");
 
 	Sans = TTF_OpenFont("libs/sdl/10.ttf", 100);
 
 	if (!image_border || !image_grass || !image_snake_head || !image_snake_body || !image_game_over_texture || !image_super_fruit_texture)
-    {
-        std::cout << "ERROR upload texture" << std::endl;
-        exit(0);
-    }
-    if (!Sans)
-    {
-        std::cout << "ERROR SANS" << std::endl;
-        exit(0);
-    }
+	{
+		std::cout << "ERROR upload texture" << std::endl;
+		exit(0);
+	}
+	if (!Sans)
+	{
+		std::cout << "ERROR SANS" << std::endl;
+		exit(0);
+	}
 
 	/*
 	 *	Creating of the textures
 	 */
 
-    border_texture = SDL_CreateTextureFromSurface(ren, image_border);
-    grass_texture = SDL_CreateTextureFromSurface(ren, image_grass);
-    snake_head_texture = SDL_CreateTextureFromSurface(ren, image_snake_head);
-    snake_body_texture = SDL_CreateTextureFromSurface(ren, image_snake_body);
-    super_fruit_texture = SDL_CreateTextureFromSurface(ren, image_super_fruit_texture);
+	border_texture = SDL_CreateTextureFromSurface(ren, image_border);
+	grass_texture = SDL_CreateTextureFromSurface(ren, image_grass);
+	snake_head_texture = SDL_CreateTextureFromSurface(ren, image_snake_head);
+	snake_body_texture = SDL_CreateTextureFromSurface(ren, image_snake_body);
+	super_fruit_texture = SDL_CreateTextureFromSurface(ren, image_super_fruit_texture);
 	game_over_screen_texture = SDL_CreateTextureFromSurface(ren, image_game_over_texture);
 
-    if (!border_texture || !grass_texture || !snake_head_texture || !snake_body_texture || !game_over_screen_texture || !super_fruit_texture) {
-        std::cout << "ERROR border texture" << std::endl;
-        exit(1);
-    }
+	if (!border_texture || !grass_texture || !snake_head_texture || !snake_body_texture || !game_over_screen_texture || !super_fruit_texture) {
+		std::cout << "ERROR border texture" << std::endl;
+		exit(1);
+	}
 
-    SDL_FreeSurface(image_border);
-    SDL_FreeSurface(image_grass);
-    SDL_FreeSurface(image_snake_head);
-    SDL_FreeSurface(image_snake_body);
-    SDL_FreeSurface(image_super_fruit_texture);
+	SDL_FreeSurface(image_border);
+	SDL_FreeSurface(image_grass);
+	SDL_FreeSurface(image_snake_head);
+	SDL_FreeSurface(image_snake_body);
+	SDL_FreeSurface(image_super_fruit_texture);
 	SDL_FreeSurface(image_game_over_texture);
 
 
@@ -365,16 +365,16 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Getting parts of the texture for the snake parts
 	 */
 
-    head_up = {64, 0, 32, 32};
-    head_right = {0, 0, 32, 32};
-    head_down = {96, 0, 32, 32};
-    head_left = {32, 0, 32, 32};
+	head_up = {64, 0, 32, 32};
+	head_right = {0, 0, 32, 32};
+	head_down = {96, 0, 32, 32};
+	head_left = {32, 0, 32, 32};
 
 
-    rect_background = {0, 0, w * 32, h * 32};
-    rect_snake_body = {0, 32, 32, 32};
-    rect_food = {96, 32, 32, 32};
-    rect_super_fruit = {0, 0, 50, 50};
+	rect_background = {0, 0, w * 32, h * 32};
+	rect_snake_body = {0, 32, 32, 32};
+	rect_food = {96, 32, 32, 32};
+	rect_super_fruit = {0, 0, 50, 50};
 	game_over_rect = { 0, 0, w * 32 + SIDE_MENU_WIDTH, h * 32};
 
 	/*
@@ -398,12 +398,12 @@ void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos, bool isBonusFruit)
 	r.x = j_pos * r.h;
 	r.y = i_pos * r.w;
 
-    if (isBonusFruit) {
-        SDL_RenderCopy(ren, super_fruit_texture, NULL, &r);
-    }
-    else {
-        SDL_RenderCopy(ren, snake_head_texture, &rect_food, &r);
-    }
+	if (isBonusFruit) {
+		SDL_RenderCopy(ren, super_fruit_texture, NULL, &r);
+	}
+	else {
+		SDL_RenderCopy(ren, snake_head_texture, &rect_food, &r);
+	}
 }
 
 /*
@@ -411,15 +411,15 @@ void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos, bool isBonusFruit)
  */
 
 SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
-        : win(sdl.win),
-          ren(sdl.ren),
-          now(sdl.now),
-          last(sdl.last),
-          image_texture_part(sdl.image_texture_part),
-          border_texture(sdl.border_texture),
-          grass_texture(sdl.grass_texture),
-          snake_head_texture(sdl.snake_head_texture),
-          snake_body_texture(sdl.snake_body_texture),
+		: win(sdl.win),
+		  ren(sdl.ren),
+		  now(sdl.now),
+		  last(sdl.last),
+		  image_texture_part(sdl.image_texture_part),
+		  border_texture(sdl.border_texture),
+		  grass_texture(sdl.grass_texture),
+		  snake_head_texture(sdl.snake_head_texture),
+		  snake_body_texture(sdl.snake_body_texture),
 		  super_fruit_texture(sdl.super_fruit_texture),
 		  game_over_screen_texture(sdl.game_over_screen_texture),
 		  head_up(sdl.head_up),
@@ -427,7 +427,7 @@ SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
 		  head_down(sdl.head_down),
 		  head_left(sdl.head_left),
 		  rect_background(sdl.rect_background),
-          rect_snake_body(sdl.rect_snake_body),
+		  rect_snake_body(sdl.rect_snake_body),
 		  rect_food(sdl.rect_food),
 		  rect_super_fruit(sdl.rect_super_fruit),
 		  game_over_rect(sdl.game_over_rect),
@@ -493,9 +493,9 @@ SdlLibraryWrap::~SdlLibraryWrap()
 
 extern "C" SdlLibraryWrap      *createWrapper(int w, int h)
 {
-    return (new SdlLibraryWrap(w, h));
+	return (new SdlLibraryWrap(w, h));
 }
 extern "C" void                deleteWrapper(SdlLibraryWrap *lib)
 {
-    delete lib;
+	delete lib;
 }
