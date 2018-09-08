@@ -159,6 +159,9 @@ private:
      */
     void        *dl_sound;
 
+	std::string		library_name;
+
+	int				cur_lib;
 public:
 
 	/*

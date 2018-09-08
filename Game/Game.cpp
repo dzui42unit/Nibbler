@@ -55,14 +55,15 @@ void	Game::LoadSoundLibrary(void)
 
 void	Game::LoadGraphicLibrary(Directions lib_nb)
 {
+	std::string lib_name;
+
 	if (lib_wrap)
 	{
+		std::cout << "DELETED\n";
 		DeleteLibWrap(lib_wrap);
-        lib_wrap = nullptr;
-        dlclose(dl_handle);
+		lib_wrap = nullptr;
+		dlclose(dl_handle);
 	}
-
-	std::string	lib_name;
 
 	switch(lib_nb)
 	{
@@ -76,7 +77,7 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 			lib_name = OPENGL_LIB_NAME;
 			break ;
 		default:
-			break ;
+			break;
 	}
 
 	/*
@@ -106,13 +107,7 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
 	if (!DeleteLibWrap)
 		dlErrors();
-
-	if (lib_name == OPENGL_LIB_NAME)
-	{
-		std::cout << "Success!\n\n";
-		exit(0);
-	}
-
+	std::cout << "CREATED\n";
 }
 
 /*
@@ -163,7 +158,6 @@ Events	Game::CheckCollision(void) const
 		&& head_coords.second == fruit->GetFruitPosition().second)
 	{
 		lib_wrap->RenderFood(-1, -1, false);
-//		sound_wrap->playEatSound();
 		return (Events::PICKED_FRUIT);
 	}
 
@@ -175,9 +169,7 @@ Events	Game::CheckCollision(void) const
 		&& head_coords.second == super_fruit->GetFruitPosition().second)
 	{
 		lib_wrap->RenderFood(-1, -1, true);
-//		sound_wrap->playEatSound();
 		return (Events::PICKED_SUPER_FRUIT);
-
 	}
 
 	/*
@@ -266,9 +258,11 @@ void	Game::RunGame(void)
 	LoadGraphicLibrary(Directions::SDL_LIB);
 	LoadSoundLibrary();
 
-    sound_wrap->playBackgroundMusic();
+	sound_wrap->playBackgroundMusic();
 
-    while (true)
+	direction = Directions::NOTHING_PRESSED;
+//	bool test = false;
+	while (true)
 	{
 		/*
 		 *	Render all the image with the RunLib method and get the input from the user
@@ -277,6 +271,15 @@ void	Game::RunGame(void)
 		 */
 
 		direction = lib_wrap->HandleInput();
+		if ((direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB)
+			&& (cur_lib != direction))
+		{
+			cur_lib = direction;
+			std::cout << "Change lib\n\n";
+			LoadGraphicLibrary(static_cast<Directions>(direction));
+			direction = Directions::NOTHING_PRESSED;
+//			direction = snake->GetSnakeDirection();
+		}
 		if (game_run)
 		{
 			lib_wrap->ClearImage();
@@ -306,10 +309,6 @@ void	Game::RunGame(void)
 		{
 			StoreScore();
 			break ;
-		}
-		if (direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB) {
-			LoadGraphicLibrary(static_cast<Directions>(direction));
-			direction = Directions::NOTHING_PRESSED;
 		}
 
 		/*
@@ -479,7 +478,7 @@ void	Game::GenerateMap(const std::vector<std::pair<int, int>> &snake_parts)
 		int i_map = unif_range_h(rng);
 		while (snake->CheckSnakePartCoordinate(i_map, j_map) || snake->CheckSnakePartCoordinate(i_map, width - j_map - 1)
 			   || (game_map[i_map][j_map] && game_map[i_map][width - j_map - 1])
-				|| (snake_parts[0].first - 1 == i_map))
+			   || (snake_parts[0].first - 1 == i_map))
 		{
 			i_map = unif_range_h(rng);
 			j_map = unif_range_w(rng);
@@ -530,7 +529,7 @@ Game::Game(char *w, char *h)
 	 *	Create SDL wrapper
 	 */
 
-    lib_wrap = nullptr;
+	lib_wrap = nullptr;
 
 	/*
 	 *	Set score value
@@ -542,7 +541,7 @@ Game::Game(char *w, char *h)
 	 *	Set game speed
 	 */
 
-	game_speed = 700;
+	game_speed = 350;
 
 	/*
 	 *	Time in seconds to the food respawn
@@ -574,7 +573,7 @@ Game::Game(char *w, char *h)
 	 *	Create a sound wrapper
 	 */
 
-    sound_wrap = nullptr;
+	sound_wrap = nullptr;
 
 	/*
 	 *	Read scores from score file
@@ -585,13 +584,15 @@ Game::Game(char *w, char *h)
 
 	file.open(FILE_SCORES);
 
-    while (std::getline(file, temp_string))
-    {
-        scores_data.push_back(std::stoi(temp_string));
-        temp_string.clear();
-    }
+	while (std::getline(file, temp_string))
+	{
+		scores_data.push_back(std::stoi(temp_string));
+		temp_string.clear();
+	}
 
 	file.close();
+
+	cur_lib = 0;
 }
 
 /*
@@ -618,7 +619,9 @@ Game::Game(const Game &game) :
 		scores_data(game.scores_data),
 		createSoundWrap(game.createSoundWrap),
 		DeleteSoundWrap(game.DeleteSoundWrap),
-        dl_handle(game.dl_handle)
+		dl_handle(game.dl_handle),
+		library_name(game.library_name),
+		cur_lib(game.cur_lib)
 {
 
 }
@@ -646,8 +649,10 @@ Game& 	Game::operator=(const Game &game)
 	DeleteSoundWrap = game.DeleteSoundWrap;
 	LibWrapCreator = game.LibWrapCreator;
 	DeleteLibWrap = game.DeleteLibWrap;
-    dl_handle = game.dl_handle;
-    dl_sound = game.dl_sound;
+	dl_handle = game.dl_handle;
+	dl_sound = game.dl_sound;
+	library_name = game.library_name;
+	cur_lib = game.cur_lib;
 	return (*this);
 }
 
@@ -657,11 +662,11 @@ Game& 	Game::operator=(const Game &game)
 
 Game::~Game()
 {
-    if (dl_sound)
-        dlclose(dl_sound);
-    if (dl_handle)
-        dlclose(dl_handle);
-    delete(snake);
+	if (dl_sound)
+		dlclose(dl_sound);
+	if (dl_handle)
+		dlclose(dl_handle);
+	delete(snake);
 	delete(fruit);
 	delete(super_fruit);
 	delete(sound_wrap);

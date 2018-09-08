@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/dzui/Projects/NibblerToWorkWith
+CMAKE_SOURCE_DIR = /Users/sprotsen/Nibbler
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/sprotsen/Nibbler/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Nibbler.dir/depend.make
@@ -66,6 +66,6 @@ CMakeFiles/Nibbler.dir/clean:
 .PHONY : CMakeFiles/Nibbler.dir/clean
 
 CMakeFiles/Nibbler.dir/depend:
-	cd /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/dzui/Projects/NibblerToWorkWith /Users/dzui/Projects/NibblerToWorkWith /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug /Users/dzui/Projects/NibblerToWorkWith/cmake-build-debug/CMakeFiles/Nibbler.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/sprotsen/Nibbler/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/sprotsen/Nibbler /Users/sprotsen/Nibbler /Users/sprotsen/Nibbler/cmake-build-debug /Users/sprotsen/Nibbler/cmake-build-debug /Users/sprotsen/Nibbler/cmake-build-debug/CMakeFiles/Nibbler.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Nibbler.dir/depend
 
