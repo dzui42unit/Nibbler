@@ -11,6 +11,7 @@
 
 enum Directions { NOTHING_PRESSED = -1, UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4, PAUSE = -2, SDL_LIB = 10, SFML_LIB = 20, OPENGL_LIB = 30 };
 
+
 class Snake
 {
 private:

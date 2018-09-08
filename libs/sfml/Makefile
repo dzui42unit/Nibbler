@@ -5,51 +5,41 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sprotsen <sprotsen@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/11/01 09:29:35 by sprotsen          #+#    #+#              #
-#    Updated: 2018/09/02 18:32:51 by dzui             ###   ########.fr        #
+#    Created: 2018/08/22 21:10:53 by sprotsen          #+#    #+#              #
+#    Updated: 2018/09/02 18:14:45 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Nibbler
+NAME = libsfmlwrapper.so
 
-SRC = main.cpp \
-	Game/Game.cpp \
-	Snake/Snake.cpp \
-	Fruit/Fruit.cpp
+CC = clang++ -std=c++14
 
-OBJ = $(SRC:.cpp=.o)
+# -Wall -Wextra -Werror
 
-CFLAGS = -std=c++14 -Wall -Wextra -Werror
-		 
+LIBS = -I ../../InterfaceLibrary -I.
+LIBS += -I SFML -L lib/  -lsfml-window -lsfml-graphics -Wl,-rpath, ~/.brew/Cellar/sfml/2.4.2_1/lib/
+LISD += -framework OpenGL -framework AppKit
 
-CC = clang++
+SRC = SfmlWrapper.cpp
 
-all: lib $(NAME)
+# OBJ = $(SRC:.cpp=.o)
 
-lib:
-	make re -C libs/sdl
-	make re -C libs/SoundWrapper
-	make re -C libs/glfw3
-	make re -C libs/sfml
+all: lib.so 
 
-$(NAME): $(OBJ)
-	clang++ -o $(NAME) $(OBJ) 
+lib.so:
+	$(CC) -dynamiclib -flat_namespace  $(SRC) $(LIBS) -o $(NAME)
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c  -o $@ $< 
+
+#-Wl,rpath, ~/.brew/Cellar/sfml/2.4.2_1/lib/
+
+# %.o: %.cpp
+# 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 
+
 
 clean:
 	rm -f $(OBJ)
-	make clean -C libs/sdl
-	make clean -C libs/SoundWrapper
-	make clean -C libs/glfw3
-	make clean -C libs/sfml
 
 fclean:	clean
 	rm -f $(NAME)
-	make fclean -C libs/sdl
-	make fclean -C libs/SoundWrapper
-	make fclean -C libs/glfw3
-	make fclean -C libs/sfml
 
 re: fclean all

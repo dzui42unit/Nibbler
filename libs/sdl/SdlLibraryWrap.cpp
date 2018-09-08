@@ -170,14 +170,15 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 int 			SdlLibraryWrap::HandleInput(void)
 {
-	if (SDL_PollEvent(&event))
+    if (SDL_PollEvent(&event))
 	{
-		if(event.type == SDL_QUIT )
+        if(event.type == SDL_QUIT )
 			return (0);
 		if (event.key.keysym.sym == SDLK_ESCAPE && event.key.repeat == 0)
 			return (0);
-		if (event.type == SDL_KEYDOWN)
+		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 		{
+         std::cout << "SdlLibraryWrap::HandleInput" << std::endl;
 			if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0)
 				return (Directions::UP);
 			if (event.key.keysym.sym == SDLK_LEFT && event.key.repeat == 0)
@@ -253,6 +254,9 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	/*
 	 *	Perform initialization for the SDL
 	 */
+
+    std::cout << "Constr SDL2" << std::endl;
+
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
@@ -478,7 +482,8 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 
 SdlLibraryWrap::~SdlLibraryWrap()
 {
-	SDL_DestroyWindow(win);
+    std::cout << "Destr SDL2" << std::endl;
+    SDL_DestroyWindow(win);
 	SDL_DestroyRenderer(ren);
 	TTF_CloseFont(Sans);
 	SDL_DestroyTexture(border_texture);
@@ -493,6 +498,7 @@ SdlLibraryWrap::~SdlLibraryWrap()
 
 extern "C" SdlLibraryWrap      *createWrapper(int w, int h)
 {
+    std::cout << "createWrapper SDl\n";
     return (new SdlLibraryWrap(w, h));
 }
 extern "C" void                deleteWrapper(SdlLibraryWrap *lib)

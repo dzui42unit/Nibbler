@@ -82,9 +82,14 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	/*
 	 *	Open a library
 	 */
-	dl_handle = dlopen(lib_name.c_str(), RTLD_LAZY);
-	if (!dl_handle)
-		dlErrors();
+	dl_handle = dlopen(lib_name.c_str() , RTLD_LAZY);
+//    dl_handle = dlopen("libs/sfml/libsfmlwrapper.so" , RTLD_LAZY);
+
+	if (!dl_handle) {
+        std::cout << "ERROR HERE\n";
+        dlErrors();
+    }
+
 
 	/*
 	 *	Get a pointer to the Constructor of the library object
