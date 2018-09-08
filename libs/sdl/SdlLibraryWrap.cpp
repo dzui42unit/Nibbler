@@ -1,6 +1,8 @@
 #include "SdlLibraryWrap.h"
 #include "../../Snake/Snake.h"
 
+#include <map>
+
 /*
  *	A method that renders a game over screen
  */
@@ -170,31 +172,56 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 int 			SdlLibraryWrap::HandleInput(void)
 {
-	if (SDL_PollEvent(&event))
+//	static std::map<int, int>	key_events = { {SDLK_KP_1, SDL_KEYUP}, {SDLK_KP_2, SDL_KEYUP}, {SDLK_KP_3, SDL_KEYUP} };
+
+	SDL_PollEvent(&event);
+	if(event.type == SDL_QUIT)
+		return (0);
+	if (event.key.keysym.sym == SDLK_ESCAPE)
+		return (0);
+	if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 	{
-		if(event.type == SDL_QUIT )
-			return (0);
-		if (event.key.keysym.sym == SDLK_ESCAPE && event.key.repeat == 0)
-			return (0);
-		if (event.type == SDL_KEYDOWN)
+		if (event.key.keysym.sym == SDLK_UP)
+			return (Directions::UP);
+		if (event.key.keysym.sym == SDLK_LEFT)
+			return (Directions::LEFT);
+		if (event.key.keysym.sym == SDLK_DOWN)
+			return (Directions::DOWN);
+		if (event.key.keysym.sym == SDLK_RIGHT)
+			return (Directions::RIGHT);
+		if (event.key.keysym.sym == SDLK_SPACE)
+			return (Directions::PAUSE);
+//		if (event.key.keysym.sym == SDLK_KP_1)
+//			return (Directions::SDL_LIB);
+//		if (event.key.keysym.sym == SDLK_KP_2 && key_events[SDLK_KP_2] == SDL_KEYDOWN)
+//		{
+//			key_events[SDLK_KP_2] = SDL_KEYUP;
+//			return (Directions::SDL_LIB);
+//		}
+//		key_events[SDLK_KP_2] = SDL_KEYDOWN;
+//
+//		if (event.key.keysym.sym == SDLK_KP_3 && key_events[SDLK_KP_3] == SDL_KEYDOWN)
+//		{
+//			key_events[SDLK_KP_3] = SDL_KEYUP;
+//			return (Directions::SDL_LIB);
+//		}
+//		key_events[SDLK_KP_3] = SDL_KEYDOWN;
+//
+		if (event.key.keysym.sym == SDLK_KP_2)
+			return (Directions::SFML_LIB);
+		if (event.key.keysym.sym == SDLK_KP_3)
 		{
-			if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0)
-				return (Directions::UP);
-			if (event.key.keysym.sym == SDLK_LEFT && event.key.repeat == 0)
-				return (Directions::LEFT);
-			if (event.key.keysym.sym == SDLK_DOWN && event.key.repeat == 0)
-				return (Directions::DOWN);
-			if (event.key.keysym.sym == SDLK_RIGHT && event.key.repeat == 0)
-				return (Directions::RIGHT);
-			if (event.key.keysym.sym == SDLK_SPACE && event.key.repeat == 0)
-				return (Directions::PAUSE);
-			if (event.key.keysym.sym == SDLK_KP_1 && event.key.repeat == 0)
-				return (Directions::SDL_LIB);
-			if (event.key.keysym.sym == SDLK_KP_2 && event.key.repeat == 0)
-				return (Directions::SFML_LIB);
-			if (event.key.keysym.sym == SDLK_KP_3 && event.key.repeat == 0)
-				return (Directions::OPENGL_LIB);
+			std::cout << "Call from sdl\n\n";
+			return (Directions::OPENGL_LIB);
 		}
+
+//		state = glfwGetKey(window, GLFW_KEY_KP_2);
+//		if (state == GLFW_PRESS && key_events[GLFW_KEY_KP_2] == GLFW_PRESS)
+//		{
+//			key_events[GLFW_KEY_KP_2] = state;
+//			return (Directions::SFML_LIB);
+//		}
+//		key_events[GLFW_KEY_KP_2] = state;
 	}
 	return (Directions::NOTHING_PRESSED);
 }
@@ -478,7 +505,6 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 
 SdlLibraryWrap::~SdlLibraryWrap()
 {
-	SDL_DestroyWindow(win);
 	SDL_DestroyRenderer(ren);
 	TTF_CloseFont(Sans);
 	SDL_DestroyTexture(border_texture);
@@ -487,6 +513,8 @@ SdlLibraryWrap::~SdlLibraryWrap()
 	SDL_DestroyTexture(snake_body_texture);
 	SDL_DestroyTexture(super_fruit_texture);
 	SDL_DestroyTexture(game_over_screen_texture);
+	SDL_PollEvent(nullptr);
+	SDL_DestroyWindow(win);
 	IMG_Quit();
 }
 

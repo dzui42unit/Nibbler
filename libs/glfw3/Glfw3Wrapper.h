@@ -12,6 +12,7 @@ private:
 	GLFWwindow* 	window;
 	int 			width;
 	int				height;
+//	static std::map<int, int>	key_events;
 
 public:
 

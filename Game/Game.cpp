@@ -55,105 +55,54 @@ void	Game::LoadSoundLibrary(void)
 
 void	Game::LoadGraphicLibrary(Directions lib_nb)
 {
-	static int lib_number = 0;
-	std::string	lib_name;
+	std::string lib_name;
 
-	if (lib_number != lib_nb)
+	if (lib_wrap)
 	{
-		if (lib_wrap)
-		{
-			std::cout << "DELETED\n";
-			DeleteLibWrap(lib_wrap);
-			lib_wrap = nullptr;
-			dlclose(dl_handle);
-		}
-
-		switch(lib_nb)
-		{
-			case Directions::SDL_LIB :
-				lib_name = SDL_LIB_NAME;
-				break ;
-			case Directions::SFML_LIB :
-				lib_name = SFML_LIB_NAME;
-				break;
-			case Directions::OPENGL_LIB :
-				lib_name = OPENGL_LIB_NAME;
-				break ;
-			default:
-				break;
-		}
-
-		/*
-		 *	Open a library
-		 */
-		dl_handle = dlopen(lib_name.c_str(), RTLD_LAZY);
-		if (!dl_handle)
-			dlErrors();
-
-		/*
-		 *	Get a pointer to the Constructor of the library object
-		 */
-
-		LibWrapCreator = (InterfaceLibrary *(*)(int w, int h)) dlsym(dl_handle, "createWrapper");
-		if (!LibWrapCreator)
-			dlErrors();
-
-		/*
-		 *	Get a pointer to the Destructor of the
-		 */
-		lib_wrap = LibWrapCreator(width, height);
-		DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
-		if (!DeleteLibWrap)
-			dlErrors();
-		std::cout << "CREATED\n";
-		lib_number = lib_nb;
+		std::cout << "DELETED\n";
+		DeleteLibWrap(lib_wrap);
+		lib_wrap = nullptr;
+		dlclose(dl_handle);
 	}
-//	if (lib_wrap)
-//	{
-//		std::cout << "DELETED\n";
-//		DeleteLibWrap(lib_wrap);
-//		lib_wrap = nullptr;
-//		dlclose(dl_handle);
-//	}
-//
-//	switch(lib_nb)
-//	{
-//		case Directions::SDL_LIB :
-//			lib_name = SDL_LIB_NAME;
-//			break ;
-//		case Directions::SFML_LIB :
-//			lib_name = SFML_LIB_NAME;
-//			break;
-//		case Directions::OPENGL_LIB :
-//			lib_name = OPENGL_LIB_NAME;
-//			break ;
-//		default:
-//			break;
-//	}
-//
-//	/*
-//	 *	Open a library
-//	 */
-//	dl_handle = dlopen(lib_name.c_str(), RTLD_LAZY);
-//	if (!dl_handle)
-//		dlErrors();
-//
-//	/*
-//	 *	Get a pointer to the Constructor of the library object
-//	 */
-//
-//	LibWrapCreator = (InterfaceLibrary *(*)(int w, int h)) dlsym(dl_handle, "createWrapper");
-//	if (!LibWrapCreator)
-//		dlErrors();
-//
-//	/*
-//	 *	Get a pointer to the Destructor of the
-//	 */
-//	lib_wrap = LibWrapCreator(width, height);
-//	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
-//	if (!DeleteLibWrap)
-//		dlErrors();
-//	std::cout << "CREATED\n";
+
+	switch(lib_nb)
+	{
+		case Directions::SDL_LIB :
+			lib_name = SDL_LIB_NAME;
+			break ;
+		case Directions::SFML_LIB :
+			lib_name = SFML_LIB_NAME;
+			break;
+		case Directions::OPENGL_LIB :
+			lib_name = OPENGL_LIB_NAME;
+			break ;
+		default:
+			break;
+	}
+
+	/*
+	 *	Open a library
+	 */
+	dl_handle = dlopen(lib_name.c_str(), RTLD_LAZY);
+	if (!dl_handle)
+		dlErrors();
+
+	/*
+	 *	Get a pointer to the Constructor of the library object
+	 */
+
+	LibWrapCreator = (InterfaceLibrary *(*)(int w, int h)) dlsym(dl_handle, "createWrapper");
+	if (!LibWrapCreator)
+		dlErrors();
+
+	/*
+	 *	Get a pointer to the Destructor of the
+	 */
+	lib_wrap = LibWrapCreator(width, height);
+	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
+	if (!DeleteLibWrap)
+		dlErrors();
+	std::cout << "CREATED\n";
 }
 
 /*
@@ -307,7 +256,7 @@ void	Game::RunGame(void)
 	sound_wrap->playBackgroundMusic();
 
 	direction = Directions::NOTHING_PRESSED;
-	bool test = false;
+//	bool test = false;
 	while (true)
 	{
 		/*
@@ -317,6 +266,15 @@ void	Game::RunGame(void)
 		 */
 
 		direction = lib_wrap->HandleInput();
+		if ((direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB)
+			&& (cur_lib != direction))
+		{
+			cur_lib = direction;
+			std::cout << "Change lib\n\n";
+			LoadGraphicLibrary(static_cast<Directions>(direction));
+			direction = Directions::NOTHING_PRESSED;
+//			direction = snake->GetSnakeDirection();
+		}
 		if (game_run)
 		{
 			lib_wrap->ClearImage();
@@ -326,7 +284,6 @@ void	Game::RunGame(void)
 			lib_wrap->RenderSnake(snake->GetSnakeParts(), snake->GetSnakeDirection());
 			lib_wrap->RenderSideMenu(static_cast<int>(game_map[0].size() * 32), 0, score, static_cast<float>(time_left), scores_data);
 			lib_wrap->RenderImage();
-			test = true;
 		}
 		else
 		{
@@ -347,10 +304,6 @@ void	Game::RunGame(void)
 		{
 			StoreScore();
 			break ;
-		}
-		if (direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB) {
-			LoadGraphicLibrary(static_cast<Directions>(direction));
-			direction = Directions::NOTHING_PRESSED;
 		}
 
 		/*
@@ -633,6 +586,8 @@ Game::Game(char *w, char *h)
 	}
 
 	file.close();
+
+	cur_lib = 0;
 }
 
 /*
@@ -660,7 +615,8 @@ Game::Game(const Game &game) :
 		createSoundWrap(game.createSoundWrap),
 		DeleteSoundWrap(game.DeleteSoundWrap),
 		dl_handle(game.dl_handle),
-		lib_name(game.lib_name)
+		library_name(game.library_name),
+		cur_lib(game.cur_lib)
 {
 
 }
@@ -690,7 +646,8 @@ Game& 	Game::operator=(const Game &game)
 	DeleteLibWrap = game.DeleteLibWrap;
 	dl_handle = game.dl_handle;
 	dl_sound = game.dl_sound;
-	lib_name = game.lib_name;
+	library_name = game.library_name;
+	cur_lib = game.cur_lib;
 	return (*this);
 }
 

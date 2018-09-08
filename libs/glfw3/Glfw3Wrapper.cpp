@@ -75,8 +75,6 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
 	if (action == GLFW_PRESS)
 		Glfw3Wrapper::last_key = key;
-	else
-		Glfw3Wrapper::last_key = Directions::NOTHING_PRESSED;
 }
 
 int 			Glfw3Wrapper::HandleInput(void)
@@ -85,12 +83,7 @@ int 			Glfw3Wrapper::HandleInput(void)
 	int state;
 
 	glfwPollEvents();
-	if (Glfw3Wrapper::last_key == GLFW_KEY_ESCAPE)
-		return (0);
-	if (glfwWindowShouldClose(window))
-		return (0);
-	if (Glfw3Wrapper::last_key == GLFW_KEY_SPACE)
-		return (Directions::PAUSE);
+
 
 
 	state = glfwGetKey(window, GLFW_KEY_ESCAPE);
@@ -99,6 +92,7 @@ int 			Glfw3Wrapper::HandleInput(void)
 	state = glfwGetKey(window, GLFW_KEY_SPACE);
 	if (state == GLFW_RELEASE && key_events[GLFW_KEY_SPACE] == GLFW_PRESS)
 	{
+		std::cout << "PAusE \n";
 		key_events[GLFW_KEY_SPACE] = state;
 		return (Directions::PAUSE);
 	}
@@ -114,38 +108,46 @@ int 			Glfw3Wrapper::HandleInput(void)
 		return (Directions::LEFT);
 	state = glfwGetKey(window, GLFW_KEY_RIGHT);
 	if (state == GLFW_PRESS)
-	{
 		return (Directions::RIGHT);
-	}
+
+//	state = glfwGetKey(window, GLFW_KEY_KP_1);
+//	if (state == GLFW_RELEASE)
+//		return (Directions::SDL_LIB);
+
 	state = glfwGetKey(window, GLFW_KEY_KP_1);
-	if (state == GLFW_PRESS && key_events[GLFW_KEY_KP_1] == GLFW_PRESS)
+	if (state == GLFW_RELEASE && key_events[GLFW_KEY_KP_1] == GLFW_PRESS)
 	{
 		key_events[GLFW_KEY_KP_1] = state;
 		return (Directions::SDL_LIB);
 	}
 	key_events[GLFW_KEY_KP_1] = state;
-
+//
 	state = glfwGetKey(window, GLFW_KEY_KP_2);
-	if (state == GLFW_PRESS && key_events[GLFW_KEY_KP_2] == GLFW_PRESS)
+	if (state == GLFW_RELEASE && key_events[GLFW_KEY_KP_2] == GLFW_PRESS)
 	{
 		key_events[GLFW_KEY_KP_2] = state;
 		return (Directions::SFML_LIB);
 	}
 	key_events[GLFW_KEY_KP_2] = state;
 
-	state = glfwGetKey(window, GLFW_KEY_KP_3);
-	if (state == GLFW_PRESS && key_events[GLFW_KEY_KP_3] == GLFW_PRESS)
-	{
-		key_events[GLFW_KEY_KP_3] = state;
-		return (Directions::OPENGL_LIB);
-	}
-	key_events[GLFW_KEY_KP_3] = state;
+//	state = glfwGetKey(window, GLFW_KEY_KP_3);
+//	if (state == GLFW_RELEASE && key_events[GLFW_KEY_KP_3] == GLFW_PRESS)
+//	{
+//		std::cout << "OPENGL_LIB\n";
+//		key_events[GLFW_KEY_KP_3] = state;
+//		return (Directions::OPENGL_LIB);
+//	}
+//	key_events[GLFW_KEY_KP_3] = state;
 
 
 
 
 
-
+//	state = glfwGetKey(window, GLFW_KEY_KP_1);
+//	if (state == GLFW_PRESS)
+//	{
+//		return (Directions::SDL_LIB);
+//	}
 //	state = glfwGetKey(window, GLFW_KEY_KP_2);
 //	if (state == GLFW_PRESS)
 //	{
@@ -154,9 +156,11 @@ int 			Glfw3Wrapper::HandleInput(void)
 //	state = glfwGetKey(window, GLFW_KEY_KP_3); // && libState == GLFW_PRESS
 //	if (state == GLFW_PRESS)
 //	{
+//		std::cout << "OPENGL_LIB\n";
 //		return (Directions::OPENGL_LIB);
 //	}
 //	libState = state;
+//	std::cout << "NOTHING\n\n";
 	return (Directions::NOTHING_PRESSED);
 }
 
@@ -192,6 +196,7 @@ void 		 Glfw3Wrapper::RenderMap(const std::vector<std::vector<int>> &game_map)
 
 Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 {
+	std::cout << "GlWrapper Created\n\n";
 
 	width = w * 32 + SIDE_MENU_WIDTH;
 	height = h * 32;
@@ -208,7 +213,7 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 	}
 
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);
+//	glfwSwapInterval(1);
 
 	/*
 	 *	Initialize callback function for the input handler
@@ -218,6 +223,16 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 
 	glOrtho(0, width, height, 0, 0, 1);
+
+//	key_events[GLFW_KEY_ESCAPE] = 0;
+//	key_events[GLFW_KEY_SPACE] = Directions::PAUSE;
+//	key_events[GLFW_KEY_UP] = Directions::UP;
+//	key_events[GLFW_KEY_DOWN] = Directions::DOWN;
+//	key_events[GLFW_KEY_LEFT] = Directions::LEFT;
+//	key_events[GLFW_KEY_RIGHT] = Directions::RIGHT;
+//	key_events[GLFW_KEY_KP_1] = Directions::SDL_LIB;
+//	key_events[GLFW_KEY_KP_2] = Directions::SFML_LIB;
+//	key_events[GLFW_KEY_KP_3] = Directions::OPENGL_LIB;
 }
 
 /*
@@ -249,6 +264,7 @@ Glfw3Wrapper::Glfw3Wrapper(const Glfw3Wrapper &glfw3)
 	window = glfw3.window;
 	width = glfw3.width;
 	height = glfw3.height;
+//	key_events = glfw3.key_events;
 }
 
 /*
@@ -260,6 +276,7 @@ Glfw3Wrapper 	&Glfw3Wrapper::operator=(const Glfw3Wrapper &glfw3)
 	window = glfw3.window;
 	width = glfw3.width;
 	height = glfw3.height;
+//	key_events = glfw3.key_events;
 	return (*this);
 }
 
