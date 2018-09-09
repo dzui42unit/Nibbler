@@ -205,6 +205,7 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h) : last_key(-1)
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);
 	}
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 	window = glfwCreateWindow(width, height, "Nibbler OpenGl", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
