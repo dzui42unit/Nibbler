@@ -5,7 +5,7 @@ scores.nibbler
 libs/sdl/libsdl2wrapper.so.dSYM/*
 libs/sfml/libsfmlwrapper.so.dSYM/*
 libs/glfw3/libglfw3wrapper.so.dSYM/*
-
+.idea/workspace.xml
 libs/glfw3/GLFW
 libs/glfw3/lib
 libs/sdl/sdl2/SDL2

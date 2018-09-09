@@ -5,6 +5,7 @@
 #include "SfmlWrapper.h"
 #include "../../Snake/Snake.h"
 
+
 SfmlWrapper::SfmlWrapper(int w, int h) {
     w *= 2;
     h *= 2;

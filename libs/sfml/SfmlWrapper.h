@@ -8,10 +8,11 @@
 #endif //NIBBLER_SFMLWRAPPER_H
 
 #include "../../InterfaceLibrary/InterfaceLibrary.h"
-#include <Graphics.hpp>
-#include <Graphics/Image.hpp>
-#include <Window/VideoMode.hpp>
-#include <Graphics/Sprite.hpp>
+#include "Graphics.hpp"
+#include "Graphics/Image.hpp"
+#include "Window/VideoMode.hpp"
+#include "Window/WindowStyle.hpp"
+#include "Graphics/Sprite.hpp"
 #include "iostream"
 
 
