@@ -22,28 +22,28 @@ pkg6="sfml"
 #    echo "Package '$pkg2' is installed"
 #else
    # echo "Package '$pkg2' is not installed"
-   brew reinstall sdl2 sdl2_image
+   brew install sdl2 sdl2_image
 #fi
 
 #if brew list -1 | grep -q "^${pkg3}\$"; then
 #    echo "Package '$pkg3' is installed"
 #else
    # echo "Package '$pkg3' is not installed"
-   brew reinstall sdl2 sdl2_ttf
+   brew install sdl2 sdl2_ttf
 #fi
 
 #if brew list -1 | grep -q "^${pkg4}\$"; then
 #    echo "Package '$pkg4' is installed"
 #else
    # echo "Package '$pkg4' is not installed"
-   brew reinstall sdl2 sdl2_mixer
+   brew install sdl2 sdl2_mixer
 #fi
 
 #if brew list -1 | grep -q "^${pkg5}\$"; then
 #    echo "Package '$pkg5' is installed"
 #else
    # echo "Package '$pkg5' is not installed"
-   brew reinstall glfw3
+   brew install glfw3
 #fi
 
 if brew list -1 | grep -q "^${pkg6}\$"; then
