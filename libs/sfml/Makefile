@@ -12,7 +12,7 @@
 
 NAME = libsfmlwrapper.so
 
-CC = clang++ -std=c++14
+CC = clang++ -g -std=c++14
 
 # -Wall -Wextra -Werror
 

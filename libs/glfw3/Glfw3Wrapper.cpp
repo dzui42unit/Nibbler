@@ -2,7 +2,7 @@
 #include "../../Snake/Snake.h"
 #include <cmath>
 
-int	Glfw3Wrapper::last_key = -1;
+// int	Glfw3Wrapper::last_key = -1;
 
 /*
  *	A method that renders a game over screen
@@ -71,11 +71,11 @@ void 			Glfw3Wrapper::RenderSnake(const std::vector<std::pair<int, int>> &snake_
  */
 
 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	if (action == GLFW_PRESS)
-		Glfw3Wrapper::last_key = key;
-}
+// static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+// {
+// 	if (action == GLFW_PRESS)
+// 		last_key = key;
+// }
 
 int 			Glfw3Wrapper::HandleInput(void)
 {
@@ -194,9 +194,10 @@ void 		 Glfw3Wrapper::RenderMap(const std::vector<std::vector<int>> &game_map)
  *	Default constructor for the SDL wrap
  */
 
-Glfw3Wrapper::Glfw3Wrapper(int w, int h)
+Glfw3Wrapper::Glfw3Wrapper(int w, int h) : last_key(-1)
 {
 	std::cout << "GlWrapper Created\n\n";
+
 
 	width = w * 32 + SIDE_MENU_WIDTH;
 	height = h * 32;
@@ -261,7 +262,7 @@ void	Glfw3Wrapper::RenderFood(int i_pos, int j_pos, bool isBonusFruit)
 
 Glfw3Wrapper::Glfw3Wrapper(const Glfw3Wrapper &glfw3)
 {
-	window = glfw3.window;
+    window = glfw3.window;
 	width = glfw3.width;
 	height = glfw3.height;
 //	key_events = glfw3.key_events;
@@ -273,7 +274,7 @@ Glfw3Wrapper::Glfw3Wrapper(const Glfw3Wrapper &glfw3)
 
 Glfw3Wrapper 	&Glfw3Wrapper::operator=(const Glfw3Wrapper &glfw3)
 {
-	window = glfw3.window;
+    window = glfw3.window;
 	width = glfw3.width;
 	height = glfw3.height;
 //	key_events = glfw3.key_events;
@@ -286,7 +287,9 @@ Glfw3Wrapper 	&Glfw3Wrapper::operator=(const Glfw3Wrapper &glfw3)
 
 Glfw3Wrapper::~Glfw3Wrapper()
 {
-	glfwDestroyWindow(window);
+    glfwDestroyWindow(window);
+    glfwTerminate();
+//	system("leaks Nibbler -q");
 }
 
 extern "C" Glfw3Wrapper      *createWrapper(int w, int h)

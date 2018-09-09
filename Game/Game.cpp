@@ -43,7 +43,7 @@ void	Game::LoadSoundLibrary(void)
 	/*
 	 *	Create a sound library
 	 */
-	sound_wrap = createSoundWrap();
+//	sound_wrap = createSoundWrap();
 	DeleteSoundWrap = (void(*)(InterfaceSoundLib *)) dlsym(dl_sound, "deleteSoundWrapper");
 	if (!DeleteSoundWrap)
 		dlErrors();
@@ -57,13 +57,12 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 {
 	std::string lib_name;
 
-	if (lib_wrap)
-	{
-		std::cout << "DELETED\n";
-		DeleteLibWrap(lib_wrap);
-		lib_wrap = nullptr;
-		dlclose(dl_handle);
-	}
+
+	if (lib_wrap) {
+        DeleteLibWrap(lib_wrap);
+        lib_wrap = nullptr;
+        dlclose(dl_handle);
+    }
 
 	switch(lib_nb)
 	{
@@ -255,10 +254,11 @@ void	Game::RunGame(void)
 	std::chrono::high_resolution_clock::time_point		pause_time;
 	pause_time = std::chrono::high_resolution_clock::now();
 
+	std::cout << "START GAME************************\n";
 	LoadGraphicLibrary(Directions::SDL_LIB);
-	LoadSoundLibrary();
+//	LoadSoundLibrary();
 
-	sound_wrap->playBackgroundMusic();
+//	sound_wrap->playBackgroundMusic();
 
 	direction = Directions::NOTHING_PRESSED;
 //	bool test = false;
@@ -271,11 +271,12 @@ void	Game::RunGame(void)
 		 */
 
 		direction = lib_wrap->HandleInput();
+//		std::cout << "direction: " << direction << std::endl;
 		if ((direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB)
 			&& (cur_lib != direction))
 		{
 			cur_lib = direction;
-			std::cout << "Change lib\n\n";
+			std::cout << "Change lib ***** " << cur_lib << std::endl;
 			LoadGraphicLibrary(static_cast<Directions>(direction));
 			direction = Directions::NOTHING_PRESSED;
 //			direction = snake->GetSnakeDirection();
@@ -325,7 +326,7 @@ void	Game::RunGame(void)
 				fruit_timer = std::chrono::high_resolution_clock::now();
 				super_fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
 				super_fruit_present = true;
-				sound_wrap->playBonusFruitAppearsSound();
+//				sound_wrap->playBonusFruitAppearsSound();
 			}
 
 			/*
@@ -360,7 +361,7 @@ void	Game::RunGame(void)
 			{
 				fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
 				score += 10;
-				sound_wrap->playEatSound();
+//				sound_wrap->playEatSound();
 
 				/*
 				 *	we set TRUE to the move_norm_or_grow  to indicate that the size of snake should be increased
@@ -374,7 +375,7 @@ void	Game::RunGame(void)
 				 */
 				super_fruit->HideFruit();
 				score += 50;
-				sound_wrap->playEatSound();
+//				sound_wrap->playEatSound();
 				move_norm_or_grow = true;
 
 				/*
@@ -411,7 +412,7 @@ void	Game::RunGame(void)
 			{
 				StoreScore();
 				game_run = false;
-				sound_wrap->playGameOverSound();
+//				sound_wrap->playGameOverSound();
 				continue ;
 			}
 

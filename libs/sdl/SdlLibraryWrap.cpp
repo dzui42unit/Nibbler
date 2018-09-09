@@ -172,8 +172,10 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 int 			SdlLibraryWrap::HandleInput(void)
 {
+//    static std::map<int, int>	key_events = { {SDLK_KP_1, SDL_KEYUP}, {SDLK_KP_2, SDL_KEYUP}, {SDLK_KP_3, SDL_KEYUP} };
+    static std::map<int, int>	key_events = { {SDLK_KP_1, SDL_KEYUP}};
 
-    if (SDL_PollEvent(&event))
+    while (SDL_PollEvent(&event))
 	{
         if(event.type == SDL_QUIT )
 			return (0);
@@ -181,7 +183,6 @@ int 			SdlLibraryWrap::HandleInput(void)
 			return (0);
 		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 		{
-         std::cout << "SdlLibraryWrap::HandleInput" << std::endl;
 			if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0)
 				return (Directions::UP);
 			if (event.key.keysym.sym == SDLK_LEFT && event.key.repeat == 0)
@@ -198,8 +199,6 @@ int 			SdlLibraryWrap::HandleInput(void)
 				return (Directions::SFML_LIB);
 			if (event.key.keysym.sym == SDLK_KP_3 && event.key.repeat == 0)
 				return (Directions::OPENGL_LIB);
-//	static std::map<int, int>	key_events = { {SDLK_KP_1, SDL_KEYUP}, {SDLK_KP_2, SDL_KEYUP}, {SDLK_KP_3, SDL_KEYUP} };
-
 		}
 	}
 	return (Directions::NOTHING_PRESSED);
@@ -259,8 +258,6 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	/*
 	 *	Perform initialization for the SDL
 	 */
-
-    std::cout << "Constr SDL2" << std::endl;
 
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -488,16 +485,18 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 SdlLibraryWrap::~SdlLibraryWrap()
 {
 	SDL_DestroyRenderer(ren);
-	TTF_CloseFont(Sans);
 	SDL_DestroyTexture(border_texture);
 	SDL_DestroyTexture(grass_texture);
 	SDL_DestroyTexture(snake_head_texture);
 	SDL_DestroyTexture(snake_body_texture);
 	SDL_DestroyTexture(super_fruit_texture);
 	SDL_DestroyTexture(game_over_screen_texture);
-	SDL_PollEvent(nullptr);
 	SDL_DestroyWindow(win);
+	TTF_CloseFont(Sans);
+	TTF_Quit();
 	IMG_Quit();
+	SDL_Quit();
+	system("leaks Nibbler -q");
 }
 
 

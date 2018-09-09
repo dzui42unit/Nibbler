@@ -6,7 +6,7 @@
 #    By: sprotsen <sprotsen@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/01 09:29:35 by sprotsen          #+#    #+#              #
-#    Updated: 2018/09/05 20:40:18 by dzui             ###   ########.fr        #
+#    Updated: 2018/09/08 20:37:20 by sprotsen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC = main.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
-CFLAGS = -std=c++14 -Wall -Wextra -Werror
+CFLAGS = -g -std=c++14 -Wall -Wextra -Werror
 		 
 
 CC = clang++

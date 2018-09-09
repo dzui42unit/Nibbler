@@ -54,5 +54,7 @@ public:
     sf::Sprite          sprite_snake;
     sf::Sprite          sprite_game_over;
 
+    sf::Font            font;
+
 
 };

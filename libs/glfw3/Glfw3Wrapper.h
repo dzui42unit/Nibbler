@@ -16,7 +16,7 @@ private:
 
 public:
 
-	static int		last_key;
+	int		last_key;
 
 	Glfw3Wrapper() = delete;
 					Glfw3Wrapper(int w, int h);

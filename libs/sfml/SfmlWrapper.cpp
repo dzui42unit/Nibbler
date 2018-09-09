@@ -13,7 +13,7 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
      *  Init Windows
      */
 
-    win.create(sf::VideoMode(w * 32, h * 32), "Nibbler");
+    win.create(sf::VideoMode(w * 32 + (SIDE_MENU_WIDTH * 2), h * 32), "Nibbler");
     if (!win.isOpen()) {
         std::cout << "Error: can't open SFML window" << std::endl;
         exit(1);
@@ -30,24 +30,29 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
     sf::Image     image_backgroud;
     if (!image_backgroud.loadFromFile("libs/sfml/sfml_background2.jpg")) {
         std::cout << "Error: can't load image for background" << std::endl;
+        exit(0);
     }
     sf::IntRect  rect_background(0, 0, (w * 32), (h * 32));
     if (!texture_background.loadFromImage(image_backgroud, rect_background)) {
         std::cout << "Error: can't create texture from background image" << std::endl;
+        exit(0);
     }
 
     sf::Image   all;
     if (!all.loadFromFile("libs/sfml/All64.png")) {
         std::cout << "Error: can't load image" << std::endl;
+        exit(0);
     }
 
 
     sf::IntRect  rect_border(64, 128, 64, 64);
     if (!texture_border.loadFromImage(all, rect_border)) {
         std::cout << "Error: can't create texture from border image" << std::endl;
+        exit(0);
     }
     if (!texture_border_block.loadFromImage(all, sf::IntRect(0, 128, 64, 64))) {
         std::cout << "Error: can't create texture from border image" << std::endl;
+        exit(0);
     }
 
     sprite.setTexture(texture_background);
@@ -55,12 +60,14 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
     sf::IntRect  rect_food(64, 192, 64, 64);
     if (!texture_food.loadFromImage(all, rect_food)) {
         std::cout << "Error: can't create texture from food image" << std::endl;
+        exit(0);
     }
     sprite_food.setTexture(texture_food);
 
     sf::IntRect  rect_super_food(192, 128, 64, 64);
     if (!texture_super_food.loadFromImage(all, rect_super_food)) {
         std::cout << "Error: can't create texture from super_food image" << std::endl;
+        exit(0);
     }
     sprite_super_food.setTexture(texture_super_food);
 
@@ -69,15 +76,18 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
         !texture_snake_head_left.loadFromImage(all, sf::IntRect(128, 256, 64, 64)) ||
         !texture_snake_head_right.loadFromImage(all, sf::IntRect(64, 256, 64, 64)))  {
         std::cout << "Error: can't create texture from snake image" << std::endl;
+        exit(0);
     }
 
     sf::IntRect     rect_snake_body(0, 64, 64, 64);
     if (!texture_snake_body.loadFromImage(all, rect_snake_body)) {
         std::cout << "Error: can't create texture from snake_body image" << std::endl;
+        exit(0);
     }
 
     if (!texture_game_over.loadFromFile("libs/sfml/game_over.png")) {
         std::cout << "Error: can't create texture from game_over image" << std::endl;
+        exit(0);
     }
 
     sf::Vector2u size = texture_game_over.getSize();
@@ -85,11 +95,20 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
     sprite_game_over.scale(((w * 32) / static_cast<float>(size.x)), ((h * 32) / static_cast<float>(size.y)));
     sprite_game_over.setTexture(texture_game_over);
 
+    /*
+     * working with text
+     */
+
+    if (!font.loadFromFile("libs/sfml/10.ttf")) {
+        std::cout << "Error: can't load ttf file";
+        exit (0);
+    }
 }
 
 SfmlWrapper::~SfmlWrapper() {
-    std::cout << "Call destructor SfmlWrapper" << std::endl;
+    win.clear();
     win.close();
+//    system("leaks Nibbler -q");
 }
 
 SfmlWrapper::SfmlWrapper(const SfmlWrapper &sfml) {
@@ -138,14 +157,12 @@ void SfmlWrapper::RenderFood(int x, int y, bool isBonusFruit) {
 
 int SfmlWrapper::HandleInput() {
 
-    if (win.pollEvent(event))
+    while (win.isOpen() && win.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
             return (0);
         if (event.type == sf::Event::KeyPressed)
         {
-            std::cout << "KEY PRess SFML\n";
-
             if (event.key.code == sf::Keyboard::Escape)
                 return (0);
             if (event.key.code == sf::Keyboard::Left)
