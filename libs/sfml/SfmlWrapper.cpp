@@ -13,7 +13,7 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
      *  Init Windows
      */
 
-    win.create(sf::VideoMode(w * 32 + (SIDE_MENU_WIDTH * 2), h * 32), "Nibbler SFML");
+    win.create(sf::VideoMode(w * 32 + (SIDE_MENU_WIDTH * 2), h * 32), "Nibbler SFML", sf::Style::Titlebar | sf::Style::Close);
     if (!win.isOpen()) {
         std::cout << "Error: can't open SFML window" << std::endl;
         exit(1);

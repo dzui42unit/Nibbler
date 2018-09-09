@@ -496,7 +496,7 @@ SdlLibraryWrap::~SdlLibraryWrap()
 	TTF_Quit();
 	IMG_Quit();
 	SDL_QuitSubSystem(SDL_INIT_VIDEO);
-	system("leaks Nibbler -q");
+//	system("leaks Nibbler -q");
 }
 
 
