@@ -205,14 +205,13 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h) : last_key(-1)
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);
 	}
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	window = glfwCreateWindow(width, height, "Nibbler OpenGl", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
-
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	glfwMakeContextCurrent(window);
 //	glfwSwapInterval(1);
 

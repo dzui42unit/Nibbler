@@ -272,7 +272,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 *	Create a window
 	 */
 
-	if (!(win = SDL_CreateWindow("Nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + SIDE_MENU_WIDTH, h * 32, SDL_WINDOW_OPENGL)))
+	if (!(win = SDL_CreateWindow("Nibbler SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w * 32 + SIDE_MENU_WIDTH, h * 32, SDL_WINDOW_OPENGL)))
 	{
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);

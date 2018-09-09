@@ -13,15 +13,11 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
      *  Init Windows
      */
 
-    win.create(sf::VideoMode(w * 32 + (SIDE_MENU_WIDTH * 2), h * 32), "Nibbler");
+    win.create(sf::VideoMode(w * 32 + (SIDE_MENU_WIDTH * 2), h * 32), "Nibbler SFML");
     if (!win.isOpen()) {
         std::cout << "Error: can't open SFML window" << std::endl;
         exit(1);
     }
-
-//    sf::Vector2u size = win.getSize();
-//    std::cout << size.x << std::endl;
-//    std::cout << size.y << std::endl;
 
     /*
      *  create background
@@ -90,9 +86,13 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
         exit(0);
     }
 
+    /*
+     *  prepare game over/ game_over screen
+     */
+
     sf::Vector2u size = texture_game_over.getSize();
 
-    sprite_game_over.scale(((w * 32) / static_cast<float>(size.x)), ((h * 32) / static_cast<float>(size.y)));
+    sprite_game_over.scale((((w * 32) + (SIDE_MENU_WIDTH * 2)) / static_cast<float>(size.x)), ((h * 32) / static_cast<float>(size.y)));
     sprite_game_over.setTexture(texture_game_over);
 
     /*
@@ -103,19 +103,90 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
         std::cout << "Error: can't load ttf file";
         exit (0);
     }
+
+    text_score.setFont(font);
+    text_score.setStyle(sf::Text::Bold);
+    text_score.setCharacterSize(60);
+    text_score.setPosition(w * 32 + 30, 30);
+    text_score.setFillColor(sf::Color::Yellow);
+
+    text_time_left.setFont(font);
+    text_time_left.setStyle(sf::Text::Bold);
+    text_time_left.setCharacterSize(60);
+    text_time_left.setPosition(w * 32 + 30, 120);
+    text_time_left.setFillColor(sf::Color::Yellow);
+
+    text_best_score.setFont(font);
+    text_best_score.setStyle(sf::Text::Bold);
+    text_best_score.setCharacterSize(60);
+    text_best_score.setPosition(w * 32 + 30, 210);
+    text_best_score.setFillColor(sf::Color::Yellow);
+    text_best_score.setString("BEST SCORES:");
+
+    text_score_element.setFont(font);
+    text_score_element.setStyle(sf::Text::Bold);
+    text_score_element.setCharacterSize(60);
+    text_score_element.setFillColor(sf::Color::Yellow);
 }
 
 SfmlWrapper::~SfmlWrapper() {
-    win.clear();
+//    win.clear();
     win.close();
 //    system("leaks Nibbler -q");
 }
 
-SfmlWrapper::SfmlWrapper(const SfmlWrapper &sfml) {
-    //TODO Add info
+SfmlWrapper::SfmlWrapper(const SfmlWrapper &sfml)
+        : event(sfml.event),
+          texture_background(sfml.texture_background),
+          texture_border(sfml.texture_border),
+          texture_border_block(sfml.texture_border_block),
+          texture_food(sfml.texture_food),
+          texture_super_food(sfml.texture_super_food),
+          texture_snake_head_up(sfml.texture_snake_head_up),
+          texture_snake_head_down(sfml.texture_snake_head_down),
+          texture_snake_head_left(sfml.texture_snake_head_left),
+          texture_snake_head_right(sfml.texture_snake_head_right),
+          texture_snake_body(sfml.texture_snake_body),
+          texture_game_over(sfml.texture_game_over),
+          sprite(sfml.sprite),
+          sprite_border(sfml.sprite_border),
+          sprite_food(sfml.sprite_food),
+          sprite_super_food(sfml.sprite_super_food),
+          sprite_snake(sfml.sprite_snake),
+          sprite_game_over(sfml.sprite_game_over),
+          font(sfml.font),
+          text_score(sfml.text_score),
+          text_time_left(sfml.text_time_left),
+          text_best_score(sfml.text_best_score),
+          text_score_element(sfml.text_score_element)
+{
+
 }
+
 SfmlWrapper& SfmlWrapper::operator=(const SfmlWrapper &sfml) {
-    //TODO Add info
+    event = sfml.event;
+    texture_background = sfml.texture_background;
+    texture_border = sfml.texture_border;
+    texture_border_block = sfml.texture_border_block;
+    texture_food = sfml.texture_food;
+    texture_super_food = sfml.texture_super_food;
+    texture_snake_head_up = sfml.texture_snake_head_up;
+    texture_snake_head_down = sfml.texture_snake_head_down;
+    texture_snake_head_left = sfml.texture_snake_head_left;
+    texture_snake_head_right = sfml.texture_snake_head_right;
+    texture_snake_body = sfml.texture_snake_body;
+    texture_game_over = sfml.texture_game_over;
+    sprite = sfml.sprite;
+    sprite_border = sfml.sprite_border;
+    sprite_food = sfml.sprite_food;
+    sprite_super_food = sfml.sprite_super_food;
+    sprite_snake = sfml.sprite_snake;
+    sprite_game_over = sfml.sprite_game_over;
+    font = sfml.font;
+    text_score = sfml.text_score;
+    text_time_left = sfml.text_time_left;
+    text_best_score = sfml.text_best_score;
+    text_score_element = sfml.text_score_element;
     return *this;
 }
 
@@ -208,7 +279,6 @@ void SfmlWrapper::RenderSnake(const std::vector <std::pair<int, int>> &snake_par
         case 2: {
             sprite_snake.setTexture(texture_snake_head_down);
             break;
-
         }
         case 3: {
             sprite_snake.setTexture(texture_snake_head_left);
@@ -230,12 +300,23 @@ void SfmlWrapper::RenderSnake(const std::vector <std::pair<int, int>> &snake_par
 
 void SfmlWrapper::RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) {
 
+    text_score.setString("Score: " + std::to_string(score));
+    win.draw(text_score);
+    text_time_left.setString("Time left: " + std::to_string(time_left));
+    win.draw(text_time_left);
+    win.draw(text_best_score);
+
+    for (size_t i = 0, k = 300; i < score_data.size(); i++) {
+        text_score_element.setPosition(w * 2 + 30, k);
+        text_score_element.setString(std::to_string(i + 1) + ": " + std::to_string(score_data[i]));
+        k += 70;
+        win.draw(text_score_element);
+    }
 }
 
 void SfmlWrapper::RenderGameOverScreen() {
     win.draw(sprite_game_over);
 }
-
 
 extern "C" SfmlWrapper      *createWrapper(int w, int h)
 {

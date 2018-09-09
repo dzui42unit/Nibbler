@@ -56,5 +56,11 @@ public:
 
     sf::Font            font;
 
+    sf::Text            text_score;
+    sf::Text            text_time_left;
+    sf::Text            text_best_score;
+    sf::Text            text_score_element;
+
+
 
 };

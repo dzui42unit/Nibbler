@@ -1,0 +1,4 @@
+cmake-build-debug/*
+libs/sdl/.DS_Store
+libs/sfml/.DS_Store
+scores.nibblere
