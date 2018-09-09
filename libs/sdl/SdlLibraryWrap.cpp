@@ -193,8 +193,8 @@ int 			SdlLibraryWrap::HandleInput(void)
 				return (Directions::RIGHT);
 			if (event.key.keysym.sym == SDLK_SPACE && event.key.repeat == 0)
 				return (Directions::PAUSE);
-			if (event.key.keysym.sym == SDLK_KP_1 && event.key.repeat == 0)
-				return (Directions::SDL_LIB);
+//			if (event.key.keysym.sym == SDLK_KP_1 && event.key.repeat == 0)
+//				return (Directions::SDL_LIB);
 			if (event.key.keysym.sym == SDLK_KP_2 && event.key.repeat == 0)
 				return (Directions::SFML_LIB);
 			if (event.key.keysym.sym == SDLK_KP_3 && event.key.repeat == 0)

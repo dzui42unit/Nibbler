@@ -278,7 +278,8 @@ void	Game::RunGame(void)
 			cur_lib = direction;
 			std::cout << "Change lib ***** " << cur_lib << std::endl;
 			LoadGraphicLibrary(static_cast<Directions>(direction));
-			direction = Directions::NOTHING_PRESSED;
+//			direction = Directions::NOTHING_PRESSED;
+			continue ;
 //			direction = snake->GetSnakeDirection();
 		}
 		if (game_run)
@@ -326,7 +327,7 @@ void	Game::RunGame(void)
 				fruit_timer = std::chrono::high_resolution_clock::now();
 				super_fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, fruit->GetFruitPosition().first, fruit->GetFruitPosition().second);
 				super_fruit_present = true;
-//				sound_wrap->playBonusFruitAppearsSound();
+				sound_wrap->playBonusFruitAppearsSound();
 			}
 
 			/*
@@ -361,7 +362,7 @@ void	Game::RunGame(void)
 			{
 				fruit->SetFruitPosition(game_map, snake->GetSnakeParts(), width, height, super_fruit->GetFruitPosition().first, super_fruit->GetFruitPosition().second);
 				score += 10;
-//				sound_wrap->playEatSound();
+				sound_wrap->playEatSound();
 
 				/*
 				 *	we set TRUE to the move_norm_or_grow  to indicate that the size of snake should be increased
@@ -375,7 +376,7 @@ void	Game::RunGame(void)
 				 */
 				super_fruit->HideFruit();
 				score += 50;
-//				sound_wrap->playEatSound();
+				sound_wrap->playEatSound();
 				move_norm_or_grow = true;
 
 				/*

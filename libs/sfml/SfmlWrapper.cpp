@@ -248,8 +248,8 @@ int SfmlWrapper::HandleInput() {
                 return (Directions::PAUSE);
             if (event.key.code == sf::Keyboard::Numpad1)
                 return (Directions::SDL_LIB);
-            if (event.key.code == sf::Keyboard::Numpad2)
-                return (Directions::SFML_LIB);
+//            if (event.key.code == sf::Keyboard::Numpad2)
+//                return (Directions::SFML_LIB);
             if (event.key.code == sf::Keyboard::Numpad3)
                 return (Directions::OPENGL_LIB);
         }
