@@ -34,7 +34,7 @@ void	Game::LoadSoundLibrary(void)
 		dlErrors();
 
 	/*
-	 *	Get a pointer to the constructor of the sound libary
+	 *	Get a pointer to the constructor of the sound library
 	 */
 	createSoundWrap = (InterfaceSoundLib *(*)(void)) dlsym(dl_sound, "createSoundWrapper");
 	if (!createSoundWrap)
@@ -43,7 +43,7 @@ void	Game::LoadSoundLibrary(void)
 	/*
 	 *	Create a sound library
 	 */
-//	sound_wrap = createSoundWrap();
+	sound_wrap = createSoundWrap();
 	DeleteSoundWrap = (void(*)(InterfaceSoundLib *)) dlsym(dl_sound, "deleteSoundWrapper");
 	if (!DeleteSoundWrap)
 		dlErrors();
@@ -256,9 +256,9 @@ void	Game::RunGame(void)
 
 	std::cout << "START GAME************************\n";
 	LoadGraphicLibrary(Directions::SDL_LIB);
-//	LoadSoundLibrary();
+	LoadSoundLibrary();
 
-//	sound_wrap->playBackgroundMusic();
+	sound_wrap->playBackgroundMusic();
 
 	direction = Directions::NOTHING_PRESSED;
 //	bool test = false;

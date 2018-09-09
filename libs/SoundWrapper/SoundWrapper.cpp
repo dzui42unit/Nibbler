@@ -7,12 +7,6 @@
 
 SoundWrapper::SoundWrapper()
 {
-	if (SDL_Init(SDL_INIT_AUDIO) < 0)
-	{
-		std::cout << "ERROR: SDL_INIT_AUDIO" << std::endl;
-		exit(0);
-	}
-
 	if( Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1 )
 	{
 		std::cout << "ERROR: Mix_OpenAudio" << std::endl;
@@ -154,4 +148,3 @@ void                deleteSoundWrapper(SoundWrapper *lib)
 {
 	delete lib;
 }
-

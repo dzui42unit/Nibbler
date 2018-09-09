@@ -282,7 +282,7 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	 * 	Init audio device
 	 */
 
-	SDL_Init(SDL_INIT_AUDIO);
+//	SDL_Init(SDL_INIT_AUDIO);
 
 	/*
 	 *	Check if it was created
@@ -495,7 +495,7 @@ SdlLibraryWrap::~SdlLibraryWrap()
 	TTF_CloseFont(Sans);
 	TTF_Quit();
 	IMG_Quit();
-	SDL_Quit();
+	SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	system("leaks Nibbler -q");
 }
 
