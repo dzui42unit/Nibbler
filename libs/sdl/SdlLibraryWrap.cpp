@@ -172,9 +172,6 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 int 			SdlLibraryWrap::HandleInput(void)
 {
-//    static std::map<int, int>	key_events = { {SDLK_KP_1, SDL_KEYUP}, {SDLK_KP_2, SDL_KEYUP}, {SDLK_KP_3, SDL_KEYUP} };
-    static std::map<int, int>	key_events = { {SDLK_KP_1, SDL_KEYUP}};
-
     while (SDL_PollEvent(&event))
 	{
         if(event.type == SDL_QUIT )
@@ -193,8 +190,6 @@ int 			SdlLibraryWrap::HandleInput(void)
 				return (Directions::RIGHT);
 			if (event.key.keysym.sym == SDLK_SPACE && event.key.repeat == 0)
 				return (Directions::PAUSE);
-//			if (event.key.keysym.sym == SDLK_KP_1 && event.key.repeat == 0)
-//				return (Directions::SDL_LIB);
 			if (event.key.keysym.sym == SDLK_KP_2 && event.key.repeat == 0)
 				return (Directions::SFML_LIB);
 			if (event.key.keysym.sym == SDLK_KP_3 && event.key.repeat == 0)
@@ -277,13 +272,6 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 		std::cout << "ERROR SDL CREATE WINDOW" << std::endl;
 		exit(0);
 	}
-
-	/*
-	 * 	Init audio device
-	 */
-
-//	SDL_Init(SDL_INIT_AUDIO);
-
 	/*
 	 *	Check if it was created
 	 */
@@ -496,7 +484,6 @@ SdlLibraryWrap::~SdlLibraryWrap()
 	TTF_Quit();
 	IMG_Quit();
 	SDL_QuitSubSystem(SDL_INIT_VIDEO);
-//	system("leaks Nibbler -q");
 }
 
 

@@ -1,7 +1,3 @@
-//
-// Created by Serhii Protsenko on 04.09.2018.
-//
-
 #include "SfmlWrapper.h"
 #include "../../Snake/Snake.h"
 
@@ -131,9 +127,7 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
 }
 
 SfmlWrapper::~SfmlWrapper() {
-//    win.clear();
     win.close();
-//    system("leaks Nibbler -q");
 }
 
 SfmlWrapper::SfmlWrapper(const SfmlWrapper &sfml)
@@ -249,8 +243,6 @@ int SfmlWrapper::HandleInput() {
                 return (Directions::PAUSE);
             if (event.key.code == sf::Keyboard::Numpad1)
                 return (Directions::SDL_LIB);
-//            if (event.key.code == sf::Keyboard::Numpad2)
-//                return (Directions::SFML_LIB);
             if (event.key.code == sf::Keyboard::Numpad3)
                 return (Directions::OPENGL_LIB);
         }

@@ -83,13 +83,11 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	 *	Open a library
 	 */
 	dl_handle = dlopen(lib_name.c_str() , RTLD_LAZY);
-//    dl_handle = dlopen("libs/sfml/libsfmlwrapper.so" , RTLD_LAZY);
 
 	if (!dl_handle) {
         std::cout << "ERROR HERE\n";
         dlErrors();
     }
-
 
 	/*
 	 *	Get a pointer to the Constructor of the library object
@@ -106,7 +104,6 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	DeleteLibWrap = (void(*)(InterfaceLibrary *)) dlsym(dl_handle, "deleteWrapper");
 	if (!DeleteLibWrap)
 		dlErrors();
-	std::cout << "CREATED\n";
 }
 
 /*
@@ -254,14 +251,12 @@ void	Game::RunGame(void)
 	std::chrono::high_resolution_clock::time_point		pause_time;
 	pause_time = std::chrono::high_resolution_clock::now();
 
-	std::cout << "START GAME************************\n";
 	LoadGraphicLibrary(Directions::SDL_LIB);
 	LoadSoundLibrary();
 
 	sound_wrap->playBackgroundMusic();
 
 	direction = Directions::NOTHING_PRESSED;
-//	bool test = false;
 	while (true)
 	{
 		/*
@@ -271,16 +266,12 @@ void	Game::RunGame(void)
 		 */
 
 		direction = lib_wrap->HandleInput();
-//		std::cout << "direction: " << direction << std::endl;
 		if ((direction == Directions::SDL_LIB || direction == Directions::SFML_LIB || direction == Directions::OPENGL_LIB)
 			&& (cur_lib != direction))
 		{
 			cur_lib = direction;
-			std::cout << "Change lib ***** " << cur_lib << std::endl;
 			LoadGraphicLibrary(static_cast<Directions>(direction));
-//			direction = Directions::NOTHING_PRESSED;
 			continue ;
-//			direction = snake->GetSnakeDirection();
 		}
 		if (game_run)
 		{
@@ -413,7 +404,7 @@ void	Game::RunGame(void)
 			{
 				StoreScore();
 				game_run = false;
-//				sound_wrap->playGameOverSound();
+				sound_wrap->playGameOverSound();
 				continue ;
 			}
 

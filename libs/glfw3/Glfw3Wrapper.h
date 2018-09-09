@@ -12,12 +12,8 @@ private:
 	GLFWwindow* 	window;
 	int 			width;
 	int				height;
-//	static std::map<int, int>	key_events;
-
+	GLFWimage		image_data;
 public:
-
-	int		last_key;
-
 	Glfw3Wrapper() = delete;
 					Glfw3Wrapper(int w, int h);
 					~Glfw3Wrapper();

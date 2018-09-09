@@ -2,8 +2,6 @@
 #include "../../Snake/Snake.h"
 #include <cmath>
 
-// int	Glfw3Wrapper::last_key = -1;
-
 /*
  *	A method that renders a game over screen
  */
@@ -70,13 +68,6 @@ void 			Glfw3Wrapper::RenderSnake(const std::vector<std::pair<int, int>> &snake_
  *	Movement of the snake UP, DOWN, LEFT, RIGHT and ESC
  */
 
-
-// static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-// {
-// 	if (action == GLFW_PRESS)
-// 		last_key = key;
-// }
-
 int 			Glfw3Wrapper::HandleInput(void)
 {
 	static std::map<int, int>	key_events = { {GLFW_KEY_SPACE, GLFW_RELEASE}, {GLFW_KEY_KP_1, GLFW_RELEASE}, {GLFW_KEY_KP_2, GLFW_RELEASE}, {GLFW_KEY_KP_3, GLFW_RELEASE} };
@@ -92,7 +83,6 @@ int 			Glfw3Wrapper::HandleInput(void)
 	state = glfwGetKey(window, GLFW_KEY_SPACE);
 	if (state == GLFW_RELEASE && key_events[GLFW_KEY_SPACE] == GLFW_PRESS)
 	{
-		std::cout << "PAusE \n";
 		key_events[GLFW_KEY_SPACE] = state;
 		return (Directions::PAUSE);
 	}
@@ -109,11 +99,6 @@ int 			Glfw3Wrapper::HandleInput(void)
 	state = glfwGetKey(window, GLFW_KEY_RIGHT);
 	if (state == GLFW_PRESS)
 		return (Directions::RIGHT);
-
-//	state = glfwGetKey(window, GLFW_KEY_KP_1);
-//	if (state == GLFW_RELEASE)
-//		return (Directions::SDL_LIB);
-
 	state = glfwGetKey(window, GLFW_KEY_KP_1);
 	if (state == GLFW_RELEASE && key_events[GLFW_KEY_KP_1] == GLFW_PRESS)
 	{
@@ -121,7 +106,6 @@ int 			Glfw3Wrapper::HandleInput(void)
 		return (Directions::SDL_LIB);
 	}
 	key_events[GLFW_KEY_KP_1] = state;
-//
 	state = glfwGetKey(window, GLFW_KEY_KP_2);
 	if (state == GLFW_RELEASE && key_events[GLFW_KEY_KP_2] == GLFW_PRESS)
 	{
@@ -129,38 +113,6 @@ int 			Glfw3Wrapper::HandleInput(void)
 		return (Directions::SFML_LIB);
 	}
 	key_events[GLFW_KEY_KP_2] = state;
-
-//	state = glfwGetKey(window, GLFW_KEY_KP_3);
-//	if (state == GLFW_RELEASE && key_events[GLFW_KEY_KP_3] == GLFW_PRESS)
-//	{
-//		std::cout << "OPENGL_LIB\n";
-//		key_events[GLFW_KEY_KP_3] = state;
-//		return (Directions::OPENGL_LIB);
-//	}
-//	key_events[GLFW_KEY_KP_3] = state;
-
-
-
-
-
-//	state = glfwGetKey(window, GLFW_KEY_KP_1);
-//	if (state == GLFW_PRESS)
-//	{
-//		return (Directions::SDL_LIB);
-//	}
-//	state = glfwGetKey(window, GLFW_KEY_KP_2);
-//	if (state == GLFW_PRESS)
-//	{
-//		return (Directions::SFML_LIB);
-//	}
-//	state = glfwGetKey(window, GLFW_KEY_KP_3); // && libState == GLFW_PRESS
-//	if (state == GLFW_PRESS)
-//	{
-//		std::cout << "OPENGL_LIB\n";
-//		return (Directions::OPENGL_LIB);
-//	}
-//	libState = state;
-//	std::cout << "NOTHING\n\n";
 	return (Directions::NOTHING_PRESSED);
 }
 
@@ -194,11 +146,8 @@ void 		 Glfw3Wrapper::RenderMap(const std::vector<std::vector<int>> &game_map)
  *	Default constructor for the SDL wrap
  */
 
-Glfw3Wrapper::Glfw3Wrapper(int w, int h) : last_key(-1)
+Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 {
-	std::cout << "GlWrapper Created\n\n";
-
-
 	width = w * 32 + SIDE_MENU_WIDTH;
 	height = h * 32;
 
@@ -214,26 +163,15 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h) : last_key(-1)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	glfwMakeContextCurrent(window);
-//	glfwSwapInterval(1);
 
 	/*
 	 *	Initialize callback function for the input handler
 	 */
-
-//	glfwSetKeyCallback(window, key_callback);
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 
 	glOrtho(0, width, height, 0, 0, 1);
 
-//	key_events[GLFW_KEY_ESCAPE] = 0;
-//	key_events[GLFW_KEY_SPACE] = Directions::PAUSE;
-//	key_events[GLFW_KEY_UP] = Directions::UP;
-//	key_events[GLFW_KEY_DOWN] = Directions::DOWN;
-//	key_events[GLFW_KEY_LEFT] = Directions::LEFT;
-//	key_events[GLFW_KEY_RIGHT] = Directions::RIGHT;
-//	key_events[GLFW_KEY_KP_1] = Directions::SDL_LIB;
-//	key_events[GLFW_KEY_KP_2] = Directions::SFML_LIB;
-//	key_events[GLFW_KEY_KP_3] = Directions::OPENGL_LIB;
+//	glfwReadImage("game_over.png", image_data, nullptr);
 }
 
 /*
@@ -265,7 +203,7 @@ Glfw3Wrapper::Glfw3Wrapper(const Glfw3Wrapper &glfw3)
     window = glfw3.window;
 	width = glfw3.width;
 	height = glfw3.height;
-//	key_events = glfw3.key_events;
+	image_data = glfw3.image_data;
 }
 
 /*
@@ -277,7 +215,7 @@ Glfw3Wrapper 	&Glfw3Wrapper::operator=(const Glfw3Wrapper &glfw3)
     window = glfw3.window;
 	width = glfw3.width;
 	height = glfw3.height;
-//	key_events = glfw3.key_events;
+	image_data = glfw3.image_data;
 	return (*this);
 }
 
@@ -289,7 +227,6 @@ Glfw3Wrapper::~Glfw3Wrapper()
 {
     glfwDestroyWindow(window);
     glfwTerminate();
-//	system("leaks Nibbler -q");
 }
 
 extern "C" Glfw3Wrapper      *createWrapper(int w, int h)
