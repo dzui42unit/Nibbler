@@ -6,7 +6,7 @@
 #    By: sprotsen <sprotsen@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/22 21:10:53 by sprotsen          #+#    #+#              #
-#    Updated: 2018/09/02 18:14:45 by dzui             ###   ########.fr        #
+#    Updated: 2018/09/12 20:10:07 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CC = clang++ -g -std=c++14
 
 LIBS = -I ../../InterfaceLibrary
 LIBS += -I GLFW/ -L lib/
-LIBS += -lglfw -framework OpenGL -framework AppKit
+LIBS += -I ftgl/ -L ftgl/lib/
+LIBS += -lglfw -lftgl -framework OpenGL -framework AppKit
 
 SRC = Glfw3Wrapper.cpp
 

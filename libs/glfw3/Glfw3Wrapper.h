@@ -2,6 +2,7 @@
 #define NIBBLER_GLFW3WRAPPER_H
 
 #include "InterfaceLibrary.h"
+#include "ftgl.h"
 #include "glfw3.h"
 #include <map>
 #include <iostream>
@@ -12,7 +13,7 @@ private:
 	GLFWwindow* 	window;
 	int 			width;
 	int				height;
-	GLFWimage		image_data;
+	FTFont			*font;
 public:
 	Glfw3Wrapper() = delete;
 					Glfw3Wrapper(int w, int h);

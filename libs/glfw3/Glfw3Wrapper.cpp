@@ -1,6 +1,7 @@
 #include "Glfw3Wrapper.h"
 #include "../../Snake/Snake.h"
 #include <cmath>
+#include <string>
 
 /*
  *	A method that renders a game over screen
@@ -17,7 +18,76 @@ void	Glfw3Wrapper::RenderGameOverScreen(void)
 
 void	Glfw3Wrapper::RenderSideMenu(int w, int , size_t score, float time_left, std::vector<int> score_data)
 {
+	font->FaceSize(50);
 
+	std::string str_data = "Score " + std::to_string(score);
+	glColor3f(1.0, 1.0, 1.0);
+
+	glRasterPos2f(w + 10, 50);
+	font->Render(str_data.c_str());
+
+	str_data = "Time left: " + std::to_string(time_left);
+
+	glRasterPos2f(w + 10, 100);
+	font->Render(str_data.c_str());
+
+	str_data = "BEST SCORES:";
+
+	glRasterPos2f(w + 10, 150);
+	font->Render(str_data.c_str());
+
+
+	int k = 200;
+	int step = 50;
+
+	for (size_t i = 0; i < score_data.size(); i++)
+	{
+		str_data = std::to_string(i + 1) + ": " + std::to_string(score_data[i]);
+
+		glRasterPos2f(w + 10, k);
+		font->Render(str_data.c_str());
+
+//		surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255, 0});
+//		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
+//		Message_rect.x = w + 20;
+//		Message_rect.y = k + step;
+//		Message_rect.w = 120;
+//		Message_rect.h = 30;
+//		SDL_RenderCopy(ren, Message, NULL, &Message_rect);
+//		SDL_FreeSurface(surfaceMessage);
+//		SDL_DestroyTexture(Message);
+
+		k += step;
+	}
+
+//	glPushMatrix();
+//	{
+//		glRasterPos2f(w + 10, 10);
+//		glTranslatef(0, 0, 0.0);
+//		font->Render(str_data.c_str());
+//	}
+//	glPopMatrix();
+//	glRasterPos2f(w + 20, 10);
+
+//	text_score.setString("Score: " + std::to_string(score));
+//	win.draw(text_score);
+//	text_time_left.setString("Time left: " + std::to_string(time_left));
+//	win.draw(text_time_left);
+//	win.draw(text_best_score);
+
+//	std::string str = "kekekeke";
+//	std::cout << "HERE\n";
+
+//	glColor3f(1.0, 1.0, 1.0);
+//	glPushMatrix();
+//	{
+//		glTranslatef(0, 0, 0.0);
+//		font->Render(str.c_str());
+//	}
+//	glPopMatrix();
+//	glRasterPos2f(w + 20, 10);
+//	std::string str = "kekekeke";
+//	font->Render(str.c_str());
 }
 
 /*
@@ -171,7 +241,15 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 
 	glOrtho(0, width, height, 0, 0, 1);
 
-//	glfwReadImage("game_over.png", image_data, nullptr);
+	font = new FTGLPixmapFont("libs/sdl/10.ttf");
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (!font)
+	{
+		std::cout << "COULD NOT OPEN THE FONT\n";
+		exit(0);
+	}
 }
 
 /*
@@ -203,7 +281,7 @@ Glfw3Wrapper::Glfw3Wrapper(const Glfw3Wrapper &glfw3)
     window = glfw3.window;
 	width = glfw3.width;
 	height = glfw3.height;
-	image_data = glfw3.image_data;
+	font = glfw3.font;
 }
 
 /*
@@ -215,7 +293,7 @@ Glfw3Wrapper 	&Glfw3Wrapper::operator=(const Glfw3Wrapper &glfw3)
     window = glfw3.window;
 	width = glfw3.width;
 	height = glfw3.height;
-	image_data = glfw3.image_data;
+	font = glfw3.font;
 	return (*this);
 }
 
@@ -225,6 +303,7 @@ Glfw3Wrapper 	&Glfw3Wrapper::operator=(const Glfw3Wrapper &glfw3)
 
 Glfw3Wrapper::~Glfw3Wrapper()
 {
+	delete (font);
     glfwDestroyWindow(window);
     glfwTerminate();
 }

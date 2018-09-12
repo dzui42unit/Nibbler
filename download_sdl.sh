@@ -17,6 +17,7 @@ pkg3="sdl2_ttf"
 pkg4="sdl2_mixer"
 pkg5="glfw"
 pkg6="sfml"
+pkg7="glut"
 
 #if brew list -1 | grep -q "^${pkg2}\$"; then
 #    echo "Package '$pkg2' is installed"
@@ -53,6 +54,17 @@ else
     brew install sfml
 fi
 
+brew reinstall ftgl
+brew reinstall freetype
+
+#brew install freetype
+
+#if brew list -1 | grep -q "^${pkg7}\$"; then
+#    echo "Package '$pkg6' is installed"
+#else
+   # echo "Package '$pkg7' is not installed"
+#   brew install ftgl
+#fi
 
 ln -f -s ~/.brew/Cellar/sdl2_image/*/include/SDL2 libs/sdl/sdl2_image
 ln -f -s ~/.brew/Cellar/sdl2_image/*/lib/ libs/sdl/sdl2_image
@@ -65,6 +77,13 @@ ln -f -s ~/.brew/Cellar/sdl2_mixer/*/lib/ libs/sdl/sdl2_mixer
 
 ln -f -s ~/.brew/Cellar/glfw/*/include/GLFW libs/glfw3
 ln -f -s ~/.brew/Cellar/glfw/*/lib/ libs/glfw3
+
+ln -f -s ~/.brew/Cellar/ftgl/*/include/FTGL libs/glfw3/ftgl
+ln -f -s ~/.brew/Cellar/ftgl/*/include/FTGL libs/glfw3/ftgl/FTGL
+ln -f -s ~/.brew/Cellar/ftgl/*/lib/ libs/glfw3/ftgl
+
+ln -f -s ~/.brew/Cellar/freetype/*/include/freetype2/* libs/glfw3/ftgl
+ln -f -s ~/.brew/Cellar/freetype/*/lib/ libs/glfw3/ftgl/FREETYPE
 
 ln -f -s ~/.brew/Cellar//sfml/*/include/SFML libs/sfml
 ln -f -s ~/.brew/Cellar/sfml/*/lib/ libs/sfml
