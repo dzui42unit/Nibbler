@@ -9,7 +9,11 @@
 
 void	Glfw3Wrapper::RenderGameOverScreen(void)
 {
+	font->FaceSize(width / 4);
 
+	std::string str_data = "GAME OVER";
+	glRasterPos2f(50, height / 4);
+	font->Render(str_data.c_str());
 }
 
 /*
