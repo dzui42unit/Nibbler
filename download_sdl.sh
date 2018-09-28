@@ -19,33 +19,33 @@ pkg5="glfw"
 pkg6="sfml"
 pkg7="glut"
 
-#if brew list -1 | grep -q "^${pkg2}\$"; then
-#    echo "Package '$pkg2' is installed"
-#else
-   # echo "Package '$pkg2' is not installed"
+if brew list -1 | grep -q "^${pkg2}\$"; then
+   echo "Package '$pkg2' is installed"
+else
+   echo "Package '$pkg2' is not installed"
    brew install sdl2 sdl2_image
-#fi
+fi
 
-#if brew list -1 | grep -q "^${pkg3}\$"; then
-#    echo "Package '$pkg3' is installed"
-#else
-   # echo "Package '$pkg3' is not installed"
+if brew list -1 | grep -q "^${pkg3}\$"; then
+   echo "Package '$pkg3' is installed"
+else
+   echo "Package '$pkg3' is not installed"
    brew install sdl2 sdl2_ttf
-#fi
+fi
 
-#if brew list -1 | grep -q "^${pkg4}\$"; then
-#    echo "Package '$pkg4' is installed"
-#else
-   # echo "Package '$pkg4' is not installed"
+if brew list -1 | grep -q "^${pkg4}\$"; then
+   echo "Package '$pkg4' is installed"
+else
+   echo "Package '$pkg4' is not installed"
    brew install sdl2 sdl2_mixer
-#fi
+fi
 
-#if brew list -1 | grep -q "^${pkg5}\$"; then
-#    echo "Package '$pkg5' is installed"
-#else
-   # echo "Package '$pkg5' is not installed"
+if brew list -1 | grep -q "^${pkg5}\$"; then
+   echo "Package '$pkg5' is installed"
+else
+   echo "Package '$pkg5' is not installed"
    brew install glfw3
-#fi
+fi
 
 if brew list -1 | grep -q "^${pkg6}\$"; then
     echo "Package '$pkg6' is installed"
@@ -54,8 +54,8 @@ else
     brew install sfml
 fi
 
-brew reinstall ftgl
-brew reinstall freetype
+brew install ftgl
+brew install freetype
 
 #brew install freetype
 
