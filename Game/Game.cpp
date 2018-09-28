@@ -534,7 +534,7 @@ Game::Game(char *w, char *h)
 	 *	Set game speed
 	 */
 
-	game_speed = 350;
+	game_speed = 450;
 
 	/*
 	 *	Time in seconds to the food respawn

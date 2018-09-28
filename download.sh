@@ -1,6 +1,13 @@
 #!/bin/sh
 
 pkg="sdl2"
+pkg2="sdl2_image"
+pkg3="sdl2_ttf"
+pkg4="sdl2_mixer"
+pkg5="glfw"
+pkg6="sfml"
+pkg7="ftgl"
+pkg8="freetype"
 
 if brew list -1 | grep -q "^${pkg}\$"; then
     echo "Package '$pkg' is installed"
@@ -11,13 +18,6 @@ fi
 
 ln -f -s ~/.brew/Cellar/sdl2/*/include/SDL2 libs/sdl/sdl2
 ln -f -s ~/.brew/Cellar/sdl2/*/lib/ libs/sdl/sdl2
-
-pkg2="sdl2_image"
-pkg3="sdl2_ttf"
-pkg4="sdl2_mixer"
-pkg5="glfw"
-pkg6="sfml"
-pkg7="glut"
 
 if brew list -1 | grep -q "^${pkg2}\$"; then
    echo "Package '$pkg2' is installed"
@@ -50,21 +50,23 @@ fi
 if brew list -1 | grep -q "^${pkg6}\$"; then
     echo "Package '$pkg6' is installed"
 else
-   # echo "Package '$pkg5' is not installed"
+   echo "Package '$pkg6' is not installed"
     brew install sfml
 fi
 
-brew install ftgl
-brew install freetype
+if brew list -1 | grep -q "^${pkg7}\$"; then
+    echo "Package '$pkg7' is installed"
+else
+   echo "Package '$pkg7' is not installed"
+    brew install ftgl
+fi
 
-#brew install freetype
-
-#if brew list -1 | grep -q "^${pkg7}\$"; then
-#    echo "Package '$pkg6' is installed"
-#else
-   # echo "Package '$pkg7' is not installed"
-#   brew install ftgl
-#fi
+if brew list -1 | grep -q "^${pkg8}\$"; then
+    echo "Package '$pkg8' is installed"
+else
+   echo "Package '$pkg8' is not installed"
+    brew install freetype
+fi
 
 ln -f -s ~/.brew/Cellar/sdl2_image/*/include/SDL2 libs/sdl/sdl2_image
 ln -f -s ~/.brew/Cellar/sdl2_image/*/lib/ libs/sdl/sdl2_image

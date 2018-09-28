@@ -15,8 +15,8 @@ NAME = libsoundwrapper.so
 CC = clang++ -std=c++14 -Wall -Wextra -Werror
 
 LIBS = -I ../../InterfaceSoundLib
-LIBS += -I ../sdl/sdl2/SDL2 -L ../sdl/sdl2/lib -l SDL2
-LIBS += -I ../sdl/sdl2_mixer/SDL2 -L ../sdl/sdl2_mixer/lib -l SDL2_mixer 
+LIBS += -I ../sdl/sdl2 -L ../sdl/sdl2/lib -l SDL2
+LIBS += -I ../sdl/sdl2_mixer -L ../sdl/sdl2_mixer/lib -l SDL2_mixer 
 LISD += -framework OpenGL -framework AppKit
 
 
