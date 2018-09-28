@@ -50,48 +50,8 @@ void	Glfw3Wrapper::RenderSideMenu(int w, int , size_t score, float time_left, st
 
 		glRasterPos2f(w + 10, k);
 		font->Render(str_data.c_str());
-
-//		surfaceMessage = TTF_RenderText_Solid(Sans, message.c_str(), {255, 255, 255, 0});
-//		Message = SDL_CreateTextureFromSurface(ren, surfaceMessage);
-//		Message_rect.x = w + 20;
-//		Message_rect.y = k + step;
-//		Message_rect.w = 120;
-//		Message_rect.h = 30;
-//		SDL_RenderCopy(ren, Message, NULL, &Message_rect);
-//		SDL_FreeSurface(surfaceMessage);
-//		SDL_DestroyTexture(Message);
-
 		k += step;
 	}
-
-//	glPushMatrix();
-//	{
-//		glRasterPos2f(w + 10, 10);
-//		glTranslatef(0, 0, 0.0);
-//		font->Render(str_data.c_str());
-//	}
-//	glPopMatrix();
-//	glRasterPos2f(w + 20, 10);
-
-//	text_score.setString("Score: " + std::to_string(score));
-//	win.draw(text_score);
-//	text_time_left.setString("Time left: " + std::to_string(time_left));
-//	win.draw(text_time_left);
-//	win.draw(text_best_score);
-
-//	std::string str = "kekekeke";
-//	std::cout << "HERE\n";
-
-//	glColor3f(1.0, 1.0, 1.0);
-//	glPushMatrix();
-//	{
-//		glTranslatef(0, 0, 0.0);
-//		font->Render(str.c_str());
-//	}
-//	glPopMatrix();
-//	glRasterPos2f(w + 20, 10);
-//	std::string str = "kekekeke";
-//	font->Render(str.c_str());
 }
 
 /*
@@ -118,7 +78,7 @@ void	Glfw3Wrapper::RenderImage(void)
  *	Method that renders a Snake
  */
 
-void 			Glfw3Wrapper::RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir)
+void 			Glfw3Wrapper::RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int)
 {
 	int x;
 	int y;
@@ -200,6 +160,8 @@ void 		 Glfw3Wrapper::RenderMap(const std::vector<std::vector<int>> &game_map)
 	int x;
 	int y;
 
+	x = 0;
+	y = 0;
 	glRecti(x, y, x + 32, y + 32);
 	for (size_t i = 0; i < game_map.size(); i++)
 	{
@@ -245,15 +207,28 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 
 	glOrtho(0, width, height, 0, 0, 1);
 
-	font = new FTGLPixmapFont("libs/sdl/10.ttf");
+	font = nullptr;
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	std::ifstream checker;
 
-	if (!font)
+	checker.open("libs/glfw3/10.ttf");
+
+	if (!checker.is_open())
 	{
 		std::cout << "COULD NOT OPEN THE FONT\n";
-		exit(0);
+		exit(1);
 	}
+
+	font = new FTGLPixmapFont("libs/glfw3/10.ttf");
+
+	if (!font)
+    {
+        std::cout << "COULD NOT OPEN THE FONT\n";
+        exit(1);
+    }
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	checker.close();
 }
 
 /*

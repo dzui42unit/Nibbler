@@ -85,7 +85,6 @@ void	Game::LoadGraphicLibrary(Directions lib_nb)
 	dl_handle = dlopen(lib_name.c_str() , RTLD_LAZY);
 
 	if (!dl_handle) {
-        std::cout << "ERROR HERE\n";
         dlErrors();
     }
 
@@ -579,7 +578,13 @@ Game::Game(char *w, char *h)
 
 	while (std::getline(file, temp_string))
 	{
-		scores_data.push_back(std::stoi(temp_string));
+	    try {
+            scores_data.push_back(std::stoi(temp_string));
+        }
+        catch (...) {
+            std::cout << "Broken scores file\nGive scores my back\n";
+            exit(1);
+        }
 		temp_string.clear();
 	}
 

@@ -12,9 +12,7 @@
 
 NAME = libsfmlwrapper.so
 
-CC = clang++ -g -std=c++14
-
-# -Wall -Wextra -Werror
+CC = clang++ -std=c++14 -Wall -Wextra -Werror
 
 LIBS = -I ../../InterfaceLibrary -I.
 LIBS += -I SFML -L lib/  -lsfml-window -lsfml-graphics -Wl,-rpath, ~/.brew/Cellar/sfml/2.4.2_1/lib/

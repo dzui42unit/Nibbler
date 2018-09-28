@@ -6,6 +6,7 @@
 #include "glfw3.h"
 #include <map>
 #include <iostream>
+#include <fstream>
 
 class Glfw3Wrapper : public InterfaceLibrary
 {

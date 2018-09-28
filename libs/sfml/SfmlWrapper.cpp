@@ -97,7 +97,7 @@ SfmlWrapper::SfmlWrapper(int w, int h) {
      */
 
     if (!font.loadFromFile("libs/sfml/10.ttf")) {
-        std::cout << "Error: can't load ttf file";
+        std::cout << "Error: can't load ttf file\n";
         exit (0);
     }
 
@@ -291,7 +291,7 @@ void SfmlWrapper::RenderSnake(const std::vector <std::pair<int, int>> &snake_par
     win.draw(sprite_snake);
 }
 
-void SfmlWrapper::RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) {
+void SfmlWrapper::RenderSideMenu(int w, int, size_t score, float time_left, std::vector<int> score_data) {
 
     text_score.setString("Score: " + std::to_string(score));
     win.draw(text_score);

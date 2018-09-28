@@ -19,7 +19,7 @@ SRC = main.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
-CFLAGS = -g -std=c++14 -Wall -Wextra -Werror
+CFLAGS = -std=c++14 -Wall -Wextra -Werror
 		 
 
 CC = clang++
