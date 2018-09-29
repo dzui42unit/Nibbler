@@ -40,7 +40,7 @@ SoundWrapper::SoundWrapper()
 		exit(0);
 	}
 	bonus_fruit_appears_sound = 	Mix_LoadWAV("libs/SoundWrapper/sounds/bonus_fruit_appears.wav");
-	if (game_over_sound == NULL)
+	if (bonus_fruit_appears_sound == NULL)
 	{
 		std::cout << "ERROR: Mix_LoadWAV" << std::endl;
 		exit(0);
