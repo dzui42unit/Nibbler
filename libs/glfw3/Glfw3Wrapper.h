@@ -2,8 +2,8 @@
 #define NIBBLER_GLFW3WRAPPER_H
 
 #include "InterfaceLibrary.h"
-#include "ftgl.h"
-#include "glfw3.h"
+#include "FTGL/ftgl.h"
+#include "GLFW/glfw3.h"
 #include <map>
 #include <iostream>
 #include <fstream>
@@ -30,6 +30,7 @@ public:
 	void 			RenderSnake(const std::vector<std::pair<int, int>> &snake_parts, int dir) final ;
 	void			RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) final ;
 	void			RenderGameOverScreen(void) final;
+	static int      _key;
 };
 
 

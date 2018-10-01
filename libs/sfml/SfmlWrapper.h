@@ -2,11 +2,7 @@
 #define NIBBLER_SFMLWRAPPER_H
 
 #include "../../InterfaceLibrary/InterfaceLibrary.h"
-#include "Graphics.hpp"
-#include "Graphics/Image.hpp"
-#include "Window/VideoMode.hpp"
-#include "Window/WindowStyle.hpp"
-#include "Graphics/Sprite.hpp"
+#include "SFML/Graphics.hpp"
 #include "iostream"
 
 
@@ -28,8 +24,8 @@ public:
 	void			RenderSideMenu(int w, int h, size_t score, float time_left, std::vector<int> score_data) final ;
 	void			RenderGameOverScreen(void) final;
 
-	sf::RenderWindow    win;
-	sf::Event           event;
+	sf::RenderWindow    *win;
+	sf::Event           *event;
 
 	sf::Texture         texture_background;
 	sf::Texture         texture_border;

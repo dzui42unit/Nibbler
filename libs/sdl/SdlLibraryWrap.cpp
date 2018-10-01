@@ -172,28 +172,36 @@ void 			SdlLibraryWrap::RenderSnake(const std::vector<std::pair<int, int>> &snak
 
 int 			SdlLibraryWrap::HandleInput(void)
 {
-    while (SDL_PollEvent(&event))
+    while (SDL_PollEvent(event))
 	{
-        if(event.type == SDL_QUIT )
+        if(event->type == SDL_QUIT )
+			return (Directions::QUIT);
+		if (event->key.keysym.sym == SDLK_ESCAPE && event->key.repeat == 0)
 			return (0);
-		if (event.key.keysym.sym == SDLK_ESCAPE && event.key.repeat == 0)
-			return (0);
-		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
+		if (event->type == SDL_MOUSEMOTION)
 		{
-			if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0)
+			std::cout << "Mouse moving SDL\n";
+		// 	return (Directions::NOTHING_PRESSED);
+		}	
+		if (event->type == SDL_KEYDOWN && event->key.repeat == 0)
+		{
+			if (event->key.keysym.sym == SDLK_UP && event->key.repeat == 0)
 				return (Directions::UP);
-			if (event.key.keysym.sym == SDLK_LEFT && event.key.repeat == 0)
+			if (event->key.keysym.sym == SDLK_LEFT && event->key.repeat == 0)
 				return (Directions::LEFT);
-			if (event.key.keysym.sym == SDLK_DOWN && event.key.repeat == 0)
+			if (event->key.keysym.sym == SDLK_DOWN && event->key.repeat == 0)
 				return (Directions::DOWN);
-			if (event.key.keysym.sym == SDLK_RIGHT && event.key.repeat == 0)
+			if (event->key.keysym.sym == SDLK_RIGHT && event->key.repeat == 0)
 				return (Directions::RIGHT);
-			if (event.key.keysym.sym == SDLK_SPACE && event.key.repeat == 0)
+			if (event->key.keysym.sym == SDLK_SPACE && event->key.repeat == 0)
 				return (Directions::PAUSE);
-			if (event.key.keysym.sym == SDLK_KP_2 && event.key.repeat == 0)
+			if (event->key.keysym.sym == SDLK_KP_2 && event->key.repeat == 0)
 				return (Directions::SFML_LIB);
-			if (event.key.keysym.sym == SDLK_KP_3 && event.key.repeat == 0)
+			if (event->key.keysym.sym == SDLK_KP_3 && event->key.repeat == 0)
 				return (Directions::OPENGL_LIB);
+		}
+		else {
+			std::cout << "SDL: " << event->key.keysym.sym << std::endl;
 		}
 	}
 	return (Directions::NOTHING_PRESSED);
@@ -253,14 +261,14 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 	/*
 	 *	Perform initialization for the SDL
 	 */
-
+	event = new SDL_Event();
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 		std::cout << "ERROR SDL_INIT" << std::endl;
 		exit(0);
 	}
-
+    
 	TTF_Init();
 
 	/*
@@ -377,6 +385,9 @@ SdlLibraryWrap::SdlLibraryWrap(int w, int h)
 
 	now = 0;
 	last = 0;
+	// SDL_ShowCursor(SDL_DISABLE);
+	// SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
 }
 
 /*
@@ -404,31 +415,31 @@ void	SdlLibraryWrap::RenderFood(int i_pos, int j_pos, bool isBonusFruit)
  *	Copy constructor
  */
 
-SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
-		: win(sdl.win),
-		  ren(sdl.ren),
-		  now(sdl.now),
-		  last(sdl.last),
-		  image_texture_part(sdl.image_texture_part),
-		  border_texture(sdl.border_texture),
-		  grass_texture(sdl.grass_texture),
-		  snake_head_texture(sdl.snake_head_texture),
-		  snake_body_texture(sdl.snake_body_texture),
-		  super_fruit_texture(sdl.super_fruit_texture),
-		  game_over_screen_texture(sdl.game_over_screen_texture),
-		  head_up(sdl.head_up),
-		  head_right(sdl.head_right),
-		  head_down(sdl.head_down),
-		  head_left(sdl.head_left),
-		  rect_background(sdl.rect_background),
-		  rect_snake_body(sdl.rect_snake_body),
-		  rect_food(sdl.rect_food),
-		  rect_super_fruit(sdl.rect_super_fruit),
-		  game_over_rect(sdl.game_over_rect),
-		  Sans(sdl.Sans),
-		  surfaceMessage(sdl.surfaceMessage),
-		  Message(sdl.Message),
-		  Message_rect(sdl.Message_rect)
+SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &)
+		// : win(sdl.win),
+		//   ren(sdl.ren),
+		//   now(sdl.now),
+		//   last(sdl.last),
+		//   image_texture_part(sdl.image_texture_part),
+		//   border_texture(sdl.border_texture),
+		//   grass_texture(sdl.grass_texture),
+		//   snake_head_texture(sdl.snake_head_texture),
+		//   snake_body_texture(sdl.snake_body_texture),
+		//   super_fruit_texture(sdl.super_fruit_texture),
+		//   game_over_screen_texture(sdl.game_over_screen_texture),
+		//   head_up(sdl.head_up),
+		//   head_right(sdl.head_right),
+		//   head_down(sdl.head_down),
+		//   head_left(sdl.head_left),
+		//   rect_background(sdl.rect_background),
+		//   rect_snake_body(sdl.rect_snake_body),
+		//   rect_food(sdl.rect_food),
+		//   rect_super_fruit(sdl.rect_super_fruit),
+		//   game_over_rect(sdl.game_over_rect),
+		//   Sans(sdl.Sans),
+		//   surfaceMessage(sdl.surfaceMessage),
+		//   Message(sdl.Message),
+		//   Message_rect(sdl.Message_rect)
 {
 
 }
@@ -437,32 +448,32 @@ SdlLibraryWrap::SdlLibraryWrap(const SdlLibraryWrap &sdl)
  *	Copy assignment operator
  */
 
-SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
+SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &)
 {
-	win = sdl.win;
-	ren = sdl.ren;
-	now = sdl.now;
-	last = sdl.last;
-	image_texture_part = sdl.image_texture_part;
-	border_texture = sdl.border_texture;
-	grass_texture = sdl.grass_texture;
-	snake_head_texture = sdl.snake_head_texture;
-	snake_body_texture = sdl.snake_body_texture;
-	super_fruit_texture = sdl.super_fruit_texture;
-	game_over_screen_texture = sdl.game_over_screen_texture;
-	head_up = sdl.head_up;
-	head_right = sdl.head_right;
-	head_down = sdl.head_down;
-	head_left = sdl.head_left;
-	rect_background = sdl.rect_background;
-	rect_snake_body = sdl.rect_snake_body;
-	rect_food = sdl.rect_food;
-	rect_super_fruit = sdl.rect_super_fruit;
-	game_over_rect = sdl.game_over_rect;
-	Sans = sdl.Sans;
-	surfaceMessage = sdl.surfaceMessage;
-	Message = sdl.Message;
-	Message_rect = sdl.Message_rect;
+	// win = sdl.win;
+	// ren = sdl.ren;
+	// now = sdl.now;
+	// last = sdl.last;
+	// image_texture_part = sdl.image_texture_part;
+	// border_texture = sdl.border_texture;
+	// grass_texture = sdl.grass_texture;
+	// snake_head_texture = sdl.snake_head_texture;
+	// snake_body_texture = sdl.snake_body_texture;
+	// super_fruit_texture = sdl.super_fruit_texture;
+	// game_over_screen_texture = sdl.game_over_screen_texture;
+	// head_up = sdl.head_up;
+	// head_right = sdl.head_right;
+	// head_down = sdl.head_down;
+	// head_left = sdl.head_left;
+	// rect_background = sdl.rect_background;
+	// rect_snake_body = sdl.rect_snake_body;
+	// rect_food = sdl.rect_food;
+	// rect_super_fruit = sdl.rect_super_fruit;
+	// game_over_rect = sdl.game_over_rect;
+	// Sans = sdl.Sans;
+	// surfaceMessage = sdl.surfaceMessage;
+	// Message = sdl.Message;
+	// Message_rect = sdl.Message_rect;
 	return (*this);
 }
 
@@ -472,6 +483,8 @@ SdlLibraryWrap 	&SdlLibraryWrap::operator=(const SdlLibraryWrap &sdl)
 
 SdlLibraryWrap::~SdlLibraryWrap()
 {
+	std::cout << "delete sdl\n";
+	delete event;
 	SDL_DestroyRenderer(ren);
 	SDL_DestroyTexture(border_texture);
 	SDL_DestroyTexture(grass_texture);
@@ -483,17 +496,19 @@ SdlLibraryWrap::~SdlLibraryWrap()
 	TTF_CloseFont(Sans);
 	TTF_Quit();
 	IMG_Quit();
-	SDL_QuitSubSystem(SDL_INIT_VIDEO);
+	// SDL_QuitSubSystem(SDL_INIT_VIDEO);
+	SDL_Quit();
+	std::cout << "delete sdl end\n";
 }
 
 
-extern "C" SdlLibraryWrap      *createWrapper(int w, int h)
+extern "C" InterfaceLibrary      *createWrapper(int w, int h)
 {
 
 	return (new SdlLibraryWrap(w, h));
 
 }
-extern "C" void                deleteWrapper(SdlLibraryWrap *lib)
+extern "C" void                deleteWrapper(InterfaceLibrary *lib)
 {
 	delete lib;
 }

@@ -297,8 +297,9 @@ void	Game::RunGame(void)
 			else
 				fruit_timer.operator+=(std::chrono::high_resolution_clock::now() - pause_time);
 		}
-		if (!direction)
+		if (direction == Directions::QUIT)
 		{
+			std::cout << "DIRECTION: " << direction << std::endl;
 			StoreScore();
 			break ;
 		}

@@ -15,9 +15,10 @@ NAME = libsoundwrapper.so
 CC = clang++ -std=c++14 -Wall -Wextra -Werror
 
 LIBS = -I ../../InterfaceSoundLib
-LIBS += -I ../sdl/sdl2 -L ../sdl/sdl2/lib -l SDL2
-LIBS += -I ../sdl/sdl2_mixer -L ../sdl/sdl2_mixer/lib -l SDL2_mixer 
-LISD += -framework OpenGL -framework AppKit
+LIBS += -I ~/.brew/include -L ~/.brew/lib
+LIBS += -l SDL2_mixer 
+
+#LIBS += -framework OpenGL -framework AppKit
 
 
 SRC = SoundWrapper.cpp
@@ -33,9 +34,9 @@ lib.so:
 # 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean:	clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

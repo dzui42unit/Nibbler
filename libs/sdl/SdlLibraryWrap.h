@@ -2,11 +2,11 @@
 #define NIBBLER_SDLLIBRARYWRAP_H
 
 #include "InterfaceLibrary.h"
-#include "SDL.h"
-#include "SDL_image.h"
-#include "SDL_ttf.h"
-#include "SDL_audio.h"
-#include "SDL_mixer.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
+#include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_audio.h"
+#include "SDL2/SDL_mixer.h"
 
 #include <iostream>
 
@@ -15,7 +15,7 @@ class SdlLibraryWrap : public InterfaceLibrary
 private:
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
-	SDL_Event		event;
+	SDL_Event		*event;
 	Uint32			now;
 	Uint32 			last;
     SDL_Rect        image_texture_part;

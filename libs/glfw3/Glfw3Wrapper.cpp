@@ -7,6 +7,56 @@
  *	A method that renders a game over screen
  */
 
+int Glfw3Wrapper::_key = Directions::NOTHING_PRESSED;
+int         	lastDirection = Directions::NOTHING_PRESSED;
+
+void key_callback(GLFWwindow* , int key, int , int action, int )
+{
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
+		Glfw3Wrapper::_key = Directions::QUIT;
+		return ;
+	}
+	else if (action == GLFW_PRESS && key == GLFW_KEY_SPACE)
+	{
+		Glfw3Wrapper::_key = Directions::PAUSE;
+		return ;
+	}
+	else if (action == GLFW_PRESS && key == GLFW_KEY_UP)
+	{
+		Glfw3Wrapper::_key = Directions::UP;
+		return ;
+	}
+	else if (action == GLFW_PRESS && key == GLFW_KEY_DOWN)
+	{
+		Glfw3Wrapper::_key = Directions::DOWN;
+		return ;
+	}
+	else if (action == GLFW_PRESS && key == GLFW_KEY_LEFT)
+	{
+		Glfw3Wrapper::_key = Directions::LEFT;
+		return ;
+	}
+	else if (action == GLFW_PRESS && key == GLFW_KEY_RIGHT)
+	{
+		Glfw3Wrapper::_key = Directions::RIGHT;
+		return ;
+	}
+	else if (action == GLFW_PRESS && key == GLFW_KEY_KP_1)
+	{
+		Glfw3Wrapper::_key = Directions::SDL_LIB;
+		return ;
+	}
+	else if (action == GLFW_PRESS && key == GLFW_KEY_KP_2)
+	{
+		Glfw3Wrapper::_key = Directions::SFML_LIB;
+		return ;
+	}
+	else {
+		std::cout << "glfw: " << action << std::endl;
+	}
+}
+
 void	Glfw3Wrapper::RenderGameOverScreen(void)
 {
 	font->FaceSize(width / 8);
@@ -104,50 +154,13 @@ void 			Glfw3Wrapper::RenderSnake(const std::vector<std::pair<int, int>> &snake_
 
 int 			Glfw3Wrapper::HandleInput(void)
 {
-	static std::map<int, int>	key_events = { {GLFW_KEY_SPACE, GLFW_RELEASE}, {GLFW_KEY_KP_1, GLFW_RELEASE}, {GLFW_KEY_KP_2, GLFW_RELEASE}, {GLFW_KEY_KP_3, GLFW_RELEASE} };
-	int state;
-
 	glfwPollEvents();
-
-
-
-	state = glfwGetKey(window, GLFW_KEY_ESCAPE);
-	if (state == GLFW_PRESS)
-		return(0);
-	state = glfwGetKey(window, GLFW_KEY_SPACE);
-	if (state == GLFW_RELEASE && key_events[GLFW_KEY_SPACE] == GLFW_PRESS)
-	{
-		key_events[GLFW_KEY_SPACE] = state;
-		return (Directions::PAUSE);
-	}
-	key_events[GLFW_KEY_SPACE] = state;
-	state = glfwGetKey(window, GLFW_KEY_UP);
-	if (state == GLFW_PRESS)
-		return (Directions::UP);
-	state = glfwGetKey(window, GLFW_KEY_DOWN);
-	if (state == GLFW_PRESS)
-		return (Directions::DOWN);
-	state = glfwGetKey(window, GLFW_KEY_LEFT);
-	if (state == GLFW_PRESS)
-		return (Directions::LEFT);
-	state = glfwGetKey(window, GLFW_KEY_RIGHT);
-	if (state == GLFW_PRESS)
-		return (Directions::RIGHT);
-	state = glfwGetKey(window, GLFW_KEY_KP_1);
-	if (state == GLFW_RELEASE && key_events[GLFW_KEY_KP_1] == GLFW_PRESS)
-	{
-		key_events[GLFW_KEY_KP_1] = state;
-		return (Directions::SDL_LIB);
-	}
-	key_events[GLFW_KEY_KP_1] = state;
-	state = glfwGetKey(window, GLFW_KEY_KP_2);
-	if (state == GLFW_RELEASE && key_events[GLFW_KEY_KP_2] == GLFW_PRESS)
-	{
-		key_events[GLFW_KEY_KP_2] = state;
-		return (Directions::SFML_LIB);
-	}
-	key_events[GLFW_KEY_KP_2] = state;
-	return (Directions::NOTHING_PRESSED);
+	
+	int temp = Glfw3Wrapper::_key;
+	
+	Glfw3Wrapper::_key = Directions::NOTHING_PRESSED;
+	
+	return (temp);
 }
 
 
@@ -203,7 +216,7 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 	/*
 	 *	Initialize callback function for the input handler
 	 */
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
+	glfwSetKeyCallback(window, key_callback);
 
 	glOrtho(0, width, height, 0, 0, 1);
 
@@ -229,6 +242,7 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	checker.close();
+	// glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 /*
@@ -287,11 +301,11 @@ Glfw3Wrapper::~Glfw3Wrapper()
     glfwTerminate();
 }
 
-extern "C" Glfw3Wrapper      *createWrapper(int w, int h)
+extern "C" InterfaceLibrary      *createWrapper(int w, int h)
 {
 	return (new Glfw3Wrapper(w, h));
 }
-extern "C" void                deleteWrapper(Glfw3Wrapper *lib)
+extern "C" void                deleteWrapper(InterfaceLibrary *lib)
 {
 	delete lib;
 }

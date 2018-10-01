@@ -22,7 +22,7 @@ OBJ = $(SRC:.cpp=.o)
 CFLAGS = -std=c++14 -Wall -Wextra -Werror
 		 
 
-CC = clang++
+CC = clang++ -g
 
 all: lib $(NAME)
 
@@ -33,7 +33,7 @@ lib:
 	make re -C libs/sfml
 
 $(NAME): $(OBJ)
-	clang++ -o $(NAME) $(OBJ) 
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) 
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c  -o $@ $< 

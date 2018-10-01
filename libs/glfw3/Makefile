@@ -12,12 +12,14 @@
 
 NAME = libglfw3wrapper.so
 
-CC = clang++ -std=c++14 -Wall -Wextra -Werror
+CC = clang++ -g -std=c++14 -Wall -Wextra -Werror
 
 LIBS = -I ../../InterfaceLibrary
-LIBS += -I GLFW/ -L lib/
-LIBS += -I ftgl/ -L ftgl/lib/
-LIBS += -lglfw -lftgl -framework OpenGL -framework AppKit
+LIBS += -I ~/.brew/include/freetype2
+LIBS += -I ~/.brew/include -L ~/.brew/lib -lglfw
+LIBS += -lftgl
+#LIBS += -framework OpenGL -framework AppKit
+
 
 SRC = Glfw3Wrapper.cpp
 
@@ -32,9 +34,9 @@ lib.so:
 # 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean:	clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
