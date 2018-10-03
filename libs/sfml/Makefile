@@ -20,21 +20,13 @@ LIBS += -lsfml-system
 LIBS += -lsfml-window
 LIBS += -lsfml-graphics
 LIBS += -Wl,-rpath, ~/.brew/lib
-#LIBS += -framework OpenGL -framework AppKit
 
 SRC = SfmlWrapper.cpp
-
-# OBJ = $(SRC:.cpp=.o)
 
 all: lib.so 
 
 lib.so:
 	$(CC) -dynamiclib -flat_namespace  $(SRC) $(LIBS) -o $(NAME)
-
-
-# %.o: %.cpp
-# 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 
-
 
 clean:
 	@rm -f $(OBJ)

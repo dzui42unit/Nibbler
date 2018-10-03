@@ -250,7 +250,7 @@ void	Game::RunGame(void)
 	std::chrono::high_resolution_clock::time_point		pause_time;
 	pause_time = std::chrono::high_resolution_clock::now();
 
-	LoadGraphicLibrary(Directions::SDL_LIB);
+	LoadGraphicLibrary(Directions::SFML_LIB);
 	LoadSoundLibrary();
 
 	sound_wrap->playBackgroundMusic();
@@ -299,7 +299,6 @@ void	Game::RunGame(void)
 		}
 		if (direction == Directions::QUIT)
 		{
-			std::cout << "DIRECTION: " << direction << std::endl;
 			StoreScore();
 			break ;
 		}

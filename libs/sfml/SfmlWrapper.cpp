@@ -10,16 +10,6 @@ SfmlWrapper::SfmlWrapper(int w, int h) :
     h *= 2;
 
     /*
-     *  Init Windows
-     */
-
-    // win.create(sf::VideoMode(w * 32 + (SIDE_MENU_WIDTH * 2), h * 32), "Nibbler SFML", sf::Style::Titlebar | sf::Style::Close);
-    // if (!win.isOpen()) {
-    //     std::cout << "Error: can't open SFML window" << std::endl;
-    //     exit(1);
-    // }
-
-    /*
      *  create background
      */
 
@@ -130,65 +120,63 @@ SfmlWrapper::SfmlWrapper(int w, int h) :
 }
 
 SfmlWrapper::~SfmlWrapper() {
-    // win->close();
-    std::cout << "delete SFML\n";
+    win->close();
     delete event;
     delete win;
-    std::cout << "delete SFML end\n";
 }
 
-SfmlWrapper::SfmlWrapper(const SfmlWrapper &)
-        // : event(sfml.event),
-        //   texture_background(sfml.texture_background),
-        //   texture_border(sfml.texture_border),
-        //   texture_border_block(sfml.texture_border_block),
-        //   texture_food(sfml.texture_food),
-        //   texture_super_food(sfml.texture_super_food),
-        //   texture_snake_head_up(sfml.texture_snake_head_up),
-        //   texture_snake_head_down(sfml.texture_snake_head_down),
-        //   texture_snake_head_left(sfml.texture_snake_head_left),
-        //   texture_snake_head_right(sfml.texture_snake_head_right),
-        //   texture_snake_body(sfml.texture_snake_body),
-        //   texture_game_over(sfml.texture_game_over),
-        //   sprite(sfml.sprite),
-        //   sprite_border(sfml.sprite_border),
-        //   sprite_food(sfml.sprite_food),
-        //   sprite_super_food(sfml.sprite_super_food),
-        //   sprite_snake(sfml.sprite_snake),
-        //   sprite_game_over(sfml.sprite_game_over),
-        //   font(sfml.font),
-        //   text_score(sfml.text_score),
-        //   text_time_left(sfml.text_time_left),
-        //   text_best_score(sfml.text_best_score),
-        //   text_score_element(sfml.text_score_element)
+SfmlWrapper::SfmlWrapper(const SfmlWrapper &sfml)
+        : event(sfml.event),
+          texture_background(sfml.texture_background),
+          texture_border(sfml.texture_border),
+          texture_border_block(sfml.texture_border_block),
+          texture_food(sfml.texture_food),
+          texture_super_food(sfml.texture_super_food),
+          texture_snake_head_up(sfml.texture_snake_head_up),
+          texture_snake_head_down(sfml.texture_snake_head_down),
+          texture_snake_head_left(sfml.texture_snake_head_left),
+          texture_snake_head_right(sfml.texture_snake_head_right),
+          texture_snake_body(sfml.texture_snake_body),
+          texture_game_over(sfml.texture_game_over),
+          sprite(sfml.sprite),
+          sprite_border(sfml.sprite_border),
+          sprite_food(sfml.sprite_food),
+          sprite_super_food(sfml.sprite_super_food),
+          sprite_snake(sfml.sprite_snake),
+          sprite_game_over(sfml.sprite_game_over),
+          font(sfml.font),
+          text_score(sfml.text_score),
+          text_time_left(sfml.text_time_left),
+          text_best_score(sfml.text_best_score),
+          text_score_element(sfml.text_score_element)
 {
 
 }
 
-SfmlWrapper& SfmlWrapper::operator=(const SfmlWrapper &) {
-    // event = sfml.event;
-    // texture_background = sfml.texture_background;
-    // texture_border = sfml.texture_border;
-    // texture_border_block = sfml.texture_border_block;
-    // texture_food = sfml.texture_food;
-    // texture_super_food = sfml.texture_super_food;
-    // texture_snake_head_up = sfml.texture_snake_head_up;
-    // texture_snake_head_down = sfml.texture_snake_head_down;
-    // texture_snake_head_left = sfml.texture_snake_head_left;
-    // texture_snake_head_right = sfml.texture_snake_head_right;
-    // texture_snake_body = sfml.texture_snake_body;
-    // texture_game_over = sfml.texture_game_over;
-    // sprite = sfml.sprite;
-    // sprite_border = sfml.sprite_border;
-    // sprite_food = sfml.sprite_food;
-    // sprite_super_food = sfml.sprite_super_food;
-    // sprite_snake = sfml.sprite_snake;
-    // sprite_game_over = sfml.sprite_game_over;
-    // font = sfml.font;
-    // text_score = sfml.text_score;
-    // text_time_left = sfml.text_time_left;
-    // text_best_score = sfml.text_best_score;
-    // text_score_element = sfml.text_score_element;
+SfmlWrapper& SfmlWrapper::operator=(const SfmlWrapper &sfml) {
+    event = sfml.event;
+    texture_background = sfml.texture_background;
+    texture_border = sfml.texture_border;
+    texture_border_block = sfml.texture_border_block;
+    texture_food = sfml.texture_food;
+    texture_super_food = sfml.texture_super_food;
+    texture_snake_head_up = sfml.texture_snake_head_up;
+    texture_snake_head_down = sfml.texture_snake_head_down;
+    texture_snake_head_left = sfml.texture_snake_head_left;
+    texture_snake_head_right = sfml.texture_snake_head_right;
+    texture_snake_body = sfml.texture_snake_body;
+    texture_game_over = sfml.texture_game_over;
+    sprite = sfml.sprite;
+    sprite_border = sfml.sprite_border;
+    sprite_food = sfml.sprite_food;
+    sprite_super_food = sfml.sprite_super_food;
+    sprite_snake = sfml.sprite_snake;
+    sprite_game_over = sfml.sprite_game_over;
+    font = sfml.font;
+    text_score = sfml.text_score;
+    text_time_left = sfml.text_time_left;
+    text_best_score = sfml.text_best_score;
+    text_score_element = sfml.text_score_element;
     return *this;
 }
 
@@ -214,9 +202,11 @@ void SfmlWrapper::RenderMap(const std::vector <std::vector<int>> &game_map) {
 void SfmlWrapper::ClearImage() {
     win->clear();
 }
+
 void SfmlWrapper::RenderImage() {
     win->display();
 }
+
 void SfmlWrapper::RenderFood(int x, int y, bool isBonusFruit) {
 
     if (isBonusFruit) {
@@ -234,16 +224,9 @@ int SfmlWrapper::HandleInput() {
     {
         if (event->type == sf::Event::Closed)
             return (0);
-        if (event->type == sf::Event::MouseMoved || event->type == sf::Event::MouseEntered || event->type == sf::Event::MouseLeft)
+        if (event->type == sf::Event::KeyPressed)
         {
-            std::cout << "SFRM MOUSE MOVEE\n";
-            return (Directions::NOTHING_PRESSED);
-            // std::cout << "new mouse x: " << event.mouseMove.x << std::endl;
-            // std::cout << "new mouse y: " << event.mouseMove.y << std::endl;
-        }
-        // if (event->type == sf::Event::KeyPressed)
-        // {
-            else if (event->key.code == sf::Keyboard::Escape)
+            if (event->key.code == sf::Keyboard::Escape)
                 return (Directions::QUIT);
             else if (event->key.code == sf::Keyboard::Left)
                 return (Directions::LEFT);
@@ -259,10 +242,7 @@ int SfmlWrapper::HandleInput() {
                 return (Directions::SDL_LIB);
             else if (event->key.code == sf::Keyboard::Numpad3)
                 return (Directions::OPENGL_LIB);
-            else {
-             std::cout << "poolEvent: " << event->key.code << std::endl;
-            }
-        // }
+        }
         
     }
     return (Directions::NOTHING_PRESSED);
@@ -331,12 +311,10 @@ void SfmlWrapper::RenderGameOverScreen() {
 
 extern "C" InterfaceLibrary      *createWrapper(int w, int h)
 {
-    // std::cout << "START SFML\n";
     return (new SfmlWrapper(w, h));
 }
 
 extern "C" void             deleteWrapper(InterfaceLibrary *lib)
 {
-    
     delete lib;
 }

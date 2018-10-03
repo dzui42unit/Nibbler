@@ -52,9 +52,6 @@ void key_callback(GLFWwindow* , int key, int , int action, int )
 		Glfw3Wrapper::_key = Directions::SFML_LIB;
 		return ;
 	}
-	else {
-		std::cout << "glfw: " << action << std::endl;
-	}
 }
 
 void	Glfw3Wrapper::RenderGameOverScreen(void)
@@ -242,7 +239,6 @@ Glfw3Wrapper::Glfw3Wrapper(int w, int h)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	checker.close();
-	// glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 /*

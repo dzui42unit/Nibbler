@@ -18,20 +18,13 @@ LIBS = -I ../../InterfaceLibrary
 LIBS += -I ~/.brew/include/freetype2
 LIBS += -I ~/.brew/include -L ~/.brew/lib -lglfw
 LIBS += -lftgl
-#LIBS += -framework OpenGL -framework AppKit
-
 
 SRC = Glfw3Wrapper.cpp
-
-# OBJ = $(SRC:.cpp=.o)
 
 all: lib.so
 
 lib.so:
 	$(CC) -dynamiclib -flat_namespace $(SRC) $(LIBS) -o $(NAME)
-
-# %.o: %.cpp
-# 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 
 
 clean:
 	@rm -f $(OBJ)

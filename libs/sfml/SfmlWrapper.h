@@ -52,8 +52,6 @@ public:
 	sf::Text            text_best_score;
 	sf::Text            text_score_element;
 
-
-
 };
 
 #endif //NIBBLER_SFMLWRAPPER_H
