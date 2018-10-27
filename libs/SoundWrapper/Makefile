@@ -18,20 +18,12 @@ LIBS = -I ../../InterfaceSoundLib
 LIBS += -I ~/.brew/include -L ~/.brew/lib
 LIBS += -l SDL2_mixer 
 
-#LIBS += -framework OpenGL -framework AppKit
-
-
 SRC = SoundWrapper.cpp
-
-# OBJ = $(SRC:.cpp=.o)
 
 all: lib.so
 
 lib.so:
 	$(CC) -dynamiclib -flat_namespace $(SRC) $(LIBS) -o $(NAME)
-
-# %.o: %.cpp
-# 	$(CC) $(CFLAGS) $(LIBS) -c  -o $@ $< 
 
 clean:
 	@rm -f $(OBJ)

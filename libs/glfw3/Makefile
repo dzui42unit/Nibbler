@@ -12,7 +12,7 @@
 
 NAME = libglfw3wrapper.so
 
-CC = clang++ -g -std=c++14 -Wall -Wextra -Werror
+CC = clang++ -std=c++14 -Wall -Wextra -Werror
 
 LIBS = -I ../../InterfaceLibrary
 LIBS += -I ~/.brew/include/freetype2

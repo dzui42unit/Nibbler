@@ -21,16 +21,15 @@ OBJ = $(SRC:.cpp=.o)
 
 CFLAGS = -std=c++14 -Wall -Wextra -Werror
 		 
-
-CC = clang++ -g
+CC = clang++
 
 all: lib $(NAME)
 
 lib:
-	make re -C libs/sdl
-	make re -C libs/SoundWrapper
-	make re -C libs/glfw3
-	make re -C libs/sfml
+	@make re -C libs/sdl
+	@make re -C libs/SoundWrapper
+	@make re -C libs/glfw3
+	@make re -C libs/sfml
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) 
